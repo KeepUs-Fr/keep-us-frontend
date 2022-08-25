@@ -10,6 +10,7 @@ export class NoteListComponent implements OnInit {
      * Number of notes on grid line
      */
     valueCols: number = 1;
+    isCreationMode = false;
 
     constructor() { }
 
@@ -31,6 +32,11 @@ export class NoteListComponent implements OnInit {
             default:
                 this.valueCols = 4;
         }
+    }
+
+    getMode(mode: boolean): void {
+        console.log(mode);
+        this.isCreationMode = mode;
     }
 
 }

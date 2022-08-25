@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-note-creation',
@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoteCreationComponent implements OnInit {
 
+    @Output() mode = new EventEmitter<boolean>();
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  submit(): void {
+      this.cancel();
+  }
+
+  cancel(): void {
+        this.mode.emit(false);
+  }
 }

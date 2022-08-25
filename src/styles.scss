@@ -6,6 +6,17 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 
     .accent {
-        background-color: #774387 !important;
+        background-color: #774387;
+    }
+    .justify-between {
+        display: flex;
+        justify-content: space-between;
+    }
+    .justify-center {
+        display: flex;
+        justify-content: center;
+    }
+    .spacer {
+        flex: 1 1 auto !important;
     }
 }
