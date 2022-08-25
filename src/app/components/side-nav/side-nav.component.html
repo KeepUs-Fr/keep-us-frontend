@@ -1,0 +1,34 @@
+<mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #drawer class="sidenav" fixedInViewport
+          [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+          [mode]="(isHandset$ | async) ? 'over' : 'side'"
+          [opened]="(isHandset$ | async) === false">
+        <mat-toolbar>
+<!--            <img src="assets/images/logo.jpeg" alt="logo" width="26" height="26">-->
+            Keep Us
+        </mat-toolbar>
+        <mat-nav-list>
+          <a mat-list-item href="#">Perso</a>
+          <a mat-list-item href="#">Les broS</a>
+          <a mat-list-item href="#">AL2</a>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <mat-toolbar color="primary">
+          <button
+            type="button"
+            aria-label="Toggle sidenav"
+            mat-icon-button
+            (click)="drawer.toggle()"
+            *ngIf="isHandset$ | async">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+          <span>Les BroS</span>
+        </mat-toolbar>
+
+          <!-- App content -->
+          <div style="padding-left: 80px; padding-right: 80px; padding-top: 35px">
+              <router-outlet></router-outlet>
+          </div>
+      </mat-sidenav-content>
+</mat-sidenav-container>
