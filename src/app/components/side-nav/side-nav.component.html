@@ -12,6 +12,12 @@
           <a mat-list-item href="#">Les broS</a>
           <a mat-list-item href="#">AL2</a>
         </mat-nav-list>
+          <mat-nav-list style="position: fixed; bottom: 0; width: 200px">
+              <a mat-list-item style="background-color: #c2185b">
+                  <mat-icon style="margin-right: 20px;">add</mat-icon>
+                  New group
+              </a>
+          </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>
         <mat-toolbar color="primary">
@@ -27,7 +33,7 @@
         </mat-toolbar>
 
           <!-- App content -->
-          <div style="padding-left: 80px; padding-right: 80px; padding-top: 35px">
+          <div style="padding-left: 80px; padding-right: 80px; padding-top: 25px">
               <router-outlet></router-outlet>
           </div>
       </mat-sidenav-content>
