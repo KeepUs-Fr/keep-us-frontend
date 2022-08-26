@@ -19,15 +19,7 @@ export class NoteListComponent implements OnInit {
 
     ngOnInit(): void {
         this.breakPoints();
-
-        this.notesService.getNotes().subscribe({
-            next: notes => {
-                this.notes = notes;
-            },
-            error: (error) => {
-                console.error(error);
-            }
-        });
+        this.getNotes();
     }
 
     breakPoints(): void {
@@ -48,5 +40,25 @@ export class NoteListComponent implements OnInit {
 
     getMode(mode: boolean): void {
         this.isCreationMode = mode;
+        this.getNotes();
+    }
+
+    getNotes(): void {
+        this.notesService.getNotes().subscribe({
+            next: notes => {
+                this.notes = notes;
+            },
+            error: (error) => {
+                console.error(error);
+            }
+        });
+    }
+
+    remove(id: number): void {
+        this.notesService.removeNote(id).subscribe({
+            next: _ => {
+                this.getNotes();
+            }
+        });
     }
 }

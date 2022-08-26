@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    notesUrl: 'http://localhost:9003/notes',
+    notesUrl: 'http://localhost:4200/api/notes',
 };
 
 /*

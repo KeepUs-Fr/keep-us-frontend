@@ -21,4 +21,9 @@ export class NotesService {
             note
         );
     }
+
+    removeNote(id: number): Observable<void> {
+        return this.http.delete<void>(environment.notesUrl + '/' + id);
+    }
+
 }

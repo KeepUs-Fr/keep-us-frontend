@@ -16,12 +16,16 @@
                        [gutterSize]="'20px'"
                        rowHeight="2:1"
                        (window:resize)="breakPoints()">
-            <mat-grid-tile fxFlexAlign="stretch" *ngFor="let note of notes">
+            <mat-grid-tile fxFlexAlign="stretch" *ngFor="let note of notes.reverse()">
                 <mat-card [ngStyle]="{ 'background-color': note.color }">
-                    <mat-card-subtitle>{{note.title}}</mat-card-subtitle>
+                    <div class="justify-between">
+                        <mat-card-subtitle>{{note.title}}</mat-card-subtitle>
+                        <button mat-icon-button (click)="remove(note.id)"><mat-icon>close</mat-icon></button>
+                    </div>
+
                     <mat-card-content>
                         <p>{{note.description}}</p>
-                        <mat-chip-list aria-label="Dog selection">
+                        <mat-chip-list aria-label="Dog selection" *ngIf="note.tag">
                             <mat-chip color="accent">
                                 {{note.tag}}
                             </mat-chip>

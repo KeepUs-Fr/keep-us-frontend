@@ -5,12 +5,19 @@
          width: 100%;
      }
 
+     mat-icon {
+         margin-right: 12px;
+         font-size: 28px;
+         margin-bottom: 5px;
+     }
+
      .circle {
          border-radius: 50%;
          height: 28px;
          width: 28px;
          margin-right: 5px;
          border: 1.5px solid #5f6368;
+         margin-bottom: 5px;
 
          &:hover {
              cursor: pointer;
