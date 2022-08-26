@@ -1,45 +1,65 @@
 <mat-sidenav-container class="sidenav-container">
-      <mat-sidenav #drawer class="sidenav" fixedInViewport
-          [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-          [mode]="(isHandset$ | async) ? 'over' : 'side'"
-          [opened]="(isHandset$ | async) === false">
-        <mat-toolbar>
-<!--            <img src="assets/images/logo.jpeg" alt="logo" width="26" height="26">-->
-            Keep Us
-        </mat-toolbar>
-        <mat-nav-list>
-          <a mat-list-item href="#">Perso</a>
-          <a mat-list-item href="#">Les broS</a>
-          <a mat-list-item href="#">AL2</a>
-        </mat-nav-list>
-          <mat-nav-list style="position: fixed; bottom: 0; width: 200px">
-              <a mat-list-item style="background-color: #c2185b">
-                  <mat-icon style="margin-right: 20px;">add</mat-icon>
-                  New group
-              </a>
-          </mat-nav-list>
-      </mat-sidenav>
-      <mat-sidenav-content>
-        <mat-toolbar color="primary">
-          <button
-            type="button"
-            aria-label="Toggle sidenav"
-            mat-icon-button
-            (click)="drawer.toggle()"
-            *ngIf="isHandset$ | async">
-            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-          </button>
-          <span>Les BroS</span>
-            <span class="spacer"></span>
+    <mat-sidenav #drawer class="sidenav" fixedInViewport
+                 [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+                 [mode]="(isHandset$ | async) ? 'over' : 'side'"
+                 [opened]="(isHandset$ | async) === false">
 
-            <button mat-icon-button>
+        <mat-toolbar>Keep Us</mat-toolbar>
+
+        <!-- Get user groups -->
+        <mat-nav-list>
+            <a mat-list-item>Personal space</a>
+        </mat-nav-list>
+
+        <mat-nav-list style="position: fixed; bottom: 0; width: 200px">
+            <a mat-list-item style="background-color: #c2185b">
+                <mat-icon style="margin-right: 20px;">add</mat-icon>
+                New group
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <button
+                type="button"
+                aria-label="Toggle sidenav"
+                mat-icon-button
+                (click)="drawer.toggle()"
+                *ngIf="isHandset$ | async">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+            <span>Personal space</span>
+            <span class="spacer"></span>
+            <button mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="Group menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>group</mat-icon>
+                    <span>Users</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>group_add</mat-icon>
+                    <span>Add users</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>person_remove</mat-icon>
+                    <span>Quit group</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon style="color: #eb4034">highlight_off</mat-icon>
+                    <span style="color: #eb4034">Delete Group</span>
+                </button>
+            </mat-menu>
         </mat-toolbar>
 
-          <!-- App content -->
-          <div style="padding-left: 80px; padding-right: 80px; padding-top: 25px">
-              <router-outlet></router-outlet>
-          </div>
-      </mat-sidenav-content>
+        <!-- App content -->
+        <div style="padding-left: 80px; padding-right: 80px; padding-top: 25px">
+            <router-outlet></router-outlet>
+        </div>
+
+    </mat-sidenav-content>
 </mat-sidenav-container>

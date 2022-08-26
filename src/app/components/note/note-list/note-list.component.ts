@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {NotesService} from "../../../services/notes.service";
+import {NoteModel} from "../../../models/note.model";
 
 @Component({
-  selector: 'app-note-list',
-  templateUrl: './note-list.component.html',
-  styleUrls: ['./note-list.component.scss']
+    selector: 'app-note-list',
+    templateUrl: './note-list.component.html',
+    styleUrls: ['./note-list.component.scss']
 })
 export class NoteListComponent implements OnInit {
     /**
@@ -11,11 +13,21 @@ export class NoteListComponent implements OnInit {
      */
     valueCols: number = 1;
     isCreationMode = false;
+    notes: NoteModel[] = []
 
-    constructor() { }
+    constructor(private notesService: NotesService) {}
 
     ngOnInit(): void {
         this.breakPoints();
+
+        this.notesService.getNotes().subscribe({
+            next: notes => {
+                this.notes = notes;
+            },
+            error: (error) => {
+                console.error(error);
+            }
+        });
     }
 
     breakPoints(): void {
@@ -35,8 +47,6 @@ export class NoteListComponent implements OnInit {
     }
 
     getMode(mode: boolean): void {
-        console.log(mode);
         this.isCreationMode = mode;
     }
-
 }

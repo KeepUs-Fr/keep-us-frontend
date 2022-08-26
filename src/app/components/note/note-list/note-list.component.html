@@ -1,24 +1,34 @@
-<div>
-    <div style="padding-bottom: 25px;" class="justify-center" *ngIf="!isCreationMode">
+<div class="note-list">
+    <div class="justify-center btn-create" *ngIf="!isCreationMode; else CreativeMode">
         <button mat-stroked-button (click)="isCreationMode = true">
             Create a new note ...
         </button>
     </div>
 
-    <!-- Note creation component -->
-    <app-note-creation *ngIf="isCreationMode" (mode)="getMode($event)"></app-note-creation>
+    <ng-template #CreativeMode>
+        <!-- Note creation component -->
+        <app-note-creation  (mode)="getMode($event)"></app-note-creation>
+    </ng-template>
 
-    <mat-grid-list [cols]="valueCols"
-                   [gutterSize]="'20px'"
-                   rowHeight="2:1"
-                   (window:resize)="breakPoints()">
-        <mat-grid-tile fxFlexAlign="stretch" *ngFor="let note of [0,0,0,0,0,0,0,0]">
-            <mat-card class="card">
-                <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-                <mat-card-content>
-                    <p>This card is a note example.</p>
-                </mat-card-content>
-            </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list>
+    <!-- Display note list-->
+    <div *ngIf="notes.length > 0">
+        <mat-grid-list [cols]="valueCols"
+                       [gutterSize]="'20px'"
+                       rowHeight="2:1"
+                       (window:resize)="breakPoints()">
+            <mat-grid-tile fxFlexAlign="stretch" *ngFor="let note of notes">
+                <mat-card [ngStyle]="{ 'background-color': note.color }">
+                    <mat-card-subtitle>{{note.title}}</mat-card-subtitle>
+                    <mat-card-content>
+                        <p>{{note.description}}</p>
+                        <mat-chip-list aria-label="Dog selection">
+                            <mat-chip color="accent">
+                                {{note.tag}}
+                            </mat-chip>
+                        </mat-chip-list>
+                    </mat-card-content>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
 </div>

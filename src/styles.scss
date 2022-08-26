@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
 }
+
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -8,14 +9,22 @@ body {
     .accent {
         background-color: #774387;
     }
+
     .justify-between {
         display: flex;
         justify-content: space-between;
     }
+
     .justify-center {
         display: flex;
         justify-content: center;
     }
+
+    .justify-start {
+        display: flex;
+        justify-content: start;
+    }
+
     .spacer {
         flex: 1 1 auto !important;
     }

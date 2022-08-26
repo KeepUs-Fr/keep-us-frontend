@@ -1,3 +1,9 @@
-.card {
-    max-width: 250px;
+.note-list {
+    mat-card {
+        max-width: 300px;
+    }
+
+    .btn-create {
+        padding-bottom: 25px;
+    }
 }

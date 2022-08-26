@@ -19,6 +19,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
+import { LayoutModule } from '@angular/cdk/layout';
+import { FlexModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [],
@@ -44,7 +49,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
         MatExpansionModule,
         MatDialogModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatListModule,
+        MatChipsModule,
+        LayoutModule,
+        FlexModule,
+        FormsModule
     ]
 })
 export class MaterialModule {}
