@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {NotesService} from "../../../services/notes.service";
-import {NoteModel} from "../../../models/note.model";
+import { NotesService } from '../../../services/notes.service';
+import { NoteModel } from '../../../models/note.model';
+import { MatDialog } from '@angular/material/dialog';
+import { NoteCreationComponent } from '../note-creation/note-creation.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-note-list',
@@ -12,10 +15,17 @@ export class NoteListComponent implements OnInit {
      * Number of notes on grid line
      */
     valueCols: number = 1;
-    isCreationMode = false;
-    notes: NoteModel[] = []
 
-    constructor(private notesService: NotesService) {}
+    notes: NoteModel[] = [];
+
+    displayedColumns = ['title', 'description', 'tags'];
+    isTableMode = false;
+
+    constructor(
+        private notesService: NotesService,
+        private dialog: MatDialog,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
         this.breakPoints();
@@ -38,26 +48,30 @@ export class NoteListComponent implements OnInit {
         }
     }
 
-    getMode(mode: boolean): void {
-        this.isCreationMode = mode;
-        this.getNotes();
-    }
+    openCreationDialog(): void {
+        const dialogRef = this.dialog.open(NoteCreationComponent);
 
-    getNotes(): void {
-        this.notesService.getNotes().subscribe({
-            next: notes => {
-                this.notes = notes;
+        dialogRef.afterClosed().subscribe({
+            next: (_) => {
+                this.getNotes();
             },
-            error: (error) => {
-                console.error(error);
+            error: (err) => {
+                console.error(err);
             }
         });
     }
 
-    remove(id: number): void {
-        this.notesService.removeNote(id).subscribe({
-            next: _ => {
-                this.getNotes();
+    goToNoteDetail(id: number): void {
+        this.router.navigate(['note', id]).then();
+    }
+
+    getNotes(): void {
+        this.notesService.getNotes().subscribe({
+            next: (notes) => {
+                this.notes = notes;
+            },
+            error: (err) => {
+                console.error(err);
             }
         });
     }

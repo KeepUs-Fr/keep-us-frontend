@@ -1,31 +1,28 @@
 <div class="note-list">
-    <div class="justify-center btn-create" *ngIf="!isCreationMode; else CreativeMode">
-        <button mat-stroked-button (click)="isCreationMode = true">
-            Create a new note ...
+    <div class="justify-between">
+        <button mat-stroked-button (click)="openCreationDialog()">
+            Create a new note
+        </button>
+        <button mat-icon-button
+                (click)="isTableMode = !isTableMode"
+                class="btn-switch">
+            <mat-icon *ngIf="!isTableMode">list</mat-icon>
+            <mat-icon *ngIf="isTableMode">splitscreen</mat-icon>
         </button>
     </div>
 
-    <ng-template #CreativeMode>
-        <!-- Note creation component -->
-        <app-note-creation  (mode)="getMode($event)"></app-note-creation>
-    </ng-template>
-
     <!-- Display note list-->
-    <div *ngIf="notes.length > 0">
+    <div *ngIf="notes.length > 0 && !isTableMode">
         <mat-grid-list [cols]="valueCols"
                        [gutterSize]="'20px'"
                        rowHeight="2:1"
                        (window:resize)="breakPoints()">
             <mat-grid-tile fxFlexAlign="stretch" *ngFor="let note of notes.reverse()">
-                <mat-card [ngStyle]="{ 'background-color': note.color }">
-                    <div class="justify-between">
-                        <mat-card-subtitle>{{note.title}}</mat-card-subtitle>
-                        <button mat-icon-button (click)="remove(note.id)"><mat-icon>close</mat-icon></button>
-                    </div>
-
+                <mat-card [ngStyle]="{ 'background-color': note.color }" matRipple (click)="goToNoteDetail(note.id)">
+                    <mat-card-subtitle>{{note.title}}</mat-card-subtitle>
                     <mat-card-content>
                         <p>{{note.description}}</p>
-                        <mat-chip-list aria-label="Dog selection" *ngIf="note.tag">
+                        <mat-chip-list aria-label="tags" *ngIf="note.tag">
                             <mat-chip color="accent">
                                 {{note.tag}}
                             </mat-chip>
@@ -35,4 +32,32 @@
             </mat-grid-tile>
         </mat-grid-list>
     </div>
+
+    <mat-table [dataSource]="notes" class="mat-elevation-z8" *ngIf="isTableMode">
+        <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="tags">
+            <mat-header-cell *matHeaderCellDef> Tags </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <mat-chip-list aria-label="tags" *ngIf="element.tag">
+                    <mat-chip [ngStyle]="{'background-color': element.color}">
+                        {{element.tag}}
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToNoteDetail(row.id)"></mat-row>
+    </mat-table>
 </div>
+
+

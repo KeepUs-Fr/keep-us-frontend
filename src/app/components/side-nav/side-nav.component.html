@@ -8,6 +8,8 @@
 
         <!-- Get user groups -->
         <mat-nav-list>
+            <a mat-list-item class="active">Personal space</a>
+            <a mat-list-item>Personal space</a>
             <a mat-list-item>Personal space</a>
         </mat-nav-list>
 
@@ -23,7 +25,7 @@
         <mat-toolbar color="primary">
             <button
                 type="button"
-                aria-label="Toggle sidenav"
+                aria-label="sidenav"
                 mat-icon-button
                 (click)="drawer.toggle()"
                 *ngIf="isHandset$ | async">
@@ -50,14 +52,14 @@
                     <span>Quit group</span>
                 </button>
                 <button mat-menu-item>
-                    <mat-icon style="color: #eb4034">highlight_off</mat-icon>
-                    <span style="color: #eb4034">Delete Group</span>
+                    <mat-icon class="delete-color">highlight_off</mat-icon>
+                    <span class="delete-color">Delete Group</span>
                 </button>
             </mat-menu>
         </mat-toolbar>
 
         <!-- App content -->
-        <div style="padding-top: 25px;">
+        <div class="app-content">
             <router-outlet></router-outlet>
         </div>
 

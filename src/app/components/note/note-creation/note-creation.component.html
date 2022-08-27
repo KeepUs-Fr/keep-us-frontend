@@ -1,48 +1,42 @@
-<div class="justify-center" style="padding-bottom: 25px;">
-    <mat-card class="card">
-        <mat-card-content>
-            <mat-form-field appearance="legacy">
-                <mat-label>Title</mat-label>
-                <input matInput [(ngModel)]="title">
-            </mat-form-field>
-            <br/>
-            <mat-form-field appearance="legacy">
-                <mat-label>Description</mat-label>
-                <input matInput [(ngModel)]="description">
-            </mat-form-field>
-            <br/>
-            <mat-form-field appearance="legacy">
-                <mat-label>Tags</mat-label>
-                <mat-chip-list #chipList aria-label="notes tags">
-                    <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
-                        {{tag}}
-                        <button matChipRemove>
-                            <mat-icon>cancel</mat-icon>
-                        </button>
-                    </mat-chip>
-                    <input placeholder="#work"
-                           [matChipInputFor]="chipList"
-                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                           [matChipInputAddOnBlur]="addOnBlur"
-                           (matChipInputTokenEnd)="add($event)">
-                </mat-chip-list>
-            </mat-form-field>
-            <div class="justify-start" style="flex-wrap: wrap;">
-                <mat-icon>palette</mat-icon>
-
-                <div *ngFor="let color of colors | keyvalue">
-                    <div class="circle"
-                         [ngStyle]="{ 'background-color': color.value}"
-                         [ngClass]="{'active-color': selectedColor === color.key}"
-                         (click)="getCurrentColor(color.key)">
-                    </div>
-                </div>
-            </div>
-
-        </mat-card-content>
-        <mat-card-actions class="justify-between">
-            <button mat-flat-button color="primary" (click)="submit()">Create</button>
-            <button mat-flat-button (click)="cancel()">Cancel</button>
-        </mat-card-actions>
-    </mat-card>
+<div mat-dialog-content>
+    <mat-form-field appearance="standard">
+        <input matInput [(ngModel)]="title" placeholder="Title" style="font-size: 22px">
+    </mat-form-field>
+    <br/>
+    <mat-form-field appearance="standard">
+        <textarea matInput [(ngModel)]="description"
+                  style="font-size: 16px"
+                  placeholder="Create note..."
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1">
+        </textarea>
+    </mat-form-field>
+    <br/>
+<!--    <mat-form-field appearance="legacy">-->
+<!--        <mat-label>Tags</mat-label>-->
+<!--        <mat-chip-list #chipList aria-label="notes tags">-->
+<!--            <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">-->
+<!--                {{tag}}-->
+<!--                <button matChipRemove>-->
+<!--                    <mat-icon>cancel</mat-icon>-->
+<!--                </button>-->
+<!--            </mat-chip>-->
+<!--            <input placeholder="#work"-->
+<!--                   [matChipInputFor]="chipList"-->
+<!--                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
+<!--                   [matChipInputAddOnBlur]="addOnBlur"-->
+<!--                   (matChipInputTokenEnd)="add($event)">-->
+<!--        </mat-chip-list>-->
+<!--    </mat-form-field>-->
+<!--    <br/>-->
+    <app-note-color-palette (eventEmitter)="getColor($event)"></app-note-color-palette>
+</div>
+<div mat-dialog-actions class="justify-between">
+    <button mat-flat-button
+            [mat-dialog-close]="closeModal"
+            color="primary"
+            (click)="submit()">
+        Create
+    </button>
+    <button mat-flat-button [mat-dialog-close]="true">Cancel</button>
 </div>

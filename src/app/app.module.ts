@@ -10,7 +10,8 @@ import { NoteListComponent } from './components/note/note-list/note-list.compone
 import { NoteDetailComponent } from './components/note/note-detail/note-detail.component';
 import { NoteCreationComponent } from './components/note/note-creation/note-creation.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
+import { NoteColorPaletteComponent } from './components/note/note-color-palette/note-color-palette.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import {HttpClientModule} from "@angular/common/http";
         NoteListComponent,
         NoteDetailComponent,
         NoteCreationComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        NoteColorPaletteComponent
     ],
     imports: [
         BrowserModule,

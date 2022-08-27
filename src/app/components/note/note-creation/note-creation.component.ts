@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import {CreateNoteModel} from "../../../models/note.model";
-import {NotesService} from "../../../services/notes.service";
+import { CreateNoteModel } from '../../../models/note.model';
+import { NotesService } from '../../../services/notes.service';
 
 @Component({
     selector: 'app-note-creation',
@@ -10,29 +10,17 @@ import {NotesService} from "../../../services/notes.service";
     styleUrls: ['./note-creation.component.scss']
 })
 export class NoteCreationComponent implements OnInit {
-    @Output() mode = new EventEmitter<boolean>();
     addOnBlur = true;
     readonly separatorKeysCodes = [ENTER, COMMA] as const;
     tags: string[] = [];
-    colors = new Map<string, string>();
-    selectedColor = 'black';
     title = '';
     description = '';
+    closeModal = false;
+    selectedColor = 'black';
 
     constructor(private noteService: NotesService) {}
 
     ngOnInit(): void {
-        this.colors
-            .set('black', '#424242')
-            .set('red', '#5c2b29')
-            .set('orange', '#614a19')
-            .set('yellow', '#635d19')
-            .set('green', '#345920')
-            .set('cyan', '#2d555e')
-            .set('blue', '#1e3a5f')
-            .set('purple', '#42275e')
-            .set('pink', '#5b2245')
-            .set('brown', '#442f19');
     }
 
     submit(): void {
@@ -41,20 +29,16 @@ export class NoteCreationComponent implements OnInit {
             description: this.description,
             tag: this.tags[0],
             color: this.selectedColor
-        }
-        console.log(newNote);
+        };
+
         this.noteService.createNote(newNote).subscribe({
-            next: note => {
-                this.cancel();
+            next: (note) => {
+                this.closeModal = true;
             },
             error: (error) => {
                 console.error(error);
             }
         });
-    }
-
-    cancel(): void {
-        this.mode.emit(false);
     }
 
     add(event: MatChipInputEvent): void {
@@ -75,7 +59,8 @@ export class NoteCreationComponent implements OnInit {
         }
     }
 
-    getCurrentColor(color: string): void {
+    getColor(color: string) {
         this.selectedColor = color;
     }
+
 }

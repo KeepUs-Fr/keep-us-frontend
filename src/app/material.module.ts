@@ -21,6 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
@@ -54,7 +55,8 @@ import { FormsModule } from '@angular/forms';
         MatChipsModule,
         LayoutModule,
         FlexModule,
-        FormsModule
+        FormsModule,
+        MatTableModule
     ]
 })
 export class MaterialModule {}

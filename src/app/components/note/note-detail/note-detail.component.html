@@ -1,8 +1,30 @@
-<div>
-    <mat-card class="card">
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-        <mat-card-content>
-            <p>This card indeterminates progress bar.</p>
-        </mat-card-content>
-    </mat-card>
+<div class="note-detail" *ngIf="note">
+    <div class="justify-between"  style="align-items: center">
+        <button mat-icon-button (click)="updateNote()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <app-note-color-palette (eventEmitter)="getColor($event)"></app-note-color-palette>
+        <button mat-icon-button (click)="removeNote()">
+            <mat-icon class="delete-color">delete</mat-icon>
+        </button>
+    </div>
+    <mat-form-field appearance="standard">
+        <input matInput
+               placeholder="Title"
+               [value]="note.title"
+               [(ngModel)]="title"
+               style="font-size: 28px">
+    </mat-form-field>
+    <br/>
+    <mat-form-field appearance="standard">
+        <textarea matInput
+                  style="font-size: 16px"
+                  [value]="note.description"
+                  [(ngModel)]="description"
+                  placeholder="Note"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1">
+        </textarea>
+    </mat-form-field>
 </div>
+

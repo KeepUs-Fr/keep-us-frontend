@@ -1,0 +1,27 @@
+.color-palette{
+    flex-wrap: wrap;
+
+    .circle {
+        border-radius: 50%;
+        height: 28px;
+        width: 28px;
+        margin-right: 5px;
+        border: 1.5px solid #5f6368;
+        margin-bottom: 5px;
+
+        &:hover {
+            cursor: pointer;
+            border: 1.5px solid #f5f5f5;
+        }
+    }
+
+    .active-color {
+        border: 1.5px solid #c2185b;
+    }
+
+    mat-icon {
+        margin-right: 12px;
+        font-size: 28px;
+        margin-bottom: 5px;
+    }
+}

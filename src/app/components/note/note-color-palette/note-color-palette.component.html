@@ -1,0 +1,10 @@
+<div class="justify-start color-palette">
+    <mat-icon>palette</mat-icon>
+    <div *ngFor="let color of colors | keyvalue">
+        <div class="circle"
+             [ngStyle]="{ 'background-color': color.value}"
+             [ngClass]="{'active-color': selectedColor === color.key}"
+             (click)="getCurrentColor(color.key)">
+        </div>
+    </div>
+</div>
