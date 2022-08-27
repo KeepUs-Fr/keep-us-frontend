@@ -15,7 +15,7 @@ export class NotesService {
     }
 
     getNoteById(id: number): Observable<NoteModel> {
-        return this.http.get<NoteModel>(environment.notesUrl + '/' + id );
+        return this.http.get<NoteModel>(environment.notesUrl + '/' + id);
     }
 
     createNote(note: CreateNoteModel): Observable<NoteModel> {
@@ -23,7 +23,10 @@ export class NotesService {
     }
 
     updateNote(id: number, note: CreateNoteModel): Observable<NoteModel> {
-        return this.http.patch<NoteModel>(environment.notesUrl + '/' + id, note);
+        return this.http.patch<NoteModel>(
+            environment.notesUrl + '/' + id,
+            note
+        );
     }
 
     removeNote(id: number): Observable<void> {

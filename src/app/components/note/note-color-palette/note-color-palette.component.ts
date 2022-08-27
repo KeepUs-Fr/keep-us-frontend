@@ -1,16 +1,16 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-note-color-palette',
-  templateUrl: './note-color-palette.component.html',
-  styleUrls: ['./note-color-palette.component.scss']
+    selector: 'app-note-color-palette',
+    templateUrl: './note-color-palette.component.html',
+    styleUrls: ['./note-color-palette.component.scss']
 })
 export class NoteColorPaletteComponent implements OnInit {
     @Output() eventEmitter = new EventEmitter<string>();
     colors = new Map<string, string>();
     selectedColor = 'black';
 
-    constructor() { }
+    constructor() {}
 
     ngOnInit(): void {
         this.colors

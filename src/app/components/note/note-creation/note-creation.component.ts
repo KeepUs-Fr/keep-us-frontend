@@ -20,8 +20,7 @@ export class NoteCreationComponent implements OnInit {
 
     constructor(private noteService: NotesService) {}
 
-    ngOnInit(): void {
-    }
+    ngOnInit(): void {}
 
     submit(): void {
         let newNote: CreateNoteModel = {
@@ -62,5 +61,4 @@ export class NoteCreationComponent implements OnInit {
     getColor(color: string) {
         this.selectedColor = color;
     }
-
 }

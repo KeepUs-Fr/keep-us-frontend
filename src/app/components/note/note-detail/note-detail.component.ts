@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {CreateNoteModel, NoteModel} from "../../../models/note.model";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {NotesService} from "../../../services/notes.service";
-import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
+import { Component, OnInit } from '@angular/core';
+import { CreateNoteModel, NoteModel } from '../../../models/note.model';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NotesService } from '../../../services/notes.service';
+import {
+    MatSnackBar,
+    MatSnackBarHorizontalPosition,
+    MatSnackBarVerticalPosition
+} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-note-detail',
@@ -19,17 +23,17 @@ export class NoteDetailComponent implements OnInit {
     horizontalPosition: MatSnackBarHorizontalPosition = 'center';
     verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-    constructor(private route: ActivatedRoute,
-                private notesService: NotesService,
-                private router: Router,
-                private _snackBar: MatSnackBar) {
-    }
+    constructor(
+        private route: ActivatedRoute,
+        private notesService: NotesService,
+        private router: Router,
+        private _snackBar: MatSnackBar
+    ) {}
 
     ngOnInit(): void {
         this.route.params.subscribe((params: Params) => {
             this.currentId = params['id'];
             this.getNoteDetail();
-
         });
     }
 
@@ -48,9 +52,10 @@ export class NoteDetailComponent implements OnInit {
     }
 
     updateNote(): void {
-        if(this.note?.title === this.title
-            && this.note.description === this.description
-            && this.note.color === this.selectedColor
+        if (
+            this.note?.title === this.title &&
+            this.note.description === this.description &&
+            this.note.color === this.selectedColor
         ) {
             this.router.navigate(['notes']).then();
         } else {
@@ -59,10 +64,10 @@ export class NoteDetailComponent implements OnInit {
                 description: this.description,
                 tag: this.note?.tag!,
                 color: this.selectedColor
-            }
+            };
 
             this.notesService.updateNote(this.currentId, newNote).subscribe({
-                next: _ => {
+                next: (_) => {
                     this.router.navigate(['notes']).then();
                     this.openSnackBar('Note updated');
                 },
@@ -75,7 +80,7 @@ export class NoteDetailComponent implements OnInit {
 
     removeNote(): void {
         this.notesService.removeNote(this.currentId).subscribe({
-            next: _ => {
+            next: (_) => {
                 this.router.navigate(['notes']).then();
                 this.openSnackBar('Note removed successfully');
             }
@@ -90,7 +95,7 @@ export class NoteDetailComponent implements OnInit {
         this._snackBar.open(msg, 'Close', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
-            duration: 1500,
+            duration: 1500
         });
     }
 }
