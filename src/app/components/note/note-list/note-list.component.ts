@@ -18,7 +18,7 @@ export class NoteListComponent implements OnInit {
 
     notes: NoteModel[] = [];
 
-    displayedColumns = ['title', 'description', 'tags'];
+    displayedColumns = ['title', 'description'];
     isTableMode = false;
 
     constructor(

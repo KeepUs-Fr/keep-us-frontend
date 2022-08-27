@@ -1,5 +1,5 @@
 <div class="note-list">
-    <div class="justify-between">
+    <div class="justify-between" style="margin-bottom: 24px">
         <button mat-stroked-button (click)="openCreationDialog()">
             Create a new note
         </button>
@@ -13,13 +13,15 @@
 
     <!-- Display note list-->
     <div *ngIf="notes.length > 0 && !isTableMode">
-        <mat-grid-list [cols]="valueCols"
-                       [gutterSize]="'20px'"
-                       rowHeight="2:1"
-                       (window:resize)="breakPoints()">
-            <mat-grid-tile fxFlexAlign="stretch" *ngFor="let note of notes.reverse()">
-                <mat-card [ngStyle]="{ 'background-color': note.color }" matRipple (click)="goToNoteDetail(note.id)">
-                    <mat-card-subtitle>{{note.title}}</mat-card-subtitle>
+        <div fxLayout="row wrap"
+             fxLayout.lt-sm="column"
+             fxLayoutGap="24px"
+             fxLayoutAlign="flex-start">
+            <ng-container *ngFor="let note of notes.reverse()">
+                <mat-card fxFlex="0 1 calc(33.3% - 24px)"
+                          [ngStyle]="{ 'background-color': note.color }"
+                          (click)="goToNoteDetail(note.id)">
+                    <mat-card-subtitle style="font-size: 18px;">{{note.title}}</mat-card-subtitle>
                     <mat-card-content>
                         <p>{{note.description}}</p>
                         <mat-chip-list aria-label="tags" *ngIf="note.tag">
@@ -29,8 +31,17 @@
                         </mat-chip-list>
                     </mat-card-content>
                 </mat-card>
-            </mat-grid-tile>
-        </mat-grid-list>
+            </ng-container>
+        </div>
+
+<!--        <mat-grid-list [cols]="valueCols"-->
+<!--                       [gutterSize]="'20px'"-->
+<!--                       rowHeight="2:1"-->
+<!--                       (window:resize)="breakPoints()">-->
+<!--            <mat-grid-tile fxFlexAlign="stretch" >-->
+<!--              -->
+<!--            </mat-grid-tile>-->
+<!--        </mat-grid-list>-->
     </div>
 
     <mat-table [dataSource]="notes" class="mat-elevation-z8" *ngIf="isTableMode">
@@ -40,20 +51,20 @@
         </ng-container>
 
         <ng-container matColumnDef="description">
-            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Content </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="tags">
-            <mat-header-cell *matHeaderCellDef> Tags </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <mat-chip-list aria-label="tags" *ngIf="element.tag">
-                    <mat-chip [ngStyle]="{'background-color': element.color}">
-                        {{element.tag}}
-                    </mat-chip>
-                </mat-chip-list>
-            </mat-cell>
-        </ng-container>
+<!--        <ng-container matColumnDef="tags">-->
+<!--            <mat-header-cell *matHeaderCellDef> Tags </mat-header-cell>-->
+<!--            <mat-cell *matCellDef="let element">-->
+<!--                <mat-chip-list aria-label="tags" *ngIf="element.tag">-->
+<!--                    <mat-chip [ngStyle]="{'background-color': element.color}">-->
+<!--                        {{element.tag}}-->
+<!--                    </mat-chip>-->
+<!--                </mat-chip-list>-->
+<!--            </mat-cell>-->
+<!--        </ng-container>-->
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToNoteDetail(row.id)"></mat-row>

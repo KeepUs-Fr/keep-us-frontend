@@ -1,6 +1,19 @@
 .note-list {
     mat-card {
-        width: 324px;
+        margin-bottom: 24px;
+        border: 2px solid transparent;
+        min-width: 320px;
+
+        mat-card-subtitle, p {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        &:hover {
+            border: 2px solid #5f6368;
+            cursor: pointer;
+        }
     }
 
     .mat-table {
