@@ -1,0 +1,7 @@
+<div>
+    <h2 style="text-align: center">Filters</h2>
+    <p>Select a color</p>
+    <app-note-color-palette (eventEmitter)="getColor($event)"
+                            [mat-dialog-close]="filteredColor">
+    </app-note-color-palette>
+</div>

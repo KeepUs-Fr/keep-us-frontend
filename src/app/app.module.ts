@@ -12,6 +12,7 @@ import { NoteCreationComponent } from './components/note/note-creation/note-crea
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NoteColorPaletteComponent } from './components/note/note-color-palette/note-color-palette.component';
+import { NoteFiltersComponent } from './components/note/note-filters/note-filters.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { NoteColorPaletteComponent } from './components/note/note-color-palette/
         NoteDetailComponent,
         NoteCreationComponent,
         NotFoundComponent,
-        NoteColorPaletteComponent
+        NoteColorPaletteComponent,
+        NoteFiltersComponent
     ],
     imports: [
         BrowserModule,

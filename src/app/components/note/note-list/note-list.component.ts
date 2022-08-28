@@ -4,6 +4,8 @@ import { NoteModel } from '../../../models/note.model';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteCreationComponent } from '../note-creation/note-creation.component';
 import { Router } from '@angular/router';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { NoteFiltersComponent } from '../note-filters/note-filters.component';
 
 @Component({
     selector: 'app-note-list',
@@ -61,6 +63,27 @@ export class NoteListComponent implements OnInit {
         });
     }
 
+    openFilterDialog(): void {
+        const dialogRef = this.dialog.open(NoteFiltersComponent);
+
+        dialogRef.afterClosed().subscribe({
+            next: (color) => {
+                if (!color) {
+                    this.getNotes();
+                } else {
+                    this.notesService
+                        .filterNoteByColor(color)
+                        .subscribe(
+                            (filteredNotes) => (this.notes = filteredNotes)
+                        );
+                }
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
+    }
+
     goToNoteDetail(id: number): void {
         this.router.navigate(['note', id]).then();
     }
@@ -74,5 +97,9 @@ export class NoteListComponent implements OnInit {
                 console.error(err);
             }
         });
+    }
+
+    drop(event: CdkDragDrop<string[]>) {
+        moveItemInArray(this.notes, event.previousIndex, event.currentIndex);
     }
 }

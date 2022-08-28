@@ -1,8 +1,13 @@
 <div class="note-list">
     <div class="justify-between" style="margin-bottom: 24px">
+        <button mat-icon-button
+                (click)="openFilterDialog()">
+            <mat-icon>search</mat-icon>
+        </button>
         <button mat-stroked-button (click)="openCreationDialog()">
             Create a new note
         </button>
+
         <button mat-icon-button
                 (click)="isTableMode = !isTableMode"
                 class="btn-switch">

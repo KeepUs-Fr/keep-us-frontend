@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { CreateNoteModel, NoteModel } from '../models/note.model';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -16,6 +16,15 @@ export class NotesService {
 
     getNoteById(id: number): Observable<NoteModel> {
         return this.http.get<NoteModel>(environment.notesUrl + '/' + id);
+    }
+
+    filterNoteByColor(color: string): Observable<NoteModel[]> {
+        let queryParam = new HttpParams();
+        queryParam = queryParam.append('color', color);
+
+        return this.http.get<NoteModel[]>(environment.notesUrl + '/filter', {
+            params: queryParam
+        });
     }
 
     createNote(note: CreateNoteModel): Observable<NoteModel> {
