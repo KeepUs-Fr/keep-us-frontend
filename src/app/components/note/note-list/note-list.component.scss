@@ -4,32 +4,30 @@
         border: 2px solid transparent;
         min-width: 320px;
 
-        mat-card-subtitle, p {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
         &:hover {
             border: 2px solid #5f6368;
             cursor: pointer;
         }
     }
 
-    .mat-table {
+    mat-table{
         background-color: transparent;
         box-shadow: none;
-    }
 
-    .btn-switch {
-        background-color: #c2185b;
-    }
+        .fit-content {
+            flex: 0 0 50px;
+            white-space: nowrap;
+        }
 
-    mat-table{
         .mat-row:hover {
             background-color: rgba(233,30,99,.15);
             cursor: pointer;
         }
+    }
 
+    mat-cell, mat-card-subtitle, p {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 }

@@ -3,7 +3,7 @@
         <button mat-icon-button (click)="updateNote()">
             <mat-icon>arrow_back_ios</mat-icon>
         </button>
-        <app-note-color-palette (eventEmitter)="getColor($event)"></app-note-color-palette>
+        <app-note-color-palette (eventEmitter)="getColor($event)" [detailColor]="note.color"></app-note-color-palette>
         <button mat-icon-button (click)="removeNote()">
             <mat-icon class="delete-color">delete</mat-icon>
         </button>
@@ -15,6 +15,7 @@
                [(ngModel)]="title"
                style="font-size: 28px">
     </mat-form-field>
+    <mat-hint>{{note.createDate | date:'fullDate'}}</mat-hint>
     <br/>
     <mat-form-field appearance="standard">
         <textarea matInput

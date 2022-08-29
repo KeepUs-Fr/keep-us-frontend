@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
     selector: 'app-note-color-palette',
@@ -7,6 +7,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class NoteColorPaletteComponent implements OnInit {
     @Output() eventEmitter = new EventEmitter<string>();
+    @Input() detailColor: string = '';
+
     colors = new Map<string, string>();
     selectedColor = 'black';
 
@@ -24,6 +26,16 @@ export class NoteColorPaletteComponent implements OnInit {
             .set('purple', '#42275e')
             .set('pink', '#5b2245')
             .set('brown', '#442f19');
+
+        if(this.detailColor.trim() !== null
+            && this.detailColor.trim() !== '') {
+
+            let key = [...this.colors.entries()]
+                .filter(({ 1: n}) => n === this.detailColor)
+                .map(([k]) => k);
+
+            this.selectedColor = key[0];
+        }
     }
 
     getCurrentColor(color: string): void {

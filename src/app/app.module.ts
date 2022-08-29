@@ -13,6 +13,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NoteColorPaletteComponent } from './components/note/note-color-palette/note-color-palette.component';
 import { NoteFiltersComponent } from './components/note/note-filters/note-filters.component';
+import { LoginComponent } from './components/authentication/login/login.component';
+import { SignUpComponent } from './components/authentication/sign-up/sign-up.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +25,9 @@ import { NoteFiltersComponent } from './components/note/note-filters/note-filter
         NoteCreationComponent,
         NotFoundComponent,
         NoteColorPaletteComponent,
-        NoteFiltersComponent
+        NoteFiltersComponent,
+        LoginComponent,
+        SignUpComponent
     ],
     imports: [
         BrowserModule,

@@ -10,6 +10,15 @@ body {
         color: #eb4034 !important;
     }
 
+    .circle {
+        border-radius: 50%;
+        height: 28px;
+        width: 28px;
+        margin-right: 5px;
+        border: 1.5px solid #5f6368;
+        margin-bottom: 5px;
+    }
+
     .justify-between {
         display: flex;
         justify-content: space-between;

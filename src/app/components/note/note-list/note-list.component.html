@@ -1,6 +1,7 @@
 <div class="note-list">
     <div class="justify-between" style="margin-bottom: 24px">
         <button mat-icon-button
+                style="background-color: rgba(241,243,244,.24)"
                 (click)="openFilterDialog()">
             <mat-icon>search</mat-icon>
         </button>
@@ -10,7 +11,7 @@
 
         <button mat-icon-button
                 (click)="isTableMode = !isTableMode"
-                class="btn-switch">
+                style="background-color: #c2185b;">
             <mat-icon *ngIf="!isTableMode">list</mat-icon>
             <mat-icon *ngIf="isTableMode">splitscreen</mat-icon>
         </button>
@@ -50,6 +51,12 @@
     </div>
 
     <mat-table [dataSource]="notes" class="mat-elevation-z8" *ngIf="isTableMode">
+        <ng-container matColumnDef="color">
+            <mat-header-cell *matHeaderCellDef class="fit-content"></mat-header-cell>
+            <mat-cell *matCellDef="let element" class="fit-content">
+                <div class="circle" [ngStyle]="{'background-color': element.color}"></div>
+            </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="title">
             <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
