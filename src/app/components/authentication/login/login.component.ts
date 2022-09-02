@@ -35,14 +35,13 @@ export class LoginComponent implements OnInit {
         this.authService.login(this.loginForm.value).subscribe({
             next: (result: {token: string}) => {
                 localStorage.setItem('token', result.token);
+                this.authService.decodedToken = this.authService.decodeToken(result.token);
                 this.authService.emitChange(true);
                 this.router.navigate(['notes']).then();
-
             },
             error: (error) => {
                 console.error(error);
             }
         });
     }
-
 }

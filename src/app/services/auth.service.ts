@@ -3,6 +3,9 @@ import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {Observable, Subject} from "rxjs";
 import {environment} from "../../environments/environment";
+import {DecodedTokenModel} from "../models/decoded-token.model";
+import jwt_decode from 'jwt-decode';
+
 
 @Injectable({
     providedIn: 'root'
@@ -12,11 +15,16 @@ export class AuthService {
     private emitChangeSource = new Subject<boolean>();
     // Observable string streams
     changeEmitted = this.emitChangeSource.asObservable();
+    decodedToken: DecodedTokenModel | undefined;
 
     constructor(
         private router: Router,
         private http: HttpClient,
-    ) {}
+    ) {
+        if (this.isLogged()) {
+            this.decodedToken = this.decodeToken(this.getToken()!);
+        }
+    }
 
     getToken(): string | null {
         return localStorage.getItem('token');
@@ -52,5 +60,9 @@ export class AuthService {
     isLogged(): boolean {
         const currentToken = this.getToken();
         return !!currentToken;
+    }
+
+    decodeToken(token: string): DecodedTokenModel {
+        return jwt_decode(token);
     }
 }
