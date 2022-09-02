@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {Observable, Subject} from "rxjs";
-import {environment} from "../../environments/environment";
-import {DecodedTokenModel} from "../models/decoded-token.model";
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { DecodedTokenModel } from '../models/decoded-token.model';
 import jwt_decode from 'jwt-decode';
-
+import { AuthModel } from '../models/auth.model';
 
 @Injectable({
     providedIn: 'root'
@@ -17,10 +17,7 @@ export class AuthService {
     changeEmitted = this.emitChangeSource.asObservable();
     decodedToken: DecodedTokenModel | undefined;
 
-    constructor(
-        private router: Router,
-        private http: HttpClient,
-    ) {
+    constructor(private router: Router, private http: HttpClient) {
         if (this.isLogged()) {
             this.decodedToken = this.decodeToken(this.getToken()!);
         }
@@ -34,22 +31,19 @@ export class AuthService {
         this.emitChangeSource.next(change);
     }
 
-    //
-    // register(registerData: RegisterModel): Observable<RegisterModel> {
-    //     registerData.photo = environment.userDefaultUrl;
-    //     return this.http.post<RegisterModel>(
-    //         environment.baseUrl + 'auth/register',
-    //         registerData
-    //     );
-    // }
+    signup(registerData: AuthModel): Observable<void> {
+        return this.http.post<void>(
+            environment.authUrl + '/register',
+            registerData
+        );
+    }
 
-    login(credential: any): Observable<any> {
-        return this.http.post<any>(
+    login(credential: AuthModel): Observable<{ token: string }> {
+        return this.http.post<{ token: string }>(
             environment.authUrl + '/login',
             credential
         );
     }
-
 
     logout(): void {
         localStorage.removeItem('token');

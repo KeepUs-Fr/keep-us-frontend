@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../../services/auth.service";
-import {Router} from "@angular/router";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators
+} from '@angular/forms';
 
 @Component({
     selector: 'app-login',
@@ -14,9 +19,11 @@ export class LoginComponent implements OnInit {
     usernameCtrl: FormControl;
     passwordCtrl: FormControl;
 
-    constructor(private authService: AuthService,
-                private router: Router,
-                public formBuilder: FormBuilder) {
+    constructor(
+        private authService: AuthService,
+        private router: Router,
+        public formBuilder: FormBuilder
+    ) {
         this.usernameCtrl = formBuilder.control('', Validators.required);
         this.passwordCtrl = formBuilder.control('', Validators.required);
 
@@ -27,15 +34,16 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-       if (this.authService.isLogged())
-           this.router.navigate(['notes']).then();
+        if (this.authService.isLogged()) this.router.navigate(['notes']).then();
     }
 
     onSubmit(): void {
         this.authService.login(this.loginForm.value).subscribe({
-            next: (result: {token: string}) => {
+            next: (result) => {
                 localStorage.setItem('token', result.token);
-                this.authService.decodedToken = this.authService.decodeToken(result.token);
+                this.authService.decodedToken = this.authService.decodeToken(
+                    result.token
+                );
                 this.authService.emitChange(true);
                 this.router.navigate(['notes']).then();
             },

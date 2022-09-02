@@ -1,0 +1,18 @@
+<div class="profile">
+    <button mat-flat-button
+            color="accent"
+            style="float: right"
+            (click)="authService.logout()">
+        Logout
+    </button>
+
+    <div class="justify-center" *ngIf="authService.decodedToken">
+        <div>
+            <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar">
+            <h1>{{authService.decodedToken.sub}}</h1>
+        </div>
+    </div>
+
+</div>
+
+

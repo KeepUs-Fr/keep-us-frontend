@@ -5,14 +5,28 @@ import { NoteDetailComponent } from './components/note/note-detail/note-detail.c
 import { LoginComponent } from './components/authentication/login/login.component';
 import { SignUpComponent } from './components/authentication/sign-up/sign-up.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import {AuthGuardService} from "./services/auth-guard.service";
+import { AuthGuardService } from './services/auth-guard.service';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignUpComponent },
-    { path: 'notes', component: NoteListComponent, canActivate: [AuthGuardService] },
-    { path: 'note/:id', component: NoteDetailComponent, canActivate: [AuthGuardService] },
+    {
+        path: 'notes',
+        component: NoteListComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'note/:id',
+        component: NoteDetailComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [AuthGuardService]
+    },
     { path: '**', pathMatch: 'full', component: NotFoundComponent }
 ];
 

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-note-color-palette',
@@ -27,11 +27,12 @@ export class NoteColorPaletteComponent implements OnInit {
             .set('pink', '#5b2245')
             .set('brown', '#442f19');
 
-        if(this.detailColor.trim() !== null
-            && this.detailColor.trim() !== '') {
-
+        if (
+            this.detailColor.trim() !== null &&
+            this.detailColor.trim() !== ''
+        ) {
             let key = [...this.colors.entries()]
-                .filter(({ 1: n}) => n === this.detailColor)
+                .filter(({ 1: n }) => n === this.detailColor)
                 .map(([k]) => k);
 
             this.selectedColor = key[0];

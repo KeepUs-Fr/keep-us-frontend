@@ -11,8 +11,10 @@
 }
 
 .avatar {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
+    vertical-align: middle;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
 }
 .profile {
     margin-left: 12px;
