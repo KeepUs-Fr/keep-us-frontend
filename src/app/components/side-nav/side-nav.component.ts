@@ -18,8 +18,8 @@ export class SideNavComponent implements OnInit {
         );
     isLogged = false;
     groups: string[] = [];
-    selectedGroup = "";
-    selectedAvatar = "";
+    selectedGroup = '';
+    selectedAvatar = '';
 
     constructor(
         private breakpointObserver: BreakpointObserver,
@@ -34,7 +34,7 @@ export class SideNavComponent implements OnInit {
 
         this.getAvatar();
 
-        this.groups = ["Personal space", "Couple","#work"];
+        this.groups = ['Personal space', 'Couple', '#work'];
         this.selectedGroup = this.groups[0];
     }
 
@@ -43,12 +43,12 @@ export class SideNavComponent implements OnInit {
     }
 
     getAvatar(): void {
-       const avatar = localStorage.getItem('avatar');
-       if (!avatar) {
-           localStorage.setItem('avatar', "1");
-           this.selectedAvatar = "1";
-       } else {
-           this.selectedAvatar = avatar;
-       }
+        const avatar = localStorage.getItem('avatar');
+        if (!avatar) {
+            localStorage.setItem('avatar', '1');
+            this.selectedAvatar = '1';
+        } else {
+            this.selectedAvatar = avatar;
+        }
     }
 }

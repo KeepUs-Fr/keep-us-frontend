@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../services/auth.service";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-profile',
@@ -7,7 +7,7 @@ import {AuthService} from "../../services/auth.service";
     styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-    selectedAvatar = "";
+    selectedAvatar = '';
 
     constructor(public authService: AuthService) {}
 
