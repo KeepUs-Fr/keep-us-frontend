@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Observable} from 'rxjs';
-import {map, shareReplay} from 'rxjs/operators';
-import {AuthService} from '../../services/auth.service';
-import {SideNavService} from "../../services/side-nav.service";
+import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
+import { SideNavService } from '../../services/side-nav.service';
 
 @Component({
     selector: 'app-side-nav',
@@ -43,7 +43,7 @@ export class SideNavComponent implements OnInit {
 
         this.getAvatar();
 
-        this.groups = ['Personal space',];
+        this.groups = ['Personal space'];
         this.selectedGroup = this.groups[0];
     }
 
