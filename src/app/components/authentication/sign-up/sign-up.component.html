@@ -1,1 +1,37 @@
-<p>sign-up works!</p>
+<div class="signup">
+    <button mat-icon-button routerLink="/login">
+        <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+
+    <!-- form -->
+    <div class="justify-center">
+        <div>
+            <h1>Sign up</h1>
+            <!-- Sign up form -->
+            <form  [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="outline">
+                    <mat-label>Username</mat-label>
+                    <input matInput type="text" id="username" formControlName="username" required>
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+                <br/>
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <br/>
+                <button mat-flat-button color="primary" class="btn-create" type="submit">Create my account</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="justify-center">
+        <p class="terms">
+            By clicking “Create my account” above, you acknowledge that you have read and understood,
+            and agree to Keep Us's Terms of Use.
+        </p>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+.signup {
+    padding-top: 5%;
+
+    h1 {
+        text-align: center;
+    }
+
+    mat-form-field, .btn-create{
+        width: 100%;
+    }
+
+    .terms {
+        max-width: 500px;
+        color: #d1cdc5;
+        text-align: center;
+        margin-top: 64px;
+    }
+}

@@ -15,6 +15,8 @@ import { NoteColorPaletteComponent } from './components/note/note-color-palette/
 import { NoteFiltersComponent } from './components/note/note-filters/note-filters.component';
 import { LoginComponent } from './components/authentication/login/login.component';
 import { SignUpComponent } from './components/authentication/sign-up/sign-up.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
     declarations: [
@@ -27,13 +29,15 @@ import { SignUpComponent } from './components/authentication/sign-up/sign-up.com
         NoteColorPaletteComponent,
         NoteFiltersComponent,
         LoginComponent,
-        SignUpComponent
+        SignUpComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
         HttpClientModule,
+        ReactiveFormsModule,
         MaterialModule
     ],
     providers: [],
