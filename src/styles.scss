@@ -34,6 +34,11 @@ body {
         justify-content: start;
     }
 
+    .justify-end {
+        display: flex;
+        justify-content: flex-end;
+    }
+
     .spacer {
         flex: 1 1 auto !important;
     }

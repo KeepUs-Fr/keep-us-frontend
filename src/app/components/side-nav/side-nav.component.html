@@ -19,19 +19,21 @@
                         <span class="profile">{{authService.decodedToken.sub}}</span>
                 </a>
             </mat-nav-list>
+
             <mat-divider></mat-divider>
 
             <!-- Get user groups -->
             <mat-nav-list *ngFor="let group of groups">
                 <a mat-list-item
                    [ngClass]="{'active': selectedGroup === group}"
+                   routerLink="/notes"
                    (click)="groupAction(group)">
                     {{group}}
                 </a>
             </mat-nav-list>
 
             <!-- Add new group -->
-            <mat-nav-list class="bottom-btn">
+            <mat-nav-list class="bottom-btn" [disabled]="true">
                 <a mat-list-item style="background-color: #c2185b">
                     <mat-icon style="margin-right: 20px;">add</mat-icon>
                     New group
@@ -57,9 +59,11 @@
 
             <span class="spacer"></span>
 
+            <!-- Display user actions based on rights -->
             <button mat-icon-button
                     [matMenuTriggerFor]="menu"
-                    aria-label="Group menu">
+                    aria-label="Group menu"
+                    *ngIf="!['Profile', 'Personal space'].includes(selectedGroup)">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
