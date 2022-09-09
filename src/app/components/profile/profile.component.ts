@@ -26,17 +26,8 @@ export class ProfileComponent implements OnInit {
     }
 
     openAvatarDialog(): void {
-        const dialogRef = this.dialog.open(AvatarListComponent, {
+        this.dialog.open(AvatarListComponent, {
             maxWidth: '440px'
-        });
-
-        dialogRef.afterClosed().subscribe({
-            next: (_) => {
-                // this.getNotes();
-            },
-            error: (err) => {
-                console.error(err);
-            }
         });
     }
 }

@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
     styleUrls: ['./note-color-palette.component.scss']
 })
 export class NoteColorPaletteComponent implements OnInit {
-    @Output() eventEmitter = new EventEmitter<string>();
+    @Output() eventEmitter = new EventEmitter<{ key: string; value: string }>();
     @Input() detailColor: string = '';
 
     colors = new Map<string, string>();
@@ -36,11 +36,15 @@ export class NoteColorPaletteComponent implements OnInit {
                 .map(([k]) => k);
 
             this.selectedColor = key[0];
+            this.eventEmitter.emit({
+                key: this.selectedColor,
+                value: this.detailColor
+            });
         }
     }
 
     getCurrentColor(color: string): void {
         this.selectedColor = color;
-        this.eventEmitter.emit(color);
+        this.eventEmitter.emit({ key: color, value: this.colors.get(color)! });
     }
 }

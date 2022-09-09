@@ -18,6 +18,7 @@ import { SignUpComponent } from './components/authentication/sign-up/sign-up.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AvatarListComponent } from './components/profile/avatar-list/avatar-list.component';
+import { RemoveNoteComponent } from './components/note/note-detail/remove-note/remove-note.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { AvatarListComponent } from './components/profile/avatar-list/avatar-lis
         LoginComponent,
         SignUpComponent,
         ProfileComponent,
-        AvatarListComponent
+        AvatarListComponent,
+        RemoveNoteComponent
     ],
     imports: [
         BrowserModule,

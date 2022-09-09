@@ -38,7 +38,7 @@ export class NotesService {
         );
     }
 
-    removeNote(id: number): Observable<void> {
+    deleteNote(id: number): Observable<void> {
         return this.http.delete<void>(environment.notesUrl + '/' + id);
     }
 }

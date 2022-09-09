@@ -11,7 +11,7 @@ export class NoteFiltersComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    getColor(color: string) {
-        this.filteredColor = color;
+    getColor(color: { key: string; value: string }) {
+        this.filteredColor = color.key;
     }
 }
