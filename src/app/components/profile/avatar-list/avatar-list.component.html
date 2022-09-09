@@ -1,0 +1,16 @@
+<div mat-dialog-content class="avatar-list">
+    <div
+         fxLayout="row wrap"
+         fxLayoutGap="12px"
+         fxLayoutAlign="flex-start center">
+        <div *ngFor="let avatar of avatars"
+             fxFlex="0 1 calc(33.3% - 12px)"
+             fxFlex.lt-sm="0 1 calc(50% - 12px)"
+             style="height: 110px">
+            <img src="assets/images/avatars/avatar-{{avatar}}.png" alt="Avatar"
+                 class="avatar"
+                 [ngClass]="{ 'active-avatar': avatar === selectedAvatar }"
+                 (click)="selectAvatar(avatar)">
+        </div>
+    </div>
+</div>

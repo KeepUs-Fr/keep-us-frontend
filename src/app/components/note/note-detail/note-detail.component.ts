@@ -7,6 +7,8 @@ import {
     MatSnackBarHorizontalPosition,
     MatSnackBarVerticalPosition
 } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { RemoveNoteComponent } from './remove-note/remove-note.component';
 
 @Component({
     selector: 'app-note-detail',
@@ -18,7 +20,7 @@ export class NoteDetailComponent implements OnInit {
     note: NoteModel | undefined;
     title: string = '';
     description: string = '';
-    selectedColor: string = 'black';
+    selectedColor: { key: string; value: string } = { key: '', value: '' };
 
     horizontalPosition: MatSnackBarHorizontalPosition = 'center';
     verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -27,6 +29,7 @@ export class NoteDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private notesService: NotesService,
         private router: Router,
+        private dialog: MatDialog,
         private _snackBar: MatSnackBar
     ) {}
 
@@ -43,7 +46,6 @@ export class NoteDetailComponent implements OnInit {
                 this.note = note;
                 this.title = this.note.title;
                 this.description = this.note.description;
-                this.selectedColor = this.note.color;
             },
             error: (err) => {
                 console.error(err);
@@ -55,15 +57,17 @@ export class NoteDetailComponent implements OnInit {
         if (
             this.note?.title === this.title &&
             this.note.description === this.description &&
-            this.note.color === this.selectedColor
+            this.note.color === this.selectedColor.value
         ) {
             this.router.navigate(['notes']).then();
         } else {
+            console.log(this.selectedColor);
+
             const newNote: CreateNoteModel = {
                 title: this.title,
                 description: this.description,
                 tag: this.note?.tag!,
-                color: this.selectedColor
+                color: this.selectedColor.key
             };
 
             this.notesService.updateNote(this.currentId, newNote).subscribe({
@@ -78,17 +82,30 @@ export class NoteDetailComponent implements OnInit {
         }
     }
 
-    removeNote(): void {
-        this.notesService.removeNote(this.currentId).subscribe({
-            next: (_) => {
-                this.router.navigate(['notes']).then();
-                this.openSnackBar('Note removed successfully');
-            }
-        });
+    getColor(color: { key: string; value: string }): void {
+        this.selectedColor = color;
     }
 
-    getColor(color: string) {
-        this.selectedColor = color;
+    openRemoveDialog(): void {
+        const dialogRef = this.dialog.open(RemoveNoteComponent, {
+            maxWidth: '440px'
+        });
+
+        dialogRef.afterClosed().subscribe({
+            next: (isRemovable) => {
+                if (isRemovable) {
+                    this.notesService.deleteNote(this.currentId).subscribe({
+                        next: (_) => {
+                            this.router.navigate(['notes']).then();
+                            this.openSnackBar('Note removed successfully');
+                        }
+                    });
+                }
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
     }
 
     private openSnackBar(msg: string) {

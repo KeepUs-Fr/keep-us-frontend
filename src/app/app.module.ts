@@ -17,6 +17,8 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { SignUpComponent } from './components/authentication/sign-up/sign-up.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AvatarListComponent } from './components/profile/avatar-list/avatar-list.component';
+import { RemoveNoteComponent } from './components/note/note-detail/remove-note/remove-note.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +32,9 @@ import { ProfileComponent } from './components/profile/profile.component';
         NoteFiltersComponent,
         LoginComponent,
         SignUpComponent,
-        ProfileComponent
+        ProfileComponent,
+        AvatarListComponent,
+        RemoveNoteComponent
     ],
     imports: [
         BrowserModule,

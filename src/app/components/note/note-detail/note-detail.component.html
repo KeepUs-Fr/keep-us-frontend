@@ -4,10 +4,11 @@
             <mat-icon>arrow_back_ios</mat-icon>
         </button>
         <app-note-color-palette (eventEmitter)="getColor($event)" [detailColor]="note.color"></app-note-color-palette>
-        <button mat-icon-button (click)="removeNote()">
+        <button mat-icon-button (click)="openRemoveDialog()">
             <mat-icon class="delete-color">delete</mat-icon>
         </button>
     </div>
+    <hr [ngStyle]="{'background-color': selectedColor.value}"/>
     <mat-form-field appearance="standard">
         <input matInput
                placeholder="Title"

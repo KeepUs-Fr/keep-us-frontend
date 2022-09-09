@@ -58,7 +58,7 @@ export class NoteCreationComponent implements OnInit {
         }
     }
 
-    getColor(color: string) {
-        this.selectedColor = color;
+    getColor(color: { key: string; value: string }) {
+        this.selectedColor = color.key;
     }
 }

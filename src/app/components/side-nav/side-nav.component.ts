@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
+import { SideNavService } from '../../services/side-nav.service';
 
 @Component({
     selector: 'app-side-nav',
@@ -23,7 +24,8 @@ export class SideNavComponent implements OnInit {
 
     constructor(
         private breakpointObserver: BreakpointObserver,
-        public authService: AuthService
+        public authService: AuthService,
+        private sideNavService: SideNavService
     ) {}
 
     ngOnInit(): void {
@@ -32,9 +34,16 @@ export class SideNavComponent implements OnInit {
             this.isLogged = value;
         });
 
+        /*
+         * Subscribe to avatar observable to get selected avatar
+         */
+        this.sideNavService.avatarEmitted.subscribe((msg) => {
+            this.selectedAvatar = msg;
+        });
+
         this.getAvatar();
 
-        this.groups = ['Personal space', 'Couple', '#work'];
+        this.groups = ['Personal space'];
         this.selectedGroup = this.groups[0];
     }
 
