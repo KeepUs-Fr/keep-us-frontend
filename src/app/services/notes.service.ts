@@ -10,8 +10,10 @@ import { environment } from '../../environments/environment';
 export class NotesService {
     constructor(private http: HttpClient) {}
 
-    getNotes(): Observable<NoteModel[]> {
-        return this.http.get<NoteModel[]>(environment.notesUrl);
+    getNotes(id: number): Observable<NoteModel[]> {
+        return this.http.get<NoteModel[]>(
+            environment.notesUrl + '/group/' + id
+        );
     }
 
     getNoteById(id: number): Observable<NoteModel> {

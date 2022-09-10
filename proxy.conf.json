@@ -8,5 +8,10 @@
         "target": "http://localhost:9001",
         "secure": false,
         "logLevel": "debug"
+    },
+    "/api/users": {
+        "target": "http://localhost:9004",
+        "secure": false,
+        "logLevel": "debug"
     }
 }

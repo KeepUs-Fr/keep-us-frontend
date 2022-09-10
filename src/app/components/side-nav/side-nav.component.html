@@ -12,8 +12,8 @@
             <!-- User profile -->
             <mat-nav-list>
                 <a mat-list-item
-                   routerLink="/profile"
-                   (click)="groupAction('Profile')"
+                   routerLink="profile"
+                   (click)="groupAction('Profile', 0)"
                    [ngClass]="{'active': selectedGroup === 'Profile'}">
                         <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar">
                         <span class="profile">{{authService.decodedToken.sub}}</span>
@@ -25,15 +25,14 @@
             <!-- Get user groups -->
             <mat-nav-list *ngFor="let group of groups">
                 <a mat-list-item
-                   [ngClass]="{'active': selectedGroup === group}"
-                   routerLink="/notes"
-                   (click)="groupAction(group)">
-                    {{group}}
+                   [ngClass]="{'active': selectedGroup === group.name}"
+                   (click)="groupAction(group.name, group.id)">
+                    {{group.name}}
                 </a>
             </mat-nav-list>
 
             <!-- Add new group -->
-            <mat-nav-list class="bottom-btn" [disabled]="true">
+            <mat-nav-list class="bottom-btn" (click)="openCreationGroupDialog()">
                 <a mat-list-item style="background-color: #c2185b">
                     <mat-icon style="margin-right: 20px;">add</mat-icon>
                     New group
