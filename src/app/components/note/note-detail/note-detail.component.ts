@@ -9,7 +9,7 @@ import {
 } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveNoteComponent } from './remove-note/remove-note.component';
-import {UserService} from "../../../services/user.service";
+import { UserService } from '../../../services/user.service';
 
 @Component({
     selector: 'app-note-detail',
@@ -61,7 +61,7 @@ export class NoteDetailComponent implements OnInit {
             this.note.description === this.description &&
             this.note.color === this.selectedColor.value
         ) {
-            this.router.navigate(['notes']).then( _ => {
+            this.router.navigate(['notes']).then((_) => {
                 this.userService.emitGroupId(this.note?.groupId!);
             });
         } else {
@@ -73,7 +73,7 @@ export class NoteDetailComponent implements OnInit {
                 tag: this.note?.tag!,
                 color: this.selectedColor.key,
                 ownerId: this.note?.ownerId!,
-                groupId: this.note?.groupId!,
+                groupId: this.note?.groupId!
             };
 
             this.notesService.updateNote(this.currentId, newNote).subscribe({

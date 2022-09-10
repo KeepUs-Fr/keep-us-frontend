@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable, Subject} from "rxjs";
-import {environment} from "../../environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
     // Observable string sources
@@ -13,7 +13,6 @@ export class UserService {
     groupIdEmitted = this.emitGroupIdSource.asObservable();
 
     constructor(private http: HttpClient) {}
-
 
     emitGroupId(change: number) {
         this.emitGroupIdSource.next(change);
@@ -28,7 +27,7 @@ export class UserService {
             name: groupName,
             ownerId: localStorage.getItem('ownerId'),
             members: []
-        }
+        };
         return this.http.post<any>(environment.userUrl + '/group', group);
     }
 }

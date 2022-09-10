@@ -3,10 +3,10 @@ import { NotesService } from '../../../services/notes.service';
 import { NoteModel } from '../../../models/note.model';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteCreationComponent } from '../note-creation/note-creation.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NoteFiltersComponent } from '../note-filters/note-filters.component';
-import {UserService} from "../../../services/user.service";
+import { UserService } from '../../../services/user.service';
 
 @Component({
     selector: 'app-note-list',
@@ -36,7 +36,7 @@ export class NoteListComponent implements OnInit {
     ngOnInit(): void {
         this.breakPoints();
 
-        this.userService.groupIdEmitted.subscribe( (id) => {
+        this.userService.groupIdEmitted.subscribe((id) => {
             this.groupId = id;
             this.getNotes();
         });
@@ -97,9 +97,8 @@ export class NoteListComponent implements OnInit {
     }
 
     getNotes(): void {
-        const localId =localStorage.getItem('groupId');
-        if(localId && this.groupId === 0)
-            this.groupId = +localId;
+        const localId = localStorage.getItem('groupId');
+        if (localId && this.groupId === 0) this.groupId = +localId;
         this.notesService.getNotes(this.groupId).subscribe({
             next: (notes) => {
                 this.notes = notes;

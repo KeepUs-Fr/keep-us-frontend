@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { SideNavService } from '../../services/side-nav.service';
-import {UserService} from "../../services/user.service";
-import {Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
-import {AddGroupComponent} from "./add-group/add-group.component";
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddGroupComponent } from './add-group/add-group.component';
 
 @Component({
     selector: 'app-side-nav',
@@ -38,17 +38,7 @@ export class SideNavComponent implements OnInit {
     ngOnInit(): void {
         this.isLogged = this.authService.isLogged();
         if (this.isLogged) {
-            this.userService.getGroupByUsername('1').subscribe({
-                next: groups => {
-                    this.groups = groups;
-                    const currentGroup = this.groups.slice(0, 1).shift();
-                    this.selectedGroup = currentGroup.name;
-                    this.userService.emitGroupId(currentGroup.id);
-                    localStorage.setItem('groupId', currentGroup.id);
-                    localStorage.setItem('ownerId', '1');
-
-                }
-            });
+            this.getGroupByUsername();
 
             /*
              * Subscribe to avatar observable to get selected avatar
@@ -56,22 +46,14 @@ export class SideNavComponent implements OnInit {
             this.sideNavService.avatarEmitted.subscribe((msg) => {
                 this.selectedAvatar = msg;
             });
+
             this.getAvatar();
         }
 
         this.authService.changeEmitted.subscribe((value) => {
             this.isLogged = value;
             if (value) {
-                this.userService.getGroupByUsername('1').subscribe({
-                    next: groups => {
-                        this.groups = groups;
-                        const currentGroup = this.groups.slice(0, 1).shift();
-                        this.selectedGroup = currentGroup.name;
-                        this.userService.emitGroupId(currentGroup.id);
-                        localStorage.setItem('groupId', currentGroup.id);
-                        localStorage.setItem('ownerId', '1');
-                    }
-                });
+                this.getGroupByUsername();
             }
         });
     }
@@ -80,7 +62,7 @@ export class SideNavComponent implements OnInit {
         this.selectedGroup = groupName;
         if (id !== 0) {
             localStorage.setItem('groupId', id.toString());
-            this.router.navigate(['notes']).then( _ =>  {
+            this.router.navigate(['notes']).then((_) => {
                 this.userService.emitGroupId(id);
             });
         }
@@ -100,20 +82,24 @@ export class SideNavComponent implements OnInit {
         const dialogRef = this.dialog.open(AddGroupComponent);
 
         dialogRef.afterClosed().subscribe({
-            next: _ => {
-                this.userService.getGroupByUsername('1').subscribe({
-                    next: groups => {
-                        this.groups = groups;
-                        const currentGroup = this.groups.slice(0, 1).shift();
-                        this.selectedGroup = currentGroup.name;
-                        this.userService.emitGroupId(currentGroup.id);
-                        localStorage.setItem('groupId', currentGroup.id);
-                        localStorage.setItem('ownerId', '1');
-                    }
-                });
+            next: (_) => {
+                this.getGroupByUsername();
             },
             error: (err) => {
                 console.error(err);
+            }
+        });
+    }
+
+    private getGroupByUsername(): void {
+        this.userService.getGroupByUsername('1').subscribe({
+            next: (groups) => {
+                this.groups = groups;
+                const currentGroup = this.groups.slice(0, 1).shift();
+                this.selectedGroup = currentGroup.name;
+                this.userService.emitGroupId(currentGroup.id);
+                localStorage.setItem('groupId', currentGroup.id);
+                localStorage.setItem('ownerId', '1');
             }
         });
     }

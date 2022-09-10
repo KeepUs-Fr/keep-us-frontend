@@ -7,7 +7,6 @@ export const environment = {
     notesUrl: 'http://localhost:4200/api/notes',
     authUrl: 'http://localhost:4200/api/auth',
     userUrl: 'http://localhost:4200/api/users'
-
 };
 
 /*
