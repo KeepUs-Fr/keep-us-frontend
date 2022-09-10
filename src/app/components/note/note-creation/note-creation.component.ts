@@ -27,7 +27,9 @@ export class NoteCreationComponent implements OnInit {
             title: this.title,
             description: this.description,
             tag: this.tags[0],
-            color: this.selectedColor
+            color: this.selectedColor,
+            ownerId: +localStorage.getItem('ownerId')!,
+            groupId: +localStorage.getItem('groupId')!
         };
 
         this.noteService.createNote(newNote).subscribe({

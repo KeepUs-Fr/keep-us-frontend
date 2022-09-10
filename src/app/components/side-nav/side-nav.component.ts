@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { SideNavService } from '../../services/side-nav.service';
+import {UserService} from "../../services/user.service";
+import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {AddGroupComponent} from "./add-group/add-group.component";
 
 @Component({
     selector: 'app-side-nav',
@@ -18,37 +22,68 @@ export class SideNavComponent implements OnInit {
             shareReplay()
         );
     isLogged = false;
-    groups: string[] = [];
+    groups: any[] = [];
     selectedGroup = '';
     selectedAvatar = '';
 
     constructor(
         private breakpointObserver: BreakpointObserver,
         public authService: AuthService,
-        private sideNavService: SideNavService
+        private sideNavService: SideNavService,
+        private userService: UserService,
+        private router: Router,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
         this.isLogged = this.authService.isLogged();
+        if (this.isLogged) {
+            this.userService.getGroupByUsername('1').subscribe({
+                next: groups => {
+                    this.groups = groups;
+                    const currentGroup = this.groups.slice(0, 1).shift();
+                    this.selectedGroup = currentGroup.name;
+                    this.userService.emitGroupId(currentGroup.id);
+                    localStorage.setItem('groupId', currentGroup.id);
+                    localStorage.setItem('ownerId', '1');
+
+                }
+            });
+
+            /*
+             * Subscribe to avatar observable to get selected avatar
+             */
+            this.sideNavService.avatarEmitted.subscribe((msg) => {
+                this.selectedAvatar = msg;
+            });
+            this.getAvatar();
+        }
+
         this.authService.changeEmitted.subscribe((value) => {
             this.isLogged = value;
+            if (value) {
+                this.userService.getGroupByUsername('1').subscribe({
+                    next: groups => {
+                        this.groups = groups;
+                        const currentGroup = this.groups.slice(0, 1).shift();
+                        this.selectedGroup = currentGroup.name;
+                        this.userService.emitGroupId(currentGroup.id);
+                        localStorage.setItem('groupId', currentGroup.id);
+                        localStorage.setItem('ownerId', '1');
+                    }
+                });
+            }
         });
-
-        /*
-         * Subscribe to avatar observable to get selected avatar
-         */
-        this.sideNavService.avatarEmitted.subscribe((msg) => {
-            this.selectedAvatar = msg;
-        });
-
-        this.getAvatar();
-
-        this.groups = ['Personal space'];
-        this.selectedGroup = this.groups[0];
     }
 
-    groupAction(groupName: string): void {
+    groupAction(groupName: string, id: number): void {
         this.selectedGroup = groupName;
+        if (id !== 0) {
+            localStorage.setItem('groupId', id.toString());
+            this.router.navigate(['notes']).then( _ =>  {
+                this.userService.emitGroupId(id);
+            });
+        }
     }
 
     getAvatar(): void {
@@ -59,5 +94,27 @@ export class SideNavComponent implements OnInit {
         } else {
             this.selectedAvatar = avatar;
         }
+    }
+
+    openCreationGroupDialog(): void {
+        const dialogRef = this.dialog.open(AddGroupComponent);
+
+        dialogRef.afterClosed().subscribe({
+            next: _ => {
+                this.userService.getGroupByUsername('1').subscribe({
+                    next: groups => {
+                        this.groups = groups;
+                        const currentGroup = this.groups.slice(0, 1).shift();
+                        this.selectedGroup = currentGroup.name;
+                        this.userService.emitGroupId(currentGroup.id);
+                        localStorage.setItem('groupId', currentGroup.id);
+                        localStorage.setItem('ownerId', '1');
+                    }
+                });
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
     }
 }

@@ -4,8 +4,8 @@ export interface NoteModel {
     description: string;
     tag: string;
     color: string;
-    ownerId?: string;
-    groupId?: string;
+    ownerId: number;
+    groupId: number;
     createDate: Date;
 }
 
@@ -14,4 +14,6 @@ export interface CreateNoteModel {
     description: string;
     tag: string;
     color: string;
+    ownerId: number;
+    groupId: number;
 }

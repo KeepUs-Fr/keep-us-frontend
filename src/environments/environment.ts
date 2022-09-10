@@ -5,7 +5,9 @@
 export const environment = {
     production: false,
     notesUrl: 'http://localhost:4200/api/notes',
-    authUrl: 'http://localhost:4200/api/auth'
+    authUrl: 'http://localhost:4200/api/auth',
+    userUrl: 'http://localhost:4200/api/users'
+
 };
 
 /*

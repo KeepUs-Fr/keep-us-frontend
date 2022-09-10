@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private router: Router,
-        public formBuilder: FormBuilder
+        public formBuilder: FormBuilder,
     ) {
         this.usernameCtrl = formBuilder.control('', Validators.required);
         this.passwordCtrl = formBuilder.control('', Validators.required);
