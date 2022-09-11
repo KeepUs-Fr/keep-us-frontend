@@ -28,7 +28,7 @@ export class SideNavComponent implements OnInit {
     isLogged = false;
     groups: any[] = [];
     selectedGroup = '';
-    selectedAvatar = '';
+    selectedAvatar = '1';
 
     constructor(
         private breakpointObserver: BreakpointObserver,
@@ -44,6 +44,7 @@ export class SideNavComponent implements OnInit {
         this.isLogged = this.authService.isLogged();
         if (this.isLogged) {
             this.getGroupByUsername();
+            this.getAvatar();
 
             /*
              * Subscribe to avatar observable to get selected avatar
@@ -51,23 +52,26 @@ export class SideNavComponent implements OnInit {
             this.sideNavService.avatarEmitted.subscribe((msg) => {
                 this.selectedAvatar = msg;
             });
-
-            this.getAvatar();
         }
 
-        this.authService.changeEmitted.subscribe((value) => {
+        this.authService.changeEmitted.subscribe(value => {
             this.isLogged = value;
             if (value) {
-                this.getGroupByUsername();
+                return this.getGroupByUsername();
             }
         });
+
+        this.userService.groupIdEmitted.subscribe(value => {
+            if (value === 0)
+                return this.getGroupByUsername();
+        })
     }
 
     groupAction(groupName: string, id: number): void {
         this.selectedGroup = groupName;
         if (id !== 0) {
             localStorage.setItem('groupId', id.toString());
-            this.router.navigate(['notes']).then((_) => {
+            this.router.navigate(['notes']).then( _ => {
                 this.userService.emitGroupId(id);
             });
         }
@@ -75,19 +79,14 @@ export class SideNavComponent implements OnInit {
 
     getAvatar(): void {
         const avatar = localStorage.getItem('avatar');
-        if (!avatar) {
-            localStorage.setItem('avatar', '1');
-            this.selectedAvatar = '1';
-        } else {
-            this.selectedAvatar = avatar;
-        }
+        this.selectedAvatar = avatar ? avatar : '1';
     }
 
     openCreationGroupDialog(): void {
         const dialogRef = this.dialog.open(AddGroupComponent);
 
         dialogRef.afterClosed().subscribe({
-            next: (_) => {
+            next: _ => {
                 this.getGroupByUsername();
                 this.openSnackBar('Group successfully created');
             },
@@ -98,14 +97,13 @@ export class SideNavComponent implements OnInit {
     }
 
     private getGroupByUsername(): void {
-        this.userService.getGroupByUsername('1').subscribe({
+        this.userService.getGroupByOwnerId(+localStorage.getItem('ownerId')!).subscribe({
             next: (groups) => {
                 this.groups = groups;
                 const currentGroup = this.groups.slice(0, 1).shift();
                 this.selectedGroup = currentGroup.name;
                 this.userService.emitGroupId(currentGroup.id);
                 localStorage.setItem('groupId', currentGroup.id);
-                localStorage.setItem('ownerId', '1');
             }
         });
     }

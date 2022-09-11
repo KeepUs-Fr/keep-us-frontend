@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import {UserService} from "../../../services/user.service";
 
 @Component({
     selector: 'app-sign-up',
@@ -22,7 +23,8 @@ export class SignUpComponent {
     constructor(
         private authService: AuthService,
         private router: Router,
-        public formBuilder: FormBuilder
+        public formBuilder: FormBuilder,
+        private userService: UserService
     ) {
         this.usernameCtrl = formBuilder.control('', Validators.required);
         this.passwordCtrl = formBuilder.control('', Validators.required);
@@ -39,10 +41,15 @@ export class SignUpComponent {
                 this.authService.login(this.signupForm.value).subscribe({
                     next: (result) => {
                         localStorage.setItem('token', result.token);
-                        this.authService.decodedToken =
-                            this.authService.decodeToken(result.token);
-                        this.authService.emitChange(true);
-                        this.router.navigate(['notes']).then();
+                        this.authService.decodedToken = this.authService.decodeToken(result.token);
+
+                        this.userService.createUser( this.authService.decodedToken.sub).subscribe(
+                            user => {
+                                localStorage.setItem('ownerId', user.id.toString());
+                                this.authService.emitChange(true);
+                                this.router.navigate(['notes']).then();
+                            }
+                        )
                     },
                     error: (error) => {
                         console.error(error);

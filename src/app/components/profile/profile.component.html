@@ -31,7 +31,12 @@
             <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <button mat-icon-button><mat-icon>group</mat-icon></button>
-                <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+                <button mat-icon-button
+                        color="warn"
+                        *ngIf="element.ownerId === this.ownerId && this.element.name !== 'Personal space'"
+                        (click)="openRemoveDialog(element.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
             </mat-cell>
         </ng-container>
 

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RemoveNoteComponent } from './remove-note.component';
+import { RemoveModalComponent } from './remove-modal.component';
 
 describe('RemoveNoteComponent', () => {
-    let component: RemoveNoteComponent;
-    let fixture: ComponentFixture<RemoveNoteComponent>;
+    let component: RemoveModalComponent;
+    let fixture: ComponentFixture<RemoveModalComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [RemoveNoteComponent]
+            declarations: [RemoveModalComponent]
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(RemoveNoteComponent);
+        fixture = TestBed.createComponent(RemoveModalComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

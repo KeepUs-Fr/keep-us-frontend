@@ -18,7 +18,7 @@ import { SignUpComponent } from './components/authentication/sign-up/sign-up.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AvatarListComponent } from './components/profile/avatar-list/avatar-list.component';
-import { RemoveNoteComponent } from './components/note/note-detail/remove-note/remove-note.component';
+import { RemoveModalComponent } from './components/modals/remove-modal/remove-modal.component';
 import { AddGroupComponent } from './components/side-nav/add-group/add-group.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -36,7 +36,7 @@ import { FooterComponent } from './components/footer/footer.component';
         SignUpComponent,
         ProfileComponent,
         AvatarListComponent,
-        RemoveNoteComponent,
+        RemoveModalComponent,
         AddGroupComponent,
         FooterComponent
     ],

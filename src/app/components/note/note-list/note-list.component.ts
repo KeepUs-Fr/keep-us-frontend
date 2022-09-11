@@ -80,7 +80,7 @@ export class NoteListComponent implements OnInit {
                     this.getNotes();
                 } else {
                     this.notesService
-                        .filterNoteByColor(color)
+                        .filterNoteByColor(color, +localStorage.getItem('groupId')!)
                         .subscribe(
                             (filteredNotes) => (this.notes = filteredNotes)
                         );
@@ -99,6 +99,7 @@ export class NoteListComponent implements OnInit {
     getNotes(): void {
         const localId = localStorage.getItem('groupId');
         if (localId && this.groupId === 0) this.groupId = +localId;
+
         this.notesService.getNotes(this.groupId).subscribe({
             next: (notes) => {
                 this.notes = notes;
