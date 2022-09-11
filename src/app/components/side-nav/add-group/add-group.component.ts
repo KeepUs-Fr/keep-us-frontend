@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
+import {Component, OnInit} from '@angular/core';
+import {UserService} from '../../../services/user.service';
 
 @Component({
     selector: 'app-add-group',
@@ -14,6 +14,6 @@ export class AddGroupComponent implements OnInit {
     ngOnInit(): void {}
 
     submit() {
-        this.userService.createGroup(this.name).subscribe((_) => {});
+        this.userService.createGroup(this.name.trim()).subscribe((_) => {});
     }
 }

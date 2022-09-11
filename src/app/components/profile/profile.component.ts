@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AvatarListComponent } from './avatar-list/avatar-list.component';
 import { SideNavService } from '../../services/side-nav.service';
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'app-profile',
@@ -11,17 +12,26 @@ import { SideNavService } from '../../services/side-nav.service';
 })
 export class ProfileComponent implements OnInit {
     selectedAvatar = '';
+    groups: any[] = [];
+    displayedColumns = ['name', 'date', 'actions'];
 
     constructor(
         public authService: AuthService,
         private dialog: MatDialog,
-        private sideNavService: SideNavService
+        private sideNavService: SideNavService,
+        private userService: UserService
     ) {}
 
     ngOnInit(): void {
         this.selectedAvatar = localStorage.getItem('avatar')!;
         this.sideNavService.avatarEmitted.subscribe((msg) => {
             this.selectedAvatar = msg;
+        });
+
+        this.userService.getGroupByUsername(localStorage.getItem('ownerId')!).subscribe({
+            next: groups => {
+                this.groups = groups;
+            }
         });
     }
 

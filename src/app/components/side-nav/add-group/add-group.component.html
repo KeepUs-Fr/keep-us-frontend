@@ -1,7 +1,8 @@
 <div mat-dialog-content>
+    <h1 style="text-align: center">Create new group</h1>
     <mat-form-field appearance="outline">
         <mat-label>Group Name</mat-label>
-        <input matInput type="text" [(ngModel)]="name" required>
+        <input matInput type="text" [(ngModel)]="name" placeholder="best friends" required>
 <!--        <mat-icon matSuffix>person</mat-icon>-->
     </mat-form-field>
 </div>
@@ -9,7 +10,8 @@
     <button mat-flat-button
             mat-dialog-close=""
             color="primary"
-            (click)="submit()">
+            (click)="submit()"
+            [disabled]="name.trim() === ''">
         Create Group
     </button>
     <button mat-flat-button mat-dialog-close="">Cancel</button>

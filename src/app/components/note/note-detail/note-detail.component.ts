@@ -65,8 +65,6 @@ export class NoteDetailComponent implements OnInit {
                 this.userService.emitGroupId(this.note?.groupId!);
             });
         } else {
-            console.log(this.selectedColor);
-
             const newNote: CreateNoteModel = {
                 title: this.title,
                 description: this.description,

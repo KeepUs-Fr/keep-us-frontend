@@ -20,6 +20,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AvatarListComponent } from './components/profile/avatar-list/avatar-list.component';
 import { RemoveNoteComponent } from './components/note/note-detail/remove-note/remove-note.component';
 import { AddGroupComponent } from './components/side-nav/add-group/add-group.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { AddGroupComponent } from './components/side-nav/add-group/add-group.com
         ProfileComponent,
         AvatarListComponent,
         RemoveNoteComponent,
-        AddGroupComponent
+        AddGroupComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,

@@ -1,0 +1,27 @@
+.footer {
+    footer {
+        padding: 18px;
+        align-items: center;
+
+        p {
+            text-align: center;
+            margin: 0 !important;
+        }
+
+        mat-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        mat-icon, p {
+            font-size: 16px;
+            color: #F1F3F48C;
+        }
+    }
+
+    mat-divider {
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+}

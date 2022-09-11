@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddGroupComponent } from './add-group/add-group.component';
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-side-nav',
@@ -21,6 +22,9 @@ export class SideNavComponent implements OnInit {
             map((result) => result.matches),
             shareReplay()
         );
+    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+    verticalPosition: MatSnackBarVerticalPosition = 'top';
+
     isLogged = false;
     groups: any[] = [];
     selectedGroup = '';
@@ -32,7 +36,8 @@ export class SideNavComponent implements OnInit {
         private sideNavService: SideNavService,
         private userService: UserService,
         private router: Router,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private _snackBar: MatSnackBar
     ) {}
 
     ngOnInit(): void {
@@ -84,6 +89,7 @@ export class SideNavComponent implements OnInit {
         dialogRef.afterClosed().subscribe({
             next: (_) => {
                 this.getGroupByUsername();
+                this.openSnackBar('Group successfully created');
             },
             error: (err) => {
                 console.error(err);
@@ -101,6 +107,14 @@ export class SideNavComponent implements OnInit {
                 localStorage.setItem('groupId', currentGroup.id);
                 localStorage.setItem('ownerId', '1');
             }
+        });
+    }
+
+    private openSnackBar(msg: string) {
+        this._snackBar.open(msg, 'Close', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: 1500
         });
     }
 }

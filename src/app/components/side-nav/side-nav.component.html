@@ -5,12 +5,12 @@
                  [mode]="(isHandset$ | async) ? 'over' : 'side'"
                  [opened]="(isHandset$ | async) === false">
 
-        <mat-toolbar>Keep Us</mat-toolbar>
+        <mat-toolbar class="sticky-item">Keep Us</mat-toolbar>
 
         <ng-container *ngIf="isLogged && authService.decodedToken">
 
             <!-- User profile -->
-            <mat-nav-list>
+            <mat-nav-list style="top: 64px;" class="sticky-item">
                 <a mat-list-item
                    routerLink="profile"
                    (click)="groupAction('Profile', 0)"
@@ -20,16 +20,19 @@
                 </a>
             </mat-nav-list>
 
-            <mat-divider></mat-divider>
+            <mat-divider style="top: 120px;" class="sticky-item"></mat-divider>
 
             <!-- Get user groups -->
-            <mat-nav-list *ngFor="let group of groups">
-                <a mat-list-item
-                   [ngClass]="{'active': selectedGroup === group.name}"
-                   (click)="groupAction(group.name, group.id)">
-                    {{group.name}}
-                </a>
-            </mat-nav-list>
+            <div class="group-list">
+                <mat-nav-list *ngFor="let group of groups">
+                    <a mat-list-item
+                       [ngClass]="{'active': selectedGroup === group.name}"
+                       (click)="groupAction(group.name, group.id)">
+                        {{group.name}}
+                    </a>
+                </mat-nav-list>
+            </div>
+
 
             <!-- Add new group -->
             <mat-nav-list class="bottom-btn" (click)="openCreationGroupDialog()">
@@ -89,6 +92,7 @@
         <div class="app-content">
             <router-outlet></router-outlet>
         </div>
+        <app-footer></app-footer>
 
     </mat-sidenav-content>
 </mat-sidenav-container>
