@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import {CreateGroupModel, GroupModel} from "../models/group.model";
-import {UserModel} from "../models/user.model";
+import { CreateGroupModel, GroupModel } from '../models/group.model';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +36,9 @@ export class UserService {
     }
 
     getGroupByOwnerId(id: number): Observable<GroupModel[]> {
-        return this.http.get<GroupModel[]>(environment.userUrl + '/groups/' + id);
+        return this.http.get<GroupModel[]>(
+            environment.userUrl + '/groups/' + id
+        );
     }
 
     createGroup(groupName: string): Observable<GroupModel> {
@@ -45,7 +47,23 @@ export class UserService {
             ownerId: +localStorage.getItem('ownerId')!,
             members: []
         };
-        return this.http.post<GroupModel>(environment.userUrl + '/groups', group);
+
+        return this.http.post<GroupModel>(
+            environment.userUrl + '/groups',
+            group
+        );
+    }
+
+    addGroupMember(groupId: number, memberId: number): Observable<GroupModel> {
+        const newMember = {
+            groupId: groupId,
+            memberId: memberId
+        };
+
+        return this.http.post<GroupModel>(
+            environment.userUrl + '/groups/member',
+            newMember
+        );
     }
 
     deleteGroup(id: number): Observable<void> {

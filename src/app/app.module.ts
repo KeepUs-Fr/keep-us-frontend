@@ -19,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AvatarListComponent } from './components/profile/avatar-list/avatar-list.component';
 import { RemoveModalComponent } from './components/modals/remove-modal/remove-modal.component';
-import { AddGroupComponent } from './components/side-nav/add-group/add-group.component';
+import { AddModalComponent } from './components/modals/add-modal/add-modal.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
@@ -37,7 +37,7 @@ import { FooterComponent } from './components/footer/footer.component';
         ProfileComponent,
         AvatarListComponent,
         RemoveModalComponent,
-        AddGroupComponent,
+        AddModalComponent,
         FooterComponent
     ],
     imports: [

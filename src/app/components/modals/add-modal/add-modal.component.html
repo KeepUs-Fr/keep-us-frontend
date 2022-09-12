@@ -1,0 +1,32 @@
+<div mat-dialog-content>
+    <div *ngIf="data.isCreation; else add_user">
+        <h1 style="text-align: center">Create new group</h1>
+        <mat-form-field appearance="outline">
+            <mat-label>Group Name</mat-label>
+            <input matInput type="text" [(ngModel)]="name" placeholder="best friends" required>
+        </mat-form-field>
+    </div>
+    <ng-template #add_user>
+        <h1 style="text-align: center">Add user to the group</h1>
+        <div class="search">
+            <mat-form-field appearance="outline">
+                <mat-icon matSuffix>search</mat-icon>
+                <mat-label>Username</mat-label>
+                <input matInput type="text" [(ngModel)]="name" placeholder="Thomas" required>
+            </mat-form-field>
+        </div>
+
+    </ng-template>
+</div>
+
+<div mat-dialog-actions class="justify-between">
+    <button mat-flat-button
+            [mat-dialog-close]="name"
+            color="primary"
+            (click)="submit()"
+            [disabled]="name.trim() === ''">
+        <span *ngIf="data.isCreation">Create Group</span>
+        <span *ngIf="!data.isCreation">Add user</span>
+    </button>
+    <button mat-flat-button [mat-dialog-close]="false">Cancel</button>
+</div>

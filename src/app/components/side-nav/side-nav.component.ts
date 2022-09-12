@@ -7,8 +7,12 @@ import { SideNavService } from '../../services/side-nav.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { AddGroupComponent } from './add-group/add-group.component';
-import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
+import { AddModalComponent } from '../modals/add-modal/add-modal.component';
+import {
+    MatSnackBar,
+    MatSnackBarHorizontalPosition,
+    MatSnackBarVerticalPosition
+} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-side-nav',
@@ -54,24 +58,23 @@ export class SideNavComponent implements OnInit {
             });
         }
 
-        this.authService.changeEmitted.subscribe(value => {
+        this.authService.changeEmitted.subscribe((value) => {
             this.isLogged = value;
             if (value) {
                 return this.getGroupByUsername();
             }
         });
 
-        this.userService.groupIdEmitted.subscribe(value => {
-            if (value === 0)
-                return this.getGroupByUsername();
-        })
+        this.userService.groupIdEmitted.subscribe((value) => {
+            if (value === 0) return this.getGroupByUsername();
+        });
     }
 
     groupAction(groupName: string, id: number): void {
         this.selectedGroup = groupName;
         if (id !== 0) {
             localStorage.setItem('groupId', id.toString());
-            this.router.navigate(['notes']).then( _ => {
+            this.router.navigate(['notes']).then((_) => {
                 this.userService.emitGroupId(id);
             });
         }
@@ -82,13 +85,42 @@ export class SideNavComponent implements OnInit {
         this.selectedAvatar = avatar ? avatar : '1';
     }
 
-    openCreationGroupDialog(): void {
-        const dialogRef = this.dialog.open(AddGroupComponent);
+    openAddModal(isCreation: boolean): void {
+        const dialogRef = this.dialog.open(AddModalComponent, {
+            data: { isCreation: isCreation }
+        });
 
         dialogRef.afterClosed().subscribe({
-            next: _ => {
-                this.getGroupByUsername();
-                this.openSnackBar('Group successfully created');
+            next: (username) => {
+                if (isCreation) {
+                    if (username !== false) {
+                        this.getGroupByUsername();
+                        this.openSnackBar('Group successfully created');
+                    }
+                } else {
+                    if (username !== false) {
+                        this.userService.getUserByUsername(username).subscribe({
+                            next: (user) => {
+                                console.log(user);
+                                this.userService
+                                    .addGroupMember(
+                                        +localStorage.getItem('groupId')!,
+                                        user.id
+                                    )
+                                    .subscribe((_) =>
+                                        this.openSnackBar(
+                                            'User ' +
+                                                user.username +
+                                                ' has been added'
+                                        )
+                                    );
+                            },
+                            error: (err) => {
+                                this.openSnackBar(err.error.message);
+                            }
+                        });
+                    }
+                }
             },
             error: (err) => {
                 console.error(err);
@@ -97,15 +129,17 @@ export class SideNavComponent implements OnInit {
     }
 
     private getGroupByUsername(): void {
-        this.userService.getGroupByOwnerId(+localStorage.getItem('ownerId')!).subscribe({
-            next: (groups) => {
-                this.groups = groups;
-                const currentGroup = this.groups.slice(0, 1).shift();
-                this.selectedGroup = currentGroup.name;
-                this.userService.emitGroupId(currentGroup.id);
-                localStorage.setItem('groupId', currentGroup.id);
-            }
-        });
+        this.userService
+            .getGroupByOwnerId(+localStorage.getItem('ownerId')!)
+            .subscribe({
+                next: (groups) => {
+                    this.groups = groups;
+                    const currentGroup = this.groups.slice(0, 1).shift();
+                    this.selectedGroup = currentGroup.name;
+                    this.userService.emitGroupId(currentGroup.id);
+                    localStorage.setItem('groupId', currentGroup.id);
+                }
+            });
     }
 
     private openSnackBar(msg: string) {

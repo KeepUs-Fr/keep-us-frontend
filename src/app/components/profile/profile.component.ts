@@ -3,10 +3,14 @@ import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AvatarListComponent } from './avatar-list/avatar-list.component';
 import { SideNavService } from '../../services/side-nav.service';
-import {UserService} from "../../services/user.service";
-import {RemoveModalComponent} from "../modals/remove-modal/remove-modal.component";
-import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
-import {NotesService} from "../../services/notes.service";
+import { UserService } from '../../services/user.service';
+import { RemoveModalComponent } from '../modals/remove-modal/remove-modal.component';
+import {
+    MatSnackBar,
+    MatSnackBarHorizontalPosition,
+    MatSnackBarVerticalPosition
+} from '@angular/material/snack-bar';
+import { NotesService } from '../../services/notes.service';
 
 @Component({
     selector: 'app-profile',
@@ -58,9 +62,11 @@ export class ProfileComponent implements OnInit {
         dialogRef.afterClosed().subscribe({
             next: (isRemovable) => {
                 if (isRemovable) {
-                    this.notesService.deleteAllNote(groupId).subscribe(_ => {});
+                    this.notesService
+                        .deleteAllNote(groupId)
+                        .subscribe((_) => {});
                     this.userService.deleteGroup(groupId).subscribe({
-                        next: _ => {
+                        next: (_) => {
                             this.userService.emitGroupId(0);
                             this.getGroups();
                             this.openSnackBar('Group have been deleted');
@@ -75,11 +81,13 @@ export class ProfileComponent implements OnInit {
     }
 
     private getGroups(): void {
-        this.userService.getGroupByOwnerId(+localStorage.getItem('ownerId')!).subscribe({
-            next: groups => {
-                this.groups = groups;
-            }
-        });
+        this.userService
+            .getGroupByOwnerId(+localStorage.getItem('ownerId')!)
+            .subscribe({
+                next: (groups) => {
+                    this.groups = groups;
+                }
+            });
     }
 
     private openSnackBar(msg: string) {
