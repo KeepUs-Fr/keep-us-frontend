@@ -46,6 +46,8 @@ export class NotesService {
     }
 
     deleteAllNote(groupId: number): Observable<void> {
-        return this.http.delete<void>(environment.notesUrl + '/group/' + groupId);
+        return this.http.delete<void>(
+            environment.notesUrl + '/group/' + groupId
+        );
     }
 }

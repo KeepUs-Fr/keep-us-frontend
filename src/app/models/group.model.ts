@@ -1,12 +1,12 @@
 export interface GroupModel {
-    id: string
+    id: string;
     name: string;
     ownerId: number;
-    members: number[]
+    members: number[];
 }
 
 export interface CreateGroupModel {
     name: string;
     ownerId: number;
-    members: number[]
+    members: number[];
 }

@@ -80,7 +80,10 @@ export class NoteListComponent implements OnInit {
                     this.getNotes();
                 } else {
                     this.notesService
-                        .filterNoteByColor(color, +localStorage.getItem('groupId')!)
+                        .filterNoteByColor(
+                            color,
+                            +localStorage.getItem('groupId')!
+                        )
                         .subscribe(
                             (filteredNotes) => (this.notes = filteredNotes)
                         );

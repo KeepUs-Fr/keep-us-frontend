@@ -60,7 +60,7 @@ export class UserService {
             memberId: memberId
         };
 
-        return this.http.post<GroupModel>(
+        return this.http.patch<GroupModel>(
             environment.userUrl + '/groups/member',
             newMember
         );

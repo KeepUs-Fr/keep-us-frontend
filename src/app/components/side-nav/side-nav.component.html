@@ -61,7 +61,9 @@
 
             <span class="spacer"></span>
 
-            <button mat-icon-button (click)="openAddModal(false)">
+            <button mat-icon-button
+                    *ngIf="!['Profile', 'Personal space'].includes(selectedGroup)"
+                    (click)="openAddModal(false)">
                 <mat-icon>group_add</mat-icon>
             </button>
 
