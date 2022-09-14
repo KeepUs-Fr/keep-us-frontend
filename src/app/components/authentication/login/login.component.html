@@ -18,10 +18,17 @@
                 </button>
             </mat-form-field>
             <br/>
-            <button mat-flat-button color="primary" type="submit">Log in</button>
+            <button mat-flat-button color="primary" class="justify-center" type="submit">
+                <span *ngIf="!isLoading">Log in</span>
+                <mat-spinner diameter="36" color="accent" *ngIf="isLoading"></mat-spinner>
+            </button>
 
         </form>
         <div class="or">or</div>
-        <button mat-flat-button color="accent" routerLink="/signup">Sign up</button>
+        <button mat-flat-button
+                color="accent"
+                routerLink="/signup">
+            Sign up
+        </button>
     </div>
 </div>

@@ -4,9 +4,10 @@ import { NoteModel } from '../../../models/note.model';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteCreationComponent } from '../note-creation/note-creation.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NoteFiltersComponent } from '../note-filters/note-filters.component';
 import { UserService } from '../../../services/user.service';
+import {CalendarOptions} from "@fullcalendar/angular";
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'app-note-list',
@@ -18,19 +19,24 @@ export class NoteListComponent implements OnInit {
      * Number of notes on grid line
      */
     valueCols: number = 1;
-
+    isLoading = false;
     notes: NoteModel[] = [];
 
     displayedColumns = ['color', 'title', 'description'];
-    isTableMode = false;
+    mode = 0;
     groupId = 0;
+
+    calendarOptions: CalendarOptions = {
+        initialView: 'dayGridMonth'
+    };
 
     constructor(
         private notesService: NotesService,
         private dialog: MatDialog,
         private router: Router,
         private route: ActivatedRoute,
-        private userService: UserService
+        private userService: UserService,
+        private datePipe: DatePipe
     ) {}
 
     ngOnInit(): void {
@@ -100,20 +106,45 @@ export class NoteListComponent implements OnInit {
     }
 
     getNotes(): void {
+        this.isLoading = true;
         const localId = localStorage.getItem('groupId');
         if (localId && this.groupId === 0) this.groupId = +localId;
 
         this.notesService.getNotes(this.groupId).subscribe({
             next: (notes) => {
                 this.notes = notes;
+                this.calendarOptions.events = [];
+
+                for(let note of this.notes) {
+                    const date = this.datePipe.transform(note.createDate,"yyyy-MM-dd")!;
+
+                    this.calendarOptions.events.push({
+                        title: note.title,
+                        date,
+                        color: note.color,
+                        borderColor: note.color
+                    });
+                }
+                this.isLoading = false;
             },
             error: (err) => {
+                this.isLoading = false;
                 console.error(err);
             }
         });
     }
 
-    drop(event: CdkDragDrop<string[]>) {
-        moveItemInArray(this.notes, event.previousIndex, event.currentIndex);
+    nextMode(): void {
+        switch (this.mode) {
+            case 0:
+                this.mode = 1;
+                break;
+            case 1:
+                this.mode = 2;
+                break;
+            case 2:
+                this.mode = 0;
+                break;
+        }
     }
 }

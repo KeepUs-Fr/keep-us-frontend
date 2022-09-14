@@ -18,15 +18,19 @@
         </button>
 
         <button mat-icon-button
-                (click)="isTableMode = !isTableMode"
+                [disabled]="notes.length <= 0"
+                (click)="nextMode()"
                 style="background-color: #c2185b;">
-            <mat-icon *ngIf="!isTableMode">list</mat-icon>
-            <mat-icon *ngIf="isTableMode">splitscreen</mat-icon>
+            <mat-icon *ngIf="mode === 2">list</mat-icon>
+            <mat-icon *ngIf="mode === 0">splitscreen</mat-icon>
+            <mat-icon *ngIf="mode === 1">calendar_month</mat-icon>
         </button>
     </div>
 
+    <full-calendar [options]="calendarOptions" style="max-height: 600px" *ngIf="mode === 2"></full-calendar>
+
     <!-- Display note list-->
-    <div *ngIf="notes.length > 0 && !isTableMode">
+    <div *ngIf="notes.length > 0 && mode === 0">
         <div fxLayout="row wrap"
              fxLayout.lt-sm="column"
              fxLayoutGap="24px"
@@ -49,7 +53,7 @@
         </div>
     </div>
 
-    <mat-table [dataSource]="notes" class="mat-elevation-z8" *ngIf="isTableMode">
+    <mat-table [dataSource]="notes" class="mat-elevation-z8" *ngIf="mode === 1">
         <ng-container matColumnDef="color">
             <mat-header-cell *matHeaderCellDef class="fit-content"></mat-header-cell>
             <mat-cell *matCellDef="let element" class="fit-content">
@@ -80,6 +84,10 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToNoteDetail(row.id)"></mat-row>
     </mat-table>
+
+    <div class="justify-center" style="padding-top: 20%" *ngIf="isLoading">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
 </div>
 
 

@@ -21,6 +21,15 @@ import { AvatarListComponent } from './components/profile/avatar-list/avatar-lis
 import { RemoveModalComponent } from './components/modals/remove-modal/remove-modal.component';
 import { AddModalComponent } from './components/modals/add-modal/add-modal.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import interactionPlugin from '@fullcalendar/interaction';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import {DatePipe} from "@angular/common";
+
+FullCalendarModule.registerPlugins([
+    dayGridPlugin,
+    interactionPlugin
+]);
 
 @NgModule({
     declarations: [
@@ -46,9 +55,10 @@ import { FooterComponent } from './components/footer/footer.component';
         AppRoutingModule,
         HttpClientModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        FullCalendarModule
     ],
-    providers: [],
+    providers: [DatePipe],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
