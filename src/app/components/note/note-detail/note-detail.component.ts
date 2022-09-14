@@ -8,7 +8,7 @@ import {
     MatSnackBarVerticalPosition
 } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { RemoveNoteComponent } from './remove-note/remove-note.component';
+import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -65,8 +65,6 @@ export class NoteDetailComponent implements OnInit {
                 this.userService.emitGroupId(this.note?.groupId!);
             });
         } else {
-            console.log(this.selectedColor);
-
             const newNote: CreateNoteModel = {
                 title: this.title,
                 description: this.description,
@@ -93,7 +91,7 @@ export class NoteDetailComponent implements OnInit {
     }
 
     openRemoveDialog(): void {
-        const dialogRef = this.dialog.open(RemoveNoteComponent, {
+        const dialogRef = this.dialog.open(RemoveModalComponent, {
             maxWidth: '440px'
         });
 

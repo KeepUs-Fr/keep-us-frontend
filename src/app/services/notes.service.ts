@@ -20,9 +20,10 @@ export class NotesService {
         return this.http.get<NoteModel>(environment.notesUrl + '/' + id);
     }
 
-    filterNoteByColor(color: string): Observable<NoteModel[]> {
+    filterNoteByColor(color: string, groupId: number): Observable<NoteModel[]> {
         let queryParam = new HttpParams();
         queryParam = queryParam.append('color', color);
+        queryParam = queryParam.append('groupId', groupId);
 
         return this.http.get<NoteModel[]>(environment.notesUrl + '/filter', {
             params: queryParam
@@ -42,5 +43,11 @@ export class NotesService {
 
     deleteNote(id: number): Observable<void> {
         return this.http.delete<void>(environment.notesUrl + '/' + id);
+    }
+
+    deleteAllNote(groupId: number): Observable<void> {
+        return this.http.delete<void>(
+            environment.notesUrl + '/group/' + groupId
+        );
     }
 }

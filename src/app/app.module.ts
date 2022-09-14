@@ -18,8 +18,18 @@ import { SignUpComponent } from './components/authentication/sign-up/sign-up.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AvatarListComponent } from './components/profile/avatar-list/avatar-list.component';
-import { RemoveNoteComponent } from './components/note/note-detail/remove-note/remove-note.component';
-import { AddGroupComponent } from './components/side-nav/add-group/add-group.component';
+import { RemoveModalComponent } from './components/modals/remove-modal/remove-modal.component';
+import { AddModalComponent } from './components/modals/add-modal/add-modal.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import interactionPlugin from '@fullcalendar/interaction';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import {DatePipe} from "@angular/common";
+
+FullCalendarModule.registerPlugins([
+    dayGridPlugin,
+    interactionPlugin
+]);
 
 @NgModule({
     declarations: [
@@ -35,8 +45,9 @@ import { AddGroupComponent } from './components/side-nav/add-group/add-group.com
         SignUpComponent,
         ProfileComponent,
         AvatarListComponent,
-        RemoveNoteComponent,
-        AddGroupComponent
+        RemoveModalComponent,
+        AddModalComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,
@@ -44,9 +55,10 @@ import { AddGroupComponent } from './components/side-nav/add-group/add-group.com
         AppRoutingModule,
         HttpClientModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        FullCalendarModule
     ],
-    providers: [],
+    providers: [DatePipe],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

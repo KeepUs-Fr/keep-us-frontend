@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { CreateGroupModel, GroupModel } from '../models/group.model';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -18,16 +20,53 @@ export class UserService {
         this.emitGroupIdSource.next(change);
     }
 
-    getGroupByUsername(id: string): Observable<any[]> {
-        return this.http.get<any[]>(environment.userUrl + '/groups/' + id);
+    getUserByUsername(username: string): Observable<UserModel> {
+        let queryParam = new HttpParams();
+        queryParam = queryParam.append('username', username);
+
+        return this.http.get<UserModel>(environment.userUrl, {
+            params: queryParam
+        });
     }
 
-    createGroup(groupName: string): Observable<any> {
-        const group = {
+    createUser(username: string): Observable<UserModel> {
+        const newUser = { username: username };
+
+        return this.http.post<UserModel>(environment.userUrl, newUser);
+    }
+
+    getGroupByOwnerId(id: number): Observable<GroupModel[]> {
+        return this.http.get<GroupModel[]>(
+            environment.userUrl + '/groups/' + id
+        );
+    }
+
+    createGroup(groupName: string): Observable<GroupModel> {
+        const group: CreateGroupModel = {
             name: groupName,
-            ownerId: localStorage.getItem('ownerId'),
+            ownerId: +localStorage.getItem('ownerId')!,
             members: []
         };
-        return this.http.post<any>(environment.userUrl + '/group', group);
+
+        return this.http.post<GroupModel>(
+            environment.userUrl + '/groups',
+            group
+        );
+    }
+
+    addGroupMember(groupId: number, memberId: number): Observable<GroupModel> {
+        const newMember = {
+            groupId: groupId,
+            memberId: memberId
+        };
+
+        return this.http.patch<GroupModel>(
+            environment.userUrl + '/groups/member',
+            newMember
+        );
+    }
+
+    deleteGroup(id: number): Observable<void> {
+        return this.http.delete<void>(environment.userUrl + '/groups/' + id);
     }
 }
