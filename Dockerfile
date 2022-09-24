@@ -7,6 +7,6 @@ RUN npm install
 RUN npm install -g @angular/cli@7.3.10
 
 COPY . /app
-EXPOSE 4200
+EXPOSE 80
 
-CMD ng serve --host 0.0.0.0
+CMD ng serve --host 0.0.0.0 --proxy-config proxy.conf.prod.json --port 80
