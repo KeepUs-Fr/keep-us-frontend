@@ -13,6 +13,7 @@ import {
     MatSnackBarHorizontalPosition,
     MatSnackBarVerticalPosition
 } from '@angular/material/snack-bar';
+import {SnackBarService} from "../../services/snack-bar.service";
 
 @Component({
     selector: 'app-side-nav',
@@ -26,8 +27,6 @@ export class SideNavComponent implements OnInit {
             map((result) => result.matches),
             shareReplay()
         );
-    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-    verticalPosition: MatSnackBarVerticalPosition = 'top';
 
     isLogged = false;
     groups: any[] = [];
@@ -41,7 +40,7 @@ export class SideNavComponent implements OnInit {
         private userService: UserService,
         private router: Router,
         private dialog: MatDialog,
-        private _snackBar: MatSnackBar
+        private snackBarService: SnackBarService
     ) {}
 
     ngOnInit(): void {
@@ -70,11 +69,11 @@ export class SideNavComponent implements OnInit {
         });
     }
 
-    groupAction(groupName: string, id: number): void {
+    groupAction(groupName: string, id: number) {
         this.selectedGroup = groupName;
         if (id !== 0) {
             localStorage.setItem('groupId', id.toString());
-            this.router.navigate(['notes']).then((_) => {
+            this.router.navigate(['notes']).then(_ => {
                 this.userService.emitGroupId(id);
             });
         }
@@ -95,28 +94,21 @@ export class SideNavComponent implements OnInit {
                 if (isCreation) {
                     if (username !== false) {
                         this.getGroupByUsername();
-                        this.openSnackBar('Group successfully created');
+                        this.snackBarService.openSuccess('Group successfully created');
                     }
                 } else {
                     if (username !== false) {
                         this.userService.getUserByUsername(username).subscribe({
                             next: (user) => {
                                 console.log(user);
-                                this.userService
-                                    .addGroupMember(
-                                        +localStorage.getItem('groupId')!,
-                                        user.id
-                                    )
-                                    .subscribe((_) =>
-                                        this.openSnackBar(
-                                            'User ' +
-                                                user.username +
-                                                ' has been added'
-                                        )
+                                this.userService.addGroupMember(
+                                    +localStorage.getItem('groupId')!, user.id)
+                                    .subscribe(_ => this.snackBarService.openSuccess(
+                                        'User ' + user.username + ' has been added')
                                     );
                             },
                             error: (err) => {
-                                this.openSnackBar(err.error.message);
+                                this.snackBarService.openError(err.error.message);
                             }
                         });
                     }
@@ -140,13 +132,5 @@ export class SideNavComponent implements OnInit {
                     localStorage.setItem('groupId', currentGroup.id);
                 }
             });
-    }
-
-    private openSnackBar(msg: string) {
-        this._snackBar.open(msg, 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: 1500
-        });
     }
 }

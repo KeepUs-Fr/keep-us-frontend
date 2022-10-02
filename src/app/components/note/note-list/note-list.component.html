@@ -27,7 +27,7 @@
     </div>
 
     <!-- Display note list and detail -->
-    <div *ngIf="notes.length > 0 && !isTable" fxLayout.md="row" fxLayoutAlign.md="start none">
+    <div *ngIf="notes.length > 0 && !isTable" fxLayout.md="row" fxLayoutAlign.md="start">
         <div fxLayout="column"
              fxLayoutGap="24px"
              fxLayoutAlign="flex-start"
@@ -49,6 +49,7 @@
                 </mat-card>
             </ng-container>
         </div>
+
         <div style="margin-left: 34px;width: 100%">
             <app-note-detail [noteId]="noteId"></app-note-detail>
         </div>

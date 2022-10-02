@@ -24,7 +24,7 @@ export class UserService {
         let queryParam = new HttpParams();
         queryParam = queryParam.append('username', username);
 
-        return this.http.get<UserModel>(environment.baseUrl, {
+        return this.http.get<UserModel>(environment.baseUrl + '/users', {
             params: queryParam
         });
     }
@@ -32,7 +32,7 @@ export class UserService {
     createUser(username: string): Observable<UserModel> {
         const newUser = { username: username };
 
-        return this.http.post<UserModel>(environment.baseUrl, newUser);
+        return this.http.post<UserModel>(environment.baseUrl + '/users', newUser);
     }
 
     getGroupByOwnerId(id: number): Observable<GroupModel[]> {

@@ -10,7 +10,7 @@ import { NoteListComponent } from './components/note/note-list/note-list.compone
 import { NoteDetailComponent } from './components/note/note-detail/note-detail.component';
 import { NoteCreationComponent } from './components/note/note-creation/note-creation.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { NoteColorPaletteComponent } from './components/note/note-color-palette/note-color-palette.component';
 import { NoteFiltersComponent } from './components/note/note-filters/note-filters.component';
 import { LoginComponent } from './components/authentication/login/login.component';
@@ -27,6 +27,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { DatePipe } from "@angular/common";
 import { CalendarComponent } from './components/calendar/calendar.component';
 import {ExtendedModule} from "@angular/flex-layout";
+import {AuthService} from "./services/auth.service";
+import {TokenInterceptor} from "./token.interceptor";
+import {SnackBarService} from "./services/snack-bar.service";
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -62,7 +65,12 @@ FullCalendarModule.registerPlugins([
         FullCalendarModule,
         ExtendedModule
     ],
-    providers: [DatePipe],
+    providers: [
+        DatePipe,
+        SnackBarService,
+        AuthService,
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

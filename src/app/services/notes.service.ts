@@ -12,12 +12,12 @@ export class NotesService {
 
     getNotes(id: number): Observable<NoteModel[]> {
         return this.http.get<NoteModel[]>(
-            environment.baseUrl + '/group/' + id
+            environment.baseUrl + '/notes/group/' + id
         );
     }
 
     getNoteById(id: number): Observable<NoteModel> {
-        return this.http.get<NoteModel>(environment.baseUrl + '/' + id);
+        return this.http.get<NoteModel>(environment.baseUrl + '/notes/' + id);
     }
 
     filterNoteByColor(color: string, groupId: number): Observable<NoteModel[]> {
@@ -25,18 +25,18 @@ export class NotesService {
         queryParam = queryParam.append('color', color);
         queryParam = queryParam.append('groupId', groupId);
 
-        return this.http.get<NoteModel[]>(environment.baseUrl + '/filter', {
+        return this.http.get<NoteModel[]>(environment.baseUrl + '/notes/filter', {
             params: queryParam
         });
     }
 
     createNote(note: CreateNoteModel): Observable<NoteModel> {
-        return this.http.post<NoteModel>(environment.baseUrl, note);
+        return this.http.post<NoteModel>(environment.baseUrl + '/notes', note);
     }
 
     updateNote(id: number, note: CreateNoteModel): Observable<NoteModel> {
         return this.http.patch<NoteModel>(
-            environment.baseUrl + '/' + id,
+            environment.baseUrl + '/notes/' + id,
             note
         );
     }

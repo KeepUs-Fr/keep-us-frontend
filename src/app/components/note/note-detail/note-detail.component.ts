@@ -52,10 +52,10 @@ export class NoteDetailComponent implements OnInit {
     ngOnChanges(changes: SimpleChanges) {
         this.currentId = this.noteId;
         this.getNoteDetail();
-        console.log(changes);
     }
 
     getNoteDetail(): void {
+        console.log(this.currentId)
         this.notesService.getNoteById(this.currentId).subscribe({
             next: (note) => {
                 this.note = note;
