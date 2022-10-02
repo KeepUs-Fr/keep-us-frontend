@@ -12,12 +12,12 @@ export class NotesService {
 
     getNotes(id: number): Observable<NoteModel[]> {
         return this.http.get<NoteModel[]>(
-            environment.notesUrl + '/group/' + id
+            environment.baseUrl + '/group/' + id
         );
     }
 
     getNoteById(id: number): Observable<NoteModel> {
-        return this.http.get<NoteModel>(environment.notesUrl + '/' + id);
+        return this.http.get<NoteModel>(environment.baseUrl + '/' + id);
     }
 
     filterNoteByColor(color: string, groupId: number): Observable<NoteModel[]> {
@@ -25,29 +25,29 @@ export class NotesService {
         queryParam = queryParam.append('color', color);
         queryParam = queryParam.append('groupId', groupId);
 
-        return this.http.get<NoteModel[]>(environment.notesUrl + '/filter', {
+        return this.http.get<NoteModel[]>(environment.baseUrl + '/filter', {
             params: queryParam
         });
     }
 
     createNote(note: CreateNoteModel): Observable<NoteModel> {
-        return this.http.post<NoteModel>(environment.notesUrl, note);
+        return this.http.post<NoteModel>(environment.baseUrl, note);
     }
 
     updateNote(id: number, note: CreateNoteModel): Observable<NoteModel> {
         return this.http.patch<NoteModel>(
-            environment.notesUrl + '/' + id,
+            environment.baseUrl + '/' + id,
             note
         );
     }
 
     deleteNote(id: number): Observable<void> {
-        return this.http.delete<void>(environment.notesUrl + '/' + id);
+        return this.http.delete<void>(environment.baseUrl + '/' + id);
     }
 
     deleteAllNote(groupId: number): Observable<void> {
         return this.http.delete<void>(
-            environment.notesUrl + '/group/' + groupId
+            environment.baseUrl + '/group/' + groupId
         );
     }
 }

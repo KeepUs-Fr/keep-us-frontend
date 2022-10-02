@@ -24,7 +24,7 @@ export class UserService {
         let queryParam = new HttpParams();
         queryParam = queryParam.append('username', username);
 
-        return this.http.get<UserModel>(environment.userUrl, {
+        return this.http.get<UserModel>(environment.baseUrl, {
             params: queryParam
         });
     }
@@ -32,12 +32,12 @@ export class UserService {
     createUser(username: string): Observable<UserModel> {
         const newUser = { username: username };
 
-        return this.http.post<UserModel>(environment.userUrl, newUser);
+        return this.http.post<UserModel>(environment.baseUrl, newUser);
     }
 
     getGroupByOwnerId(id: number): Observable<GroupModel[]> {
         return this.http.get<GroupModel[]>(
-            environment.userUrl + '/groups/' + id
+            environment.baseUrl + '/groups/' + id
         );
     }
 
@@ -49,7 +49,7 @@ export class UserService {
         };
 
         return this.http.post<GroupModel>(
-            environment.userUrl + '/groups',
+            environment.baseUrl + '/groups',
             group
         );
     }
@@ -61,12 +61,12 @@ export class UserService {
         };
 
         return this.http.patch<GroupModel>(
-            environment.userUrl + '/groups/member',
+            environment.baseUrl + '/groups/member',
             newMember
         );
     }
 
     deleteGroup(id: number): Observable<void> {
-        return this.http.delete<void>(environment.userUrl + '/groups/' + id);
+        return this.http.delete<void>(environment.baseUrl + '/groups/' + id);
     }
 }

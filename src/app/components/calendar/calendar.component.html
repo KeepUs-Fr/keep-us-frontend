@@ -1,0 +1,8 @@
+<div>
+    <div class="justify-center" style="padding-top: 20%" *ngIf="isLoading">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <full-calendar [options]="calendarOptions" [deepChangeDetection]="true" style="max-height: 700px"></full-calendar>
+</div>
+

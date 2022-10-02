@@ -33,14 +33,14 @@ export class AuthService {
 
     signup(registerData: AuthModel): Observable<void> {
         return this.http.post<void>(
-            environment.authUrl + '/register',
+            environment.baseUrl + '/auth/register',
             registerData
         );
     }
 
     login(credential: AuthModel): Observable<{ token: string }> {
         return this.http.post<{ token: string }>(
-            environment.authUrl + '/login',
+            environment.baseUrl + '/auth/login',
             credential
         );
     }

@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { NotesService } from '../../../services/notes.service';
-import { NoteModel } from '../../../models/note.model';
-import { MatDialog } from '@angular/material/dialog';
-import { NoteCreationComponent } from '../note-creation/note-creation.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NoteFiltersComponent } from '../note-filters/note-filters.component';
-import { UserService } from '../../../services/user.service';
-import {CalendarOptions} from "@fullcalendar/angular";
-import {DatePipe} from "@angular/common";
+import {Component, OnInit} from '@angular/core';
+import {NotesService} from '../../../services/notes.service';
+import {NoteModel} from '../../../models/note.model';
+import {MatDialog} from '@angular/material/dialog';
+import {NoteCreationComponent} from '../note-creation/note-creation.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NoteFiltersComponent} from '../note-filters/note-filters.component';
+import {UserService} from '../../../services/user.service';
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
     selector: 'app-note-list',
@@ -15,20 +14,15 @@ import {DatePipe} from "@angular/common";
     styleUrls: ['./note-list.component.scss']
 })
 export class NoteListComponent implements OnInit {
-    /**
-     * Number of notes on grid line
-     */
-    valueCols: number = 1;
     isLoading = false;
+    isTable = false;
+    isMobile = false;
     notes: NoteModel[] = [];
+    noteId = -1;
+
 
     displayedColumns = ['color', 'title', 'description'];
-    mode = 0;
     groupId = 0;
-
-    calendarOptions: CalendarOptions = {
-        initialView: 'dayGridMonth'
-    };
 
     constructor(
         private notesService: NotesService,
@@ -36,32 +30,15 @@ export class NoteListComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private userService: UserService,
-        private datePipe: DatePipe
+        private deviceService: DeviceDetectorService
     ) {}
 
     ngOnInit(): void {
-        this.breakPoints();
-
+        this.isMobile = this.deviceService.isMobile();
         this.userService.groupIdEmitted.subscribe((id) => {
             this.groupId = id;
             this.getNotes();
         });
-    }
-
-    breakPoints(): void {
-        switch (true) {
-            case window.innerWidth <= 730:
-                this.valueCols = 1;
-                break;
-            case window.innerWidth > 730 && window.innerWidth <= 1020:
-                this.valueCols = 2;
-                break;
-            case window.innerWidth > 1020 && window.innerWidth <= 1200:
-                this.valueCols = 3;
-                break;
-            default:
-                this.valueCols = 4;
-        }
     }
 
     openCreationDialog(): void {
@@ -102,7 +79,11 @@ export class NoteListComponent implements OnInit {
     }
 
     goToNoteDetail(id: number): void {
-        this.router.navigate(['note', id]).then();
+        if(this.isMobile) {
+            this.router.navigate(['note', id]).then();
+        } else {
+            this.noteId = id;
+        }
     }
 
     getNotes(): void {
@@ -113,18 +94,6 @@ export class NoteListComponent implements OnInit {
         this.notesService.getNotes(this.groupId).subscribe({
             next: (notes) => {
                 this.notes = notes;
-                this.calendarOptions.events = [];
-
-                for(let note of this.notes) {
-                    const date = this.datePipe.transform(note.createDate,"yyyy-MM-dd")!;
-
-                    this.calendarOptions.events.push({
-                        title: note.title,
-                        date,
-                        color: note.color,
-                        borderColor: note.color
-                    });
-                }
                 this.isLoading = false;
             },
             error: (err) => {
@@ -132,19 +101,5 @@ export class NoteListComponent implements OnInit {
                 console.error(err);
             }
         });
-    }
-
-    nextMode(): void {
-        switch (this.mode) {
-            case 0:
-                this.mode = 1;
-                break;
-            case 1:
-                this.mode = 2;
-                break;
-            case 2:
-                this.mode = 0;
-                break;
-        }
     }
 }

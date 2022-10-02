@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import { CreateNoteModel, NoteModel } from '../../../models/note.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotesService } from '../../../services/notes.service';
@@ -17,6 +17,8 @@ import { UserService } from '../../../services/user.service';
     styleUrls: ['./note-detail.component.scss']
 })
 export class NoteDetailComponent implements OnInit {
+    @Input() noteId = -1;
+
     currentId = -1;
     note: NoteModel | undefined;
     title: string = '';
@@ -36,10 +38,21 @@ export class NoteDetailComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.params.subscribe((params: Params) => {
-            this.currentId = params['id'];
+        if(this.noteId === -1) {
+            this.route.params.subscribe((params: Params) => {
+                this.currentId = params['id'];
+                this.getNoteDetail();
+            });
+        } else {
+            this.currentId = this.noteId;
             this.getNoteDetail();
-        });
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.currentId = this.noteId;
+        this.getNoteDetail();
+        console.log(changes);
     }
 
     getNoteDetail(): void {

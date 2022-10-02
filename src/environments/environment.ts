@@ -4,9 +4,7 @@
 
 export const environment = {
     production: false,
-    notesUrl: 'http://localhost:80/api/notes',
-    authUrl: 'http://localhost:80/api/auth',
-    userUrl: 'http://localhost:80/api/users'
+    baseUrl: 'http://localhost:4200/api/v1',
 };
 
 /*

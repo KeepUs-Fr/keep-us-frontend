@@ -1,16 +1,17 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer
-                 class="sidenav" fixedInViewport
-                 [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-                 [mode]="(isHandset$ | async) ? 'over' : 'side'"
-                 [opened]="(isHandset$ | async) === false">
+    <mat-sidenav [ngClass]="{'mobile-view': !isLogged}"
+        #drawer
+        class="sidenav" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false">
 
-        <mat-toolbar class="sticky-item">Keep Us</mat-toolbar>
+        <mat-toolbar class="sticky-item" style="height: 64px">Keep Us</mat-toolbar>
 
         <ng-container *ngIf="isLogged && authService.decodedToken">
-
-            <!-- User profile -->
             <mat-nav-list style="top: 64px;" class="sticky-item">
+
+                <!-- User profile -->
                 <a mat-list-item
                    routerLink="profile"
                    (click)="groupAction('Profile', 0)"
@@ -18,9 +19,17 @@
                         <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar">
                         <span class="profile">{{authService.decodedToken.sub}}</span>
                 </a>
-            </mat-nav-list>
+                <mat-divider></mat-divider>
 
-            <mat-divider style="top: 120px;" class="sticky-item"></mat-divider>
+                <!-- Calendar -->
+                <a mat-list-item
+                   routerLink="calendar"
+                   (click)="groupAction('Calendar', 0)"
+                   [ngClass]="{'active': selectedGroup === 'Calendar'}">
+                    Calendar
+                </a>
+                <mat-divider></mat-divider>
+            </mat-nav-list>
 
             <!-- Get user groups -->
             <div class="group-list">
@@ -33,7 +42,6 @@
                 </mat-nav-list>
             </div>
 
-
             <!-- Add new group -->
             <mat-nav-list class="bottom-btn" (click)="openAddModal(true)">
                 <a mat-list-item style="background-color: #c2185b">
@@ -41,7 +49,6 @@
                     New group
                 </a>
             </mat-nav-list>
-
         </ng-container>
     </mat-sidenav>
 
@@ -62,7 +69,7 @@
             <span class="spacer"></span>
 
             <button mat-icon-button
-                    *ngIf="!['Profile', 'Personal space'].includes(selectedGroup)"
+                    *ngIf="!['Profile', 'Personal space', 'Calendar'].includes(selectedGroup)"
                     (click)="openAddModal(false)">
                 <mat-icon>group_add</mat-icon>
             </button>

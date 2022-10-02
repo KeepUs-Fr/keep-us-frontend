@@ -19,22 +19,20 @@
 
         <button mat-icon-button
                 [disabled]="notes.length <= 0"
-                (click)="nextMode()"
+                (click)="isTable = !isTable"
                 style="background-color: #c2185b;">
-            <mat-icon *ngIf="mode === 2">list</mat-icon>
-            <mat-icon *ngIf="mode === 0">splitscreen</mat-icon>
-            <mat-icon *ngIf="mode === 1">calendar_month</mat-icon>
+            <mat-icon *ngIf="!isTable">list</mat-icon>
+            <mat-icon *ngIf="isTable">splitscreen</mat-icon>
         </button>
     </div>
 
-    <full-calendar [options]="calendarOptions" style="max-height: 600px" *ngIf="mode === 2"></full-calendar>
-
-    <!-- Display note list-->
-    <div *ngIf="notes.length > 0 && mode === 0">
-        <div fxLayout="row wrap"
-             fxLayout.lt-sm="column"
+    <!-- Display note list and detail -->
+    <div *ngIf="notes.length > 0 && !isTable" fxLayout.md="row" fxLayoutAlign.md="start none">
+        <div fxLayout="column"
              fxLayoutGap="24px"
-             fxLayoutAlign="flex-start">
+             fxLayoutAlign="flex-start"
+             [ngClass]="{'flex-display': !isMobile}"
+            >
             <ng-container *ngFor="let note of notes.reverse()">
                 <mat-card fxFlex="0 1 calc(33.3% - 24px)"
                           [ngStyle]="{ 'background-color': note.color }"
@@ -51,9 +49,13 @@
                 </mat-card>
             </ng-container>
         </div>
+        <div style="margin-left: 34px;width: 100%">
+            <app-note-detail [noteId]="noteId"></app-note-detail>
+        </div>
     </div>
 
-    <mat-table [dataSource]="notes" class="mat-elevation-z8" *ngIf="mode === 1">
+    <!-- Table view -->
+    <mat-table [dataSource]="notes" class="mat-elevation-z8" *ngIf="isTable">
         <ng-container matColumnDef="color">
             <mat-header-cell *matHeaderCellDef class="fit-content"></mat-header-cell>
             <mat-cell *matCellDef="let element" class="fit-content">
@@ -69,17 +71,6 @@
             <mat-header-cell *matHeaderCellDef> Content </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
         </ng-container>
-
-<!--        <ng-container matColumnDef="tags">-->
-<!--            <mat-header-cell *matHeaderCellDef> Tags </mat-header-cell>-->
-<!--            <mat-cell *matCellDef="let element">-->
-<!--                <mat-chip-list aria-label="tags" *ngIf="element.tag">-->
-<!--                    <mat-chip [ngStyle]="{'background-color': element.color}">-->
-<!--                        {{element.tag}}-->
-<!--                    </mat-chip>-->
-<!--                </mat-chip-list>-->
-<!--            </mat-cell>-->
-<!--        </ng-container>-->
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToNoteDetail(row.id)"></mat-row>

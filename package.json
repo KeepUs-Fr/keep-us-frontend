@@ -1,6 +1,6 @@
 {
   "name": "keep-us-frontend",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": " ng serve --proxy-config proxy.conf.json",
@@ -28,6 +28,7 @@
     "@fullcalendar/interaction": "^5.11.3",
     "cors": "^2.8.5",
     "jwt-decode": "^3.1.2",
+    "ngx-device-detector": "^3.0.0",
     "prettier": "^2.5.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

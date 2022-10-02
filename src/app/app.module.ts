@@ -24,7 +24,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {DatePipe} from "@angular/common";
+import { DatePipe } from "@angular/common";
+import { CalendarComponent } from './components/calendar/calendar.component';
+import {ExtendedModule} from "@angular/flex-layout";
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -47,7 +49,8 @@ FullCalendarModule.registerPlugins([
         AvatarListComponent,
         RemoveModalComponent,
         AddModalComponent,
-        FooterComponent
+        FooterComponent,
+        CalendarComponent
     ],
     imports: [
         BrowserModule,
@@ -56,7 +59,8 @@ FullCalendarModule.registerPlugins([
         HttpClientModule,
         ReactiveFormsModule,
         MaterialModule,
-        FullCalendarModule
+        FullCalendarModule,
+        ExtendedModule
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

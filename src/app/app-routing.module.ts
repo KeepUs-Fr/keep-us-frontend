@@ -7,11 +7,17 @@ import { SignUpComponent } from './components/authentication/sign-up/sign-up.com
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { ProfileComponent } from './components/profile/profile.component';
+import {CalendarComponent} from "./components/calendar/calendar.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignUpComponent },
+    {
+        path: 'calendar',
+        component: CalendarComponent,
+        canActivate: [AuthGuardService]
+    },
     {
         path: 'notes',
         component: NoteListComponent,
