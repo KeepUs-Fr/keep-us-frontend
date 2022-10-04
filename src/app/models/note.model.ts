@@ -1,7 +1,7 @@
 export interface NoteModel {
     id: number;
     title: string;
-    description: string;
+    content: string;
     tag: string;
     color: string;
     ownerId: number;
@@ -11,7 +11,7 @@ export interface NoteModel {
 
 export interface CreateNoteModel {
     title: string;
-    description: string;
+    content: string;
     tag: string;
     color: string;
     ownerId: number;

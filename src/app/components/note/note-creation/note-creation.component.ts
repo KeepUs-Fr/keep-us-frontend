@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { CreateNoteModel } from '../../../models/note.model';
-import { NotesService } from '../../../services/notes.service';
+import {Component, OnInit} from '@angular/core';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {CreateNoteModel} from '../../../models/note.model';
+import {NotesService} from '../../../services/notes.service';
 
 @Component({
     selector: 'app-note-creation',
@@ -10,8 +9,6 @@ import { NotesService } from '../../../services/notes.service';
     styleUrls: ['./note-creation.component.scss']
 })
 export class NoteCreationComponent implements OnInit {
-    addOnBlur = true;
-    readonly separatorKeysCodes = [ENTER, COMMA] as const;
     tags: string[] = [];
     title = '';
     description = '';
@@ -25,7 +22,7 @@ export class NoteCreationComponent implements OnInit {
     submit(): void {
         let newNote: CreateNoteModel = {
             title: this.title,
-            description: this.description,
+            content: this.description,
             tag: this.tags[0],
             color: this.selectedColor,
             ownerId: +localStorage.getItem('ownerId')!,
@@ -33,7 +30,7 @@ export class NoteCreationComponent implements OnInit {
         };
 
         this.noteService.createNote(newNote).subscribe({
-            next: (note) => {
+            next: _ => {
                 this.closeModal = true;
             },
             error: (error) => {

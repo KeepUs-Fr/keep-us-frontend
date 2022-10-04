@@ -12,11 +12,9 @@
                 <mat-icon>refresh</mat-icon>
             </button>
         </div>
-
         <button mat-stroked-button (click)="openCreationDialog()">
             Create a new note
         </button>
-
         <button mat-icon-button
                 [disabled]="notes.length <= 0"
                 (click)="isTable = !isTable"
@@ -27,30 +25,23 @@
     </div>
 
     <!-- Display note list and detail -->
-    <div *ngIf="notes.length > 0 && !isTable" fxLayout.md="row" fxLayoutAlign.md="start">
+    <div *ngIf="notes.length > 0 && !isTable" class="justify-start">
         <div fxLayout="column"
              fxLayoutGap="24px"
-             fxLayoutAlign="flex-start"
              [ngClass]="{'flex-display': !isMobile}"
-            >
+        >
             <ng-container *ngFor="let note of notes.reverse()">
-                <mat-card fxFlex="0 1 calc(33.3% - 24px)"
-                          [ngStyle]="{ 'background-color': note.color }"
+                <mat-card [ngStyle]="{ 'background-color': note.color }"
                           (click)="goToNoteDetail(note.id)">
                     <mat-card-subtitle style="font-size: 18px;">{{note.title}}</mat-card-subtitle>
                     <mat-card-content>
-                        <p>{{note.description}}</p>
-                        <mat-chip-list aria-label="tags" *ngIf="note.tag">
-                            <mat-chip color="accent">
-                                {{note.tag}}
-                            </mat-chip>
-                        </mat-chip-list>
+                        <p>{{note.content}}</p>
                     </mat-card-content>
                 </mat-card>
             </ng-container>
         </div>
 
-        <div style="margin-left: 34px;width: 100%">
+        <div class="note-detail">
             <app-note-detail [noteId]="noteId"></app-note-detail>
         </div>
     </div>
@@ -77,7 +68,7 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToNoteDetail(row.id)"></mat-row>
     </mat-table>
 
-    <div class="justify-center" style="padding-top: 20%" *ngIf="isLoading">
+    <div class="justify-center" style="padding-top: 10%" *ngIf="isLoading">
         <mat-spinner diameter="50"></mat-spinner>
     </div>
 </div>

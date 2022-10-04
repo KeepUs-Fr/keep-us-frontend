@@ -22,7 +22,7 @@ export class NoteDetailComponent implements OnInit {
     currentId = -1;
     note: NoteModel | undefined;
     title: string = '';
-    description: string = '';
+    content: string = '';
     selectedColor: { key: string; value: string } = { key: '', value: '' };
 
     horizontalPosition: MatSnackBarHorizontalPosition = 'center';
@@ -60,7 +60,7 @@ export class NoteDetailComponent implements OnInit {
             next: (note) => {
                 this.note = note;
                 this.title = this.note.title;
-                this.description = this.note.description;
+                this.content = this.note.content;
             },
             error: (err) => {
                 console.error(err);
@@ -71,7 +71,7 @@ export class NoteDetailComponent implements OnInit {
     updateNote(): void {
         if (
             this.note?.title === this.title &&
-            this.note.description === this.description &&
+            this.note.content === this.content &&
             this.note.color === this.selectedColor.value
         ) {
             this.router.navigate(['notes']).then((_) => {
@@ -80,7 +80,7 @@ export class NoteDetailComponent implements OnInit {
         } else {
             const newNote: CreateNoteModel = {
                 title: this.title,
-                description: this.description,
+                content: this.content,
                 tag: this.note?.tag!,
                 color: this.selectedColor.key,
                 ownerId: this.note?.ownerId!,

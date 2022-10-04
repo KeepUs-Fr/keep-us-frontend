@@ -26,7 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
             catchError((error) => {
                 if (error instanceof HttpErrorResponse && error.status === 401) {
                     this.authService.logout();
-                    this.snackBarService.openError('Your session has expired');
+                    this.snackBarService.openSuccess('Your session has expired');
                 }
                 return throwError(error);
             })
