@@ -30,15 +30,9 @@
         text-overflow: ellipsis;
     }
 
-    .note-header {
-        z-index: 100;
-        padding-bottom: 24px;
-    }
-
     .flex-display {
-        height: 600px;
-        overflow-y: scroll;
-        width: 500px;
+        height: 90vh;
+        width: 40%;
         padding: 12px;
         border: 1px solid #5f6368;
         border-radius: 20px;

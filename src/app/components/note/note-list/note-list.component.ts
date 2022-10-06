@@ -7,6 +7,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NoteFiltersComponent} from '../note-filters/note-filters.component';
 import {UserService} from '../../../services/user.service';
 import {DeviceDetectorService} from "ngx-device-detector";
+import {fromEvent, Observable, startWith} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-note-list',
@@ -39,6 +41,8 @@ export class NoteListComponent implements OnInit {
             this.groupId = id;
             this.getNotes();
         });
+
+        this.media('(max-width: 767px)').subscribe((matches) => this.isMobile = matches);
     }
 
     openCreationDialog(): void {
@@ -101,5 +105,13 @@ export class NoteListComponent implements OnInit {
                 console.error(err);
             }
         });
+    }
+
+    private media(query: string): Observable<boolean> {
+        const mediaQuery = window.matchMedia(query);
+        return fromEvent<MediaQueryList>(mediaQuery, 'change').pipe(
+            startWith(mediaQuery),
+            map((list: MediaQueryList) => list.matches)
+        );
     }
 }

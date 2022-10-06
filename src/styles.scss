@@ -1,5 +1,100 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+/* ======== Angular material custom theme ======== */
+$blue: (
+    50 : #e3e4e8,
+    100 : #b9bcc5,
+    200 : #8a909e,
+    300 : #5b6477,
+    400 : #37425a,
+    500 : #14213d,
+    600 : #121d37,
+    700 : #0e182f,
+    800 : #0b1427,
+    900 : #060b1a,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: white,
+        600: white,
+        700: white,
+        800: white,
+        900: white,
+    )
+);
+
+$yellow: (
+    50 : #fff4e2,
+    100 : #fee3b8,
+    200 : #fed188,
+    300 : #fdbf58,
+    400 : #fcb135,
+    500 : #fca311,
+    600 : #fc9b0f,
+    700 : #fb910c,
+    800 : #fb880a,
+    900 : #fa7705,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: rgba(black, 0.87),
+        600: white,
+        700: white,
+        800: white,
+        900: white,
+    )
+);
+
+$red: (
+    50: #fdeaee,
+    100: #fbcad2,
+    200: #ea959b,
+    300: #de6c74,
+    400: #e84853,
+    500: #ed323b,
+    600: #de2839,
+    700: #cc1d33,
+    800: #bf152c,
+    900: #b00020,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: rgba(black, 0.87),
+        600: white,
+        700: white,
+        800: white,
+        900: white,
+    )
+);
+
+$custom-primary: mat.define-palette($blue, 500);
+$custom-accent: mat.define-palette($yellow, 500);
+$custom-warn: mat.define-palette($red, 900);
+
+$custom-theme: mat.define-light-theme((
+    color: (
+        primary: $custom-primary,
+        accent: $custom-accent,
+        warn: $custom-warn
+    )
+));
+
+/* ======== Global style ======== */
+@include mat.all-component-themes($custom-theme);
+
 html, body {
-  height: 100%;
+    height: 100%;
+    background-color: #E5E5E5;
 }
 
 body {

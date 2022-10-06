@@ -6,7 +6,7 @@
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="(isHandset$ | async) === false">
 
-        <mat-toolbar class="sticky-item" style="height: 64px">Keep Us</mat-toolbar>
+        <mat-toolbar class="sticky-item">Keep Us</mat-toolbar>
 
         <ng-container *ngIf="isLogged && authService.decodedToken">
             <mat-nav-list style="top: 64px;" class="sticky-item">
@@ -16,7 +16,7 @@
                    routerLink="profile"
                    (click)="groupAction('Profile', 0)"
                    [ngClass]="{'active': selectedGroup === 'Profile'}">
-                        <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar">
+                        <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar icon-margin">
                         <span class="profile">{{authService.decodedToken.sub}}</span>
                 </a>
                 <mat-divider></mat-divider>
@@ -26,6 +26,7 @@
                    routerLink="calendar"
                    (click)="groupAction('Calendar', 0)"
                    [ngClass]="{'active': selectedGroup === 'Calendar'}">
+                    <mat-icon class="icon-margin">calendar_month</mat-icon>
                     Calendar
                 </a>
                 <mat-divider></mat-divider>
@@ -44,8 +45,8 @@
 
             <!-- Add new group -->
             <mat-nav-list class="bottom-btn" (click)="openAddModal(true)">
-                <a mat-list-item style="background-color: #c2185b">
-                    <mat-icon style="margin-right: 20px;">add</mat-icon>
+                <a mat-list-item>
+                    <mat-icon class="icon-margin">add_circle</mat-icon>
                     New group
                 </a>
             </mat-nav-list>
@@ -67,37 +68,31 @@
 
             <span class="spacer"></span>
 
-            <button mat-icon-button
-                    *ngIf="!['Profile', 'Personal space', 'Calendar'].includes(selectedGroup)"
-                    (click)="openAddModal(false)">
-                <mat-icon>group_add</mat-icon>
-            </button>
-
             <!-- Display user actions based on rights -->
-<!--            <button mat-icon-button-->
-<!--                    [matMenuTriggerFor]="menu"-->
-<!--                    aria-label="Group menu"-->
-<!--                    *ngIf="!['Profile', 'Personal space'].includes(selectedGroup)">-->
-<!--                <mat-icon>more_vert</mat-icon>-->
-<!--            </button>-->
-<!--            <mat-menu #menu="matMenu">-->
-<!--                <button mat-menu-item>-->
-<!--                    <mat-icon>group</mat-icon>-->
-<!--                    <span>Users</span>-->
-<!--                </button>-->
-<!--                <button mat-menu-item>-->
-<!--                    <mat-icon>group_add</mat-icon>-->
-<!--                    <span>Add users</span>-->
-<!--                </button>-->
-<!--                <button mat-menu-item>-->
-<!--                    <mat-icon>person_remove</mat-icon>-->
-<!--                    <span>Quit group</span>-->
-<!--                </button>-->
-<!--                <button mat-menu-item>-->
-<!--                    <mat-icon class="delete-color">highlight_off</mat-icon>-->
-<!--                    <span class="delete-color">Delete Group</span>-->
-<!--                </button>-->
-<!--            </mat-menu>-->
+            <button mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="Group menu"
+                    *ngIf="!['Profile', 'Personal space', 'Calendar'].includes(selectedGroup)">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>group</mat-icon>
+                    <span>Users</span>
+                </button>
+                <button mat-menu-item (click)="openAddModal(false)">
+                    <mat-icon>group_add</mat-icon>
+                    <span>Add users</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>person_remove</mat-icon>
+                    <span>Quit group</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon class="delete-color">highlight_off</mat-icon>
+                    <span class="delete-color">Delete Group</span>
+                </button>
+            </mat-menu>
         </mat-toolbar>
 
         <!-- App content -->

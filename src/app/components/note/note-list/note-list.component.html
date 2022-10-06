@@ -1,5 +1,5 @@
 <div class="note-list">
-    <div class="justify-between note-header">
+    <div class="justify-between note-header" *ngIf="isMobile">
         <div>
             <button mat-icon-button
                     style="background-color: rgba(241,243,244,.24)"
@@ -17,28 +17,43 @@
         </button>
         <button mat-icon-button
                 [disabled]="notes.length <= 0"
-                (click)="isTable = !isTable"
-                style="background-color: #c2185b;">
+                (click)="isTable = !isTable">
             <mat-icon *ngIf="!isTable">list</mat-icon>
             <mat-icon *ngIf="isTable">splitscreen</mat-icon>
         </button>
     </div>
 
     <!-- Display note list and detail -->
-    <div *ngIf="notes.length > 0 && !isTable" class="justify-start">
+    <div *ngIf="!isTable" class="justify-start">
         <div fxLayout="column"
              fxLayoutGap="24px"
              [ngClass]="{'flex-display': !isMobile}"
         >
-            <ng-container *ngFor="let note of notes.reverse()">
-                <mat-card [ngStyle]="{ 'background-color': note.color }"
-                          (click)="goToNoteDetail(note.id)">
-                    <mat-card-subtitle style="font-size: 18px;">{{note.title}}</mat-card-subtitle>
-                    <mat-card-content>
-                        <p>{{note.content}}</p>
-                    </mat-card-content>
-                </mat-card>
-            </ng-container>
+            <div class="justify-between" *ngIf="!isMobile">
+                <div>
+                    <button mat-icon-button
+                            style="background-color: rgba(241,243,244,.24)"
+                            (click)="openFilterDialog()">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+                <button mat-icon-button
+                        (click)="openCreationDialog()">
+                    <mat-icon color="accent">add_circle</mat-icon>
+                </button>
+            </div>
+            <div style="overflow-y: auto">
+                <ng-container *ngFor="let note of notes.reverse()">
+                    <mat-card [ngStyle]="{ 'background-color': note.color }"
+                              (click)="goToNoteDetail(note.id)">
+                        <mat-card-subtitle style="font-size: 18px;">{{note.title}}</mat-card-subtitle>
+                        <mat-card-content>
+                            <p>{{note.content}}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </ng-container>
+            </div>
+
         </div>
 
         <div class="note-detail">

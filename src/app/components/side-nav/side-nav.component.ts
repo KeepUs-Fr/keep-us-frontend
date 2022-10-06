@@ -8,11 +8,6 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddModalComponent } from '../modals/add-modal/add-modal.component';
-import {
-    MatSnackBar,
-    MatSnackBarHorizontalPosition,
-    MatSnackBarVerticalPosition
-} from '@angular/material/snack-bar';
 import {SnackBarService} from "../../services/snack-bar.service";
 
 @Component({
