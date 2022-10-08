@@ -42,7 +42,7 @@ export class NotesService {
     }
 
     deleteNote(id: number): Observable<void> {
-        return this.http.delete<void>(environment.baseUrl + '/' + id);
+        return this.http.delete<void>(environment.baseUrl + '/notes/' + id);
     }
 
     deleteAllNote(groupId: number): Observable<void> {

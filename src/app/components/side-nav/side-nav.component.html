@@ -1,7 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav [ngClass]="{'mobile-view': !isLogged}"
-        #drawer
-        class="sidenav" fixedInViewport
+    <mat-sidenav #drawer class="sidenav" fixedInViewport
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="(isHandset$ | async) === false">
@@ -14,7 +12,7 @@
                 <!-- User profile -->
                 <a mat-list-item
                    routerLink="profile"
-                   (click)="groupAction('Profile', 0)"
+                   (click)="groupAction('Profile', 0); isMobile ? drawer.close() : null"
                    [ngClass]="{'active': selectedGroup === 'Profile'}">
                         <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar icon-margin">
                         <span class="profile">{{authService.decodedToken.sub}}</span>
@@ -24,7 +22,7 @@
                 <!-- Calendar -->
                 <a mat-list-item
                    routerLink="calendar"
-                   (click)="groupAction('Calendar', 0)"
+                   (click)="groupAction('Calendar', 0); isMobile ? drawer.close() : null"
                    [ngClass]="{'active': selectedGroup === 'Calendar'}">
                     <mat-icon class="icon-margin">calendar_month</mat-icon>
                     Calendar
@@ -33,18 +31,19 @@
             </mat-nav-list>
 
             <!-- Get user groups -->
-            <div class="group-list">
-                <mat-nav-list *ngFor="let group of groups">
+            <mat-nav-list>
+                <ng-container *ngFor="let group of groups">
                     <a mat-list-item
-                       [ngClass]="{'active': selectedGroup === group.name}"
-                       (click)="groupAction(group.name, group.id)">
+                       [ngClass]="{' active': selectedGroup === group.name}"
+                       (click)="groupAction(group.name, group.id); isMobile ? drawer.close() : null">
                         {{group.name}}
                     </a>
-                </mat-nav-list>
-            </div>
+                </ng-container>
+
+            </mat-nav-list>
 
             <!-- Add new group -->
-            <mat-nav-list class="bottom-btn" (click)="openAddModal(true)">
+            <mat-nav-list class="bottom-btn" (click)="openAddModal(true); isMobile ? drawer.close() : null">
                 <a mat-list-item>
                     <mat-icon class="icon-margin">add_circle</mat-icon>
                     New group

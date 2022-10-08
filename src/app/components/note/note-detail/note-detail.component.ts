@@ -55,17 +55,18 @@ export class NoteDetailComponent implements OnInit {
     }
 
     getNoteDetail(): void {
-        console.log(this.currentId)
-        this.notesService.getNoteById(this.currentId).subscribe({
-            next: (note) => {
-                this.note = note;
-                this.title = this.note.title;
-                this.content = this.note.content;
-            },
-            error: (err) => {
-                console.error(err);
-            }
-        });
+        if(this.currentId > 0 && this.currentId !== undefined)
+            this.notesService.getNoteById(this.currentId).subscribe({
+                next: (note) => {
+                    this.note = note;
+                    this.title = this.note.title;
+                    this.content = this.note.content;
+                    this.selectedColor.value = this.note.color;
+                },
+                error: (err) => {
+                    console.error(err);
+                }
+            });
     }
 
     updateNote(): void {

@@ -37,6 +37,8 @@ export class NoteListComponent implements OnInit {
 
     ngOnInit(): void {
         this.isMobile = this.deviceService.isMobile();
+        this.getNotes();
+
         this.userService.groupIdEmitted.subscribe((id) => {
             this.groupId = id;
             this.getNotes();
@@ -95,16 +97,18 @@ export class NoteListComponent implements OnInit {
         const localId = localStorage.getItem('groupId');
         if (localId && this.groupId === 0) this.groupId = +localId;
 
-        this.notesService.getNotes(this.groupId).subscribe({
-            next: (notes) => {
-                this.notes = notes;
-                this.isLoading = false;
-            },
-            error: (err) => {
-                this.isLoading = false;
-                console.error(err);
-            }
-        });
+        if (this.groupId > 0) {
+            this.notesService.getNotes(this.groupId).subscribe({
+                next: (notes) => {
+                    this.notes = notes;
+                    this.isLoading = false;
+                },
+                error: (err) => {
+                    this.isLoading = false;
+                    console.error(err);
+                }
+            });
+        }
     }
 
     private media(query: string): Observable<boolean> {

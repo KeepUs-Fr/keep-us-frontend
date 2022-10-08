@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddModalComponent } from '../modals/add-modal/add-modal.component';
 import {SnackBarService} from "../../services/snack-bar.service";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
     selector: 'app-side-nav',
@@ -27,6 +28,8 @@ export class SideNavComponent implements OnInit {
     groups: any[] = [];
     selectedGroup = '';
     selectedAvatar = '1';
+    panelOpenState = true;
+    isMobile = false;
 
     constructor(
         private breakpointObserver: BreakpointObserver,
@@ -35,11 +38,13 @@ export class SideNavComponent implements OnInit {
         private userService: UserService,
         private router: Router,
         private dialog: MatDialog,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private deviceService: DeviceDetectorService
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.isLogged = this.authService.isLogged();
+        this.isMobile = this.deviceService.isMobile();
         if (this.isLogged) {
             this.getGroupByUsername();
             this.getAvatar();
@@ -66,7 +71,7 @@ export class SideNavComponent implements OnInit {
 
     groupAction(groupName: string, id: number) {
         this.selectedGroup = groupName;
-        if (id !== 0) {
+        if (id > 0 && id !== undefined) {
             localStorage.setItem('groupId', id.toString());
             this.router.navigate(['notes']).then(_ => {
                 this.userService.emitGroupId(id);

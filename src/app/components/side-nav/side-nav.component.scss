@@ -5,12 +5,21 @@
         width: 16%;
         background-color: rgb(20,33,61,.94);
 
-        .mat-list-item{
+        @media screen and (max-width: 768px){
+            width: 85%;
+        }
+
+        mat-nav-list {
+            padding-top: 0;
+        }
+
+        .mat-list-item, mat-panel-title, mat-toolbar {
             color: #E5E5E5;
         }
 
         .icon-margin {
             margin-right: 12px;
+            color: #FCA311;
         }
 
         .avatar {
@@ -31,10 +40,19 @@
             background-color: transparent;
         }
 
+        mat-expansion-panel {
+            background-color: transparent !important;
+            padding: 0 !important;
+            border: none !important;
+        }
 
         .active {
             color: #14213D;
             background-color: rgba(134,141,205);
+
+            mat-icon {
+                color: #14213D;
+            }
         }
 
         .bottom-btn {
@@ -45,11 +63,10 @@
             a {
                 color: #FCA311;
             }
-        }
 
-        .group-list {
-            overflow-y: hidden;
-            padding-bottom: 48px;
+            @media screen and (max-width: 768px){
+                width: 85%;
+            }
         }
     }
 
@@ -63,10 +80,8 @@
             display: block;
         }
     }
+}
 
-
-
-    .mobile-view {
-        display: none;
-    }
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
 }
