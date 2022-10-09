@@ -7,6 +7,19 @@
         padding: 8px;
         margin-bottom: 24px;
     }
+
+    .icon-btn {
+        background-color: #14213D;
+        color: #E5E5E5;
+        width: 30px;
+        height: 30px;
+
+        mat-icon {
+            vertical-align: top;
+            padding-top: 4px;
+        }
+    }
+
     mat-card {
         margin-bottom: 24px;
         border: 2px solid transparent;
@@ -21,7 +34,7 @@
         }
     }
 
-    mat-table{
+    mat-table {
         background-color: transparent;
         box-shadow: none;
 

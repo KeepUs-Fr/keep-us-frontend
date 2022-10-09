@@ -10,7 +10,7 @@
             <img src="assets/images/avatars/avatar-{{avatar}}.png" alt="Avatar"
                  class="avatar"
                  [ngClass]="{ 'active-avatar': avatar === selectedAvatar }"
-                 (click)="selectAvatar(avatar)">
+                 (click)="selectAvatar(avatar)" [mat-dialog-close]="true">
         </div>
     </div>
 </div>

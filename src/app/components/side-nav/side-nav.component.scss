@@ -5,7 +5,7 @@
         width: 16%;
         background-color: rgb(20,33,61,.94);
 
-        @media screen and (max-width: 768px){
+        @media screen and (max-width: 786px){
             width: 85%;
         }
 
@@ -64,7 +64,7 @@
                 color: #FCA311;
             }
 
-            @media screen and (max-width: 768px){
+            @media screen and (max-width: 786px){
                 width: 85%;
             }
         }
@@ -78,6 +78,10 @@
         &:after {
             content: "";
             display: block;
+        }
+
+        @media screen and (max-width: 786px){
+            padding: 10px;
         }
     }
 }

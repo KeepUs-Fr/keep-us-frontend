@@ -20,21 +20,14 @@
 
     <!-- Display note list -->
     <div *ngIf="!isTable" [ngClass]="{'justify-start': !isMobile}">
-        <div fxLayout="column"
-             fxLayoutGap="24px"
-             [ngClass]="{'flex-display': !isMobile}"
-        >
+        <div fxLayout="column" fxLayoutGap="24px" [ngClass]="{'flex-display': !isMobile}">
             <div class="justify-between" *ngIf="!isMobile">
                 <div>
-                    <button mat-icon-button
-                            style="background-color: #14213D; color: #E5E5E5"
-                            (click)="openFilterDialog()">
+                    <button mat-icon-button class="icon-btn" (click)="openFilterDialog()">
                         <mat-icon>search</mat-icon>
                     </button>
                 </div>
-                <button mat-icon-button
-                        style="background-color: #14213D; color: #E5E5E5"
-                        (click)="openCreationDialog()">
+                <button mat-icon-button class="icon-btn" (click)="openCreationDialog()">
                     <mat-icon >add</mat-icon>
                 </button>
             </div>

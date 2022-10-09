@@ -5,12 +5,8 @@ import { AvatarListComponent } from './avatar-list/avatar-list.component';
 import { SideNavService } from '../../services/side-nav.service';
 import { UserService } from '../../services/user.service';
 import { RemoveModalComponent } from '../modals/remove-modal/remove-modal.component';
-import {
-    MatSnackBar,
-    MatSnackBarHorizontalPosition,
-    MatSnackBarVerticalPosition
-} from '@angular/material/snack-bar';
 import { NotesService } from '../../services/notes.service';
+import {SnackBarService} from "../../services/snack-bar.service";
 
 @Component({
     selector: 'app-profile',
@@ -23,15 +19,12 @@ export class ProfileComponent implements OnInit {
     displayedColumns = ['name', 'date', 'actions'];
     ownerId = 0;
 
-    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-    verticalPosition: MatSnackBarVerticalPosition = 'top';
-
     constructor(
         public authService: AuthService,
         private dialog: MatDialog,
         private sideNavService: SideNavService,
         private userService: UserService,
-        private _snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private notesService: NotesService
     ) {}
 
@@ -69,7 +62,7 @@ export class ProfileComponent implements OnInit {
                         next: (_) => {
                             this.userService.emitGroupId(0);
                             this.getGroups();
-                            this.openSnackBar('Group have been deleted');
+                            this.snackBarService.openSuccess('Group have been deleted');
                         }
                     });
                 }
@@ -88,13 +81,5 @@ export class ProfileComponent implements OnInit {
                     this.groups = groups;
                 }
             });
-    }
-
-    private openSnackBar(msg: string) {
-        this._snackBar.open(msg, 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: 1500
-        });
     }
 }
