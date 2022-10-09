@@ -1,6 +1,10 @@
 <div class="note-detail" *ngIf="note">
+    <button mat-icon-button (click)="updateNote()" *ngIf="noteId === -1">
+        <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+
     <div class="justify-between">
-        <mat-form-field appearance="standard" style="max-width: 350px;">
+        <mat-form-field appearance="standard" class="input-title">
             <input matInput
                    placeholder="Title"
                    [value]="note.title"
@@ -12,13 +16,12 @@
             <button mat-icon-button [ngStyle]="{'color': selectedColor.value}">
                 <mat-icon>palette</mat-icon>
             </button>
-            <button mat-icon-button (click)="updateNote()">
-                <mat-icon *ngIf="noteId === -1">arrow_back_ios</mat-icon>
-                <mat-icon *ngIf="noteId !== -1">save</mat-icon>
+            <button mat-icon-button (click)="updateNote()" *ngIf="noteId !== -1">
+                <mat-icon>save</mat-icon>
             </button>
             <!-- <app-note-color-palette (eventEmitter)="getColor($event)" [detailColor]="note.color"></app-note-color-palette>-->
             <button mat-icon-button (click)="openRemoveDialog()">
-                <mat-icon>delete</mat-icon>
+                <mat-icon color="warn">delete</mat-icon>
             </button>
         </div>
     </div>

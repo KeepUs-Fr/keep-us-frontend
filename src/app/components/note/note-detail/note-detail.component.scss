@@ -9,6 +9,11 @@
             padding: 0;
             border-top: 0 solid transparent;
         }
+
+        &.input-title {
+            max-width: 350px;
+            flex-wrap: wrap;
+        }
     }
 
     hr {

@@ -2,20 +2,15 @@
     <div class="justify-between note-header" *ngIf="isMobile">
         <div>
             <button mat-icon-button
-                    style="background-color: rgba(241,243,244,.24)"
+                    style="background-color: #14213D; color: #E5E5E5"
                     (click)="openFilterDialog()">
                 <mat-icon>search</mat-icon>
             </button>
-            <button mat-icon-button
-                    style="background-color: rgba(241,243,244,.24);margin-left: 7px;"
-                    (click)="getNotes()">
-                <mat-icon>refresh</mat-icon>
-            </button>
         </div>
-        <button mat-stroked-button (click)="openCreationDialog()">
+        <button mat-flat-button color="primary" (click)="openCreationDialog()">
             Create a new note
         </button>
-        <button mat-icon-button
+        <button mat-icon-button  style="background-color: #14213D; color: #E5E5E5"
                 [disabled]="notes.length <= 0"
                 (click)="isTable = !isTable">
             <mat-icon *ngIf="!isTable">list</mat-icon>
@@ -23,8 +18,8 @@
         </button>
     </div>
 
-    <!-- Display note list and detail -->
-    <div *ngIf="!isTable" class="justify-start">
+    <!-- Display note list -->
+    <div *ngIf="!isTable" [ngClass]="{'justify-start': !isMobile}">
         <div fxLayout="column"
              fxLayoutGap="24px"
              [ngClass]="{'flex-display': !isMobile}"
@@ -32,14 +27,15 @@
             <div class="justify-between" *ngIf="!isMobile">
                 <div>
                     <button mat-icon-button
-                            style="background-color: rgba(241,243,244,.24)"
+                            style="background-color: #14213D; color: #E5E5E5"
                             (click)="openFilterDialog()">
                         <mat-icon>search</mat-icon>
                     </button>
                 </div>
                 <button mat-icon-button
+                        style="background-color: #14213D; color: #E5E5E5"
                         (click)="openCreationDialog()">
-                    <mat-icon color="accent">add_circle</mat-icon>
+                    <mat-icon >add</mat-icon>
                 </button>
             </div>
             <div style="overflow-y: auto">
@@ -53,12 +49,14 @@
                     </mat-card>
                 </ng-container>
             </div>
-
         </div>
 
-        <div class="note-detail">
-            <app-note-detail [noteId]="noteId"></app-note-detail>
+        <!-- Web detail view -->
+        <div class="note-detail" *ngIf="!isMobile">
+            <h1 style="padding-top: 50%; text-align: center" *ngIf="noteId === -1">Nothing here !</h1>
+            <app-note-detail *ngIf="noteId !== -1" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
         </div>
+
     </div>
 
     <!-- Table view -->
@@ -76,7 +74,7 @@
 
         <ng-container matColumnDef="description">
             <mat-header-cell *matHeaderCellDef> Content </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.content}} </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

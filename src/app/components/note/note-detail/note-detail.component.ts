@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import { CreateNoteModel, NoteModel } from '../../../models/note.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotesService } from '../../../services/notes.service';
@@ -10,6 +10,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { UserService } from '../../../services/user.service';
+import {SnackBarService} from "../../../services/snack-bar.service";
 
 @Component({
     selector: 'app-note-detail',
@@ -18,6 +19,7 @@ import { UserService } from '../../../services/user.service';
 })
 export class NoteDetailComponent implements OnInit {
     @Input() noteId = -1;
+    @Output() reload = new EventEmitter<boolean>();
 
     currentId = -1;
     note: NoteModel | undefined;
@@ -33,7 +35,7 @@ export class NoteDetailComponent implements OnInit {
         private notesService: NotesService,
         private router: Router,
         private dialog: MatDialog,
-        private _snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private userService: UserService
     ) {}
 
@@ -91,7 +93,7 @@ export class NoteDetailComponent implements OnInit {
             this.notesService.updateNote(this.currentId, newNote).subscribe({
                 next: (_) => {
                     this.router.navigate(['notes']).then();
-                    this.openSnackBar('Note updated');
+                    this.snackBarService.openSuccess('Note updated');
                 },
                 error: (err) => {
                     console.error(err);
@@ -104,7 +106,7 @@ export class NoteDetailComponent implements OnInit {
         this.selectedColor = color;
     }
 
-    openRemoveDialog(): void {
+    openRemoveDialog() {
         const dialogRef = this.dialog.open(RemoveModalComponent, {
             maxWidth: '440px'
         });
@@ -114,8 +116,12 @@ export class NoteDetailComponent implements OnInit {
                 if (isRemovable) {
                     this.notesService.deleteNote(this.currentId).subscribe({
                         next: (_) => {
-                            this.router.navigate(['notes']).then();
-                            this.openSnackBar('Note removed successfully');
+                            if (this.noteId === -1) {
+                                this.router.navigate(['notes']).then();
+                            } else {
+                                this.reload.emit(true);
+                            }
+                            this.snackBarService.openSuccess('Note removed successfully');
                         }
                     });
                 }
@@ -123,14 +129,6 @@ export class NoteDetailComponent implements OnInit {
             error: (err) => {
                 console.error(err);
             }
-        });
-    }
-
-    private openSnackBar(msg: string) {
-        this._snackBar.open(msg, 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: 1500
         });
     }
 }

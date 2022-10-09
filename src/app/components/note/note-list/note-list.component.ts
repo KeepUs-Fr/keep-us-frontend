@@ -92,7 +92,13 @@ export class NoteListComponent implements OnInit {
         }
     }
 
-    getNotes(): void {
+    reload(doReload: boolean) {
+        if (doReload)
+            this.noteId = -1;
+            this.getNotes();
+    }
+
+    private getNotes() {
         this.isLoading = true;
         const localId = localStorage.getItem('groupId');
         if (localId && this.groupId === 0) this.groupId = +localId;
