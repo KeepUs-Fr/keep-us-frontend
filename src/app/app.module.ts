@@ -30,6 +30,7 @@ import {ExtendedModule} from "@angular/flex-layout";
 import {AuthService} from "./services/auth.service";
 import {TokenInterceptor} from "./token.interceptor";
 import {SnackBarService} from "./services/snack-bar.service";
+import { UserModalComponent } from './components/modals/user-modal/user-modal.component';
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -53,7 +54,8 @@ FullCalendarModule.registerPlugins([
         RemoveModalComponent,
         AddModalComponent,
         FooterComponent,
-        CalendarComponent
+        CalendarComponent,
+        UserModalComponent
     ],
     imports: [
         BrowserModule,

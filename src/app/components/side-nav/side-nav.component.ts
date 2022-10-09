@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddModalComponent } from '../modals/add-modal/add-modal.component';
 import {SnackBarService} from "../../services/snack-bar.service";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {UserModalComponent} from "../modals/user-modal/user-modal.component";
 
 @Component({
     selector: 'app-side-nav',
@@ -119,6 +120,17 @@ export class SideNavComponent implements OnInit {
             }
         });
     }
+
+
+    openUserModal() {
+        const groupId = localStorage.getItem('groupId');
+        const id = groupId !== null ? +groupId : -1;
+
+        const group = this.groups.filter(g => g.id === id)[0];
+        console.log(group)
+        this.dialog.open(UserModalComponent);
+    }
+
 
     private getGroupByUsername(): void {
         this.userService
