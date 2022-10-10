@@ -65,7 +65,7 @@ export class SideNavComponent implements OnInit {
             }
         });
 
-        this.userService.groupIdEmitted.subscribe((value) => {
+        this.userService.groupIdEmitted.subscribe(async (value) => {
             if (value === 0) return this.getGroupByUsername();
         });
     }
@@ -132,7 +132,7 @@ export class SideNavComponent implements OnInit {
     }
 
 
-    private getGroupByUsername(): void {
+    private getGroupByUsername() {
         this.userService
             .getGroupByOwnerId(+localStorage.getItem('ownerId')!)
             .subscribe({
