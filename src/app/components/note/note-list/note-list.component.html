@@ -34,6 +34,7 @@
             <div style="overflow-y: auto">
                 <ng-container *ngFor="let note of notes.reverse()">
                     <mat-card [ngStyle]="{ 'background-color': note.color }"
+                              [ngClass]="{ 'selected': noteId === note.id }"
                               (click)="goToNoteDetail(note.id)">
                         <mat-card-subtitle style="font-size: 18px;">{{note.title}}</mat-card-subtitle>
                         <mat-card-content>

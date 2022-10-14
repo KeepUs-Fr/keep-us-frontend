@@ -10,22 +10,17 @@ export class NoteColorPaletteComponent implements OnInit {
     @Input() detailColor: string = '';
 
     colors = new Map<string, string>();
-    selectedColor = 'black';
+    selectedColor = 'blue';
 
     constructor() {}
 
     ngOnInit(): void {
         this.colors
-            .set('black', '#424242')
-            .set('red', '#5c2b29')
-            .set('orange', '#614a19')
-            .set('yellow', '#635d19')
-            .set('green', '#345920')
-            .set('cyan', '#2d555e')
-            .set('blue', '#1e3a5f')
-            .set('purple', '#42275e')
-            .set('pink', '#5b2245')
-            .set('brown', '#442f19');
+            .set("bleu", "#5AADF9")
+            .set("red", "#F95A5A")
+            .set("green", "#5AF9DC")
+            .set("orange", "#F98A5A")
+            .set("purple", "#E25AF9");
 
         if (
             this.detailColor.trim() !== null &&

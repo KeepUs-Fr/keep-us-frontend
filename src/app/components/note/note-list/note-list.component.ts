@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NoteFiltersComponent} from '../note-filters/note-filters.component';
 import {UserService} from '../../../services/user.service';
 import {DeviceDetectorService} from "ngx-device-detector";
-import {fromEvent, Observable, startWith} from "rxjs";
+import {first, fromEvent, Observable, startWith} from "rxjs";
 import {map} from "rxjs/operators";
 
 @Component({
@@ -21,8 +21,6 @@ export class NoteListComponent implements OnInit {
     isMobile = false;
     notes: NoteModel[] = [];
     noteId = -1;
-
-
     displayedColumns = ['color', 'title', 'description'];
     groupId = 0;
 

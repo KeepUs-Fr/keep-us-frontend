@@ -1,43 +1,41 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container>
     <mat-sidenav #drawer class="sidenav" fixedInViewport
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="(isHandset$ | async) === false">
 
-        <mat-toolbar class="sticky-item">
-<!--            <img src="assets/images/logo.svg" alt="" height="150" width="150">-->
-            Keep Us
+        <mat-toolbar class="sticky-item" style="height: 105px" color="primary">
+            <img src="assets/images/logo-light.svg" alt="Logo" height="90">
         </mat-toolbar>
 
         <ng-container *ngIf="isLogged && authService.decodedToken">
-            <mat-nav-list style="top: 64px;" class="sticky-item">
-
+            <mat-nav-list class="sticky-item" style="top: 105px;" >
                 <!-- User profile -->
                 <a mat-list-item
                    routerLink="profile"
-                   (click)="groupAction('Profile', 0); isMobile ? drawer.close() : null"
-                   [ngClass]="{'active': selectedGroup === 'Profile'}">
+                   (click)="groupAction('Profile', -1); isMobile ? drawer.close() : null"
+                   [ngClass]="{'active': selectedGroup.id === -1}">
                         <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar icon-margin">
                         <span class="profile">{{authService.decodedToken.sub}}</span>
                 </a>
                 <mat-divider></mat-divider>
 
                 <!-- Calendar -->
-<!--                <a mat-list-item-->
-<!--                   routerLink="calendar"-->
-<!--                   (click)="groupAction('Calendar', 0); isMobile ? drawer.close() : null"-->
-<!--                   [ngClass]="{'active': selectedGroup === 'Calendar'}">-->
-<!--                    <mat-icon class="icon-margin">calendar_month</mat-icon>-->
-<!--                    Calendar-->
-<!--                </a>-->
-<!--                <mat-divider></mat-divider>-->
+                <a mat-list-item
+                   routerLink="calendar"
+                   (click)="groupAction('Calendar', 0); isMobile ? drawer.close() : null"
+                   [ngClass]="{'active': selectedGroup.id === 0}">
+                    <mat-icon class="icon-margin">calendar_month</mat-icon>
+                    Calendar
+                </a>
+                <mat-divider></mat-divider>
             </mat-nav-list>
 
             <!-- Get user groups -->
-            <mat-nav-list>
+            <mat-nav-list style="padding-bottom: 50px">
                 <ng-container *ngFor="let group of groups">
                     <a mat-list-item
-                       [ngClass]="{' active': selectedGroup === group.name}"
+                       [ngClass]="{'active': selectedGroup.id === group.id}"
                        (click)="groupAction(group.name, group.id); isMobile ? drawer.close() : null">
                         {{group.name}}
                     </a>
@@ -55,7 +53,7 @@
         </ng-container>
     </mat-sidenav>
     <mat-sidenav-content>
-        <mat-toolbar color="primary" *ngIf="isLogged">
+        <mat-toolbar *ngIf="isLogged" class="toolbar">
             <button
                 type="button"
                 aria-label="sidenav"

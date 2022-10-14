@@ -1,9 +1,9 @@
-.sidenav-container {
+mat-sidenav-container {
     height: 100%;
 
     .sidenav {
         width: 16%;
-        background-color: rgb(20,33,61,.94);
+        background-color: #14213D;
 
         @media screen and (max-width: 786px){
             width: 85%;
@@ -11,10 +11,6 @@
 
         mat-nav-list {
             padding-top: 0;
-        }
-
-        .mat-list-item, mat-panel-title, mat-toolbar {
-            color: #FFFFFF;
         }
 
         .icon-margin {
@@ -37,7 +33,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background-color: transparent;
+            background-color: #14213D;
         }
 
         mat-expansion-panel {
@@ -59,6 +55,7 @@
             position: fixed;
             bottom: 0;
             width: 16%;
+            background-color: #14213D;
 
             a {
                 color: #FCA311;
@@ -68,6 +65,14 @@
                 width: 85%;
             }
         }
+    }
+
+    .toolbar {
+        background-color: rgb(20,33,61,.94)
+    }
+
+    .mat-list-item, mat-panel-title, mat-toolbar {
+        color: #FFFFFF;
     }
 
     .app-content {

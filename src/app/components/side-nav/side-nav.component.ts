@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { AuthService } from '../../services/auth.service';
-import { SideNavService } from '../../services/side-nav.service';
-import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { AddModalComponent } from '../modals/add-modal/add-modal.component';
+import {Component, OnInit} from '@angular/core';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
+import {AuthService} from '../../services/auth.service';
+import {SideNavService} from '../../services/side-nav.service';
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {AddModalComponent} from '../modals/add-modal/add-modal.component';
 import {SnackBarService} from "../../services/snack-bar.service";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {UserModalComponent} from "../modals/user-modal/user-modal.component";
@@ -27,7 +27,7 @@ export class SideNavComponent implements OnInit {
 
     isLogged = false;
     groups: any[] = [];
-    selectedGroup = '';
+    selectedGroup: any;
     selectedAvatar = '1';
     panelOpenState = true;
     isMobile = false;
@@ -70,13 +70,13 @@ export class SideNavComponent implements OnInit {
         });
     }
 
-    groupAction(groupName: string, id: number) {
-        this.selectedGroup = groupName;
-        if (id > 0 && id !== undefined) {
-            localStorage.setItem('groupId', id.toString());
-            this.router.navigate(['notes']).then(_ => {
-                this.userService.emitGroupId(id);
-            });
+    async groupAction(groupName: string, id: number) {
+        this.selectedGroup = {name: groupName, id: id};
+        localStorage.setItem('groupId', id.toString());
+
+        if (id > 0) {
+            await this.userService.emitGroupId(id);
+            this.router.navigate(['notes']).then();
         }
     }
 
@@ -138,10 +138,9 @@ export class SideNavComponent implements OnInit {
             .subscribe({
                 next: (groups) => {
                     this.groups = groups;
-                    const currentGroup = this.groups.slice(0, 1).shift();
-                    this.selectedGroup = currentGroup.name;
-                    this.userService.emitGroupId(currentGroup.id);
-                    localStorage.setItem('groupId', currentGroup.id);
+                    this.selectedGroup = this.groups.slice(0, 1).shift();
+                    this.userService.emitGroupId( this.selectedGroup.id);
+                    localStorage.setItem('groupId',  this.selectedGroup.id);
                 }
             });
     }
