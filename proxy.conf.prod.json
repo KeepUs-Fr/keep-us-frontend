@@ -1,16 +1,6 @@
 {
-    "/api/notes": {
-        "target": "http://notes:9003",
-        "secure": false,
-        "logLevel": "debug"
-    },
-    "/api/auth": {
-        "target": "http://authentication:9001",
-        "secure": false,
-        "logLevel": "debug"
-    },
-    "/api/users": {
-        "target": "http://users:9004",
+    "/api/v1": {
+        "target": "http://localhost:9000",
         "secure": false,
         "logLevel": "debug"
     }
