@@ -13,30 +13,30 @@
                 <!-- User profile -->
                 <a mat-list-item
                    routerLink="profile"
-                   (click)="groupAction('Profile', -1); isMobile ? drawer.close() : null"
-                   [ngClass]="{'active': selectedGroup.id === -1}">
+                   (click)="groupAction(-1); isMobile ? drawer.close() : null"
+                   [ngClass]="{'active': currentId === '-1'}">
                         <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar icon-margin">
                         <span class="profile">{{authService.decodedToken.sub}}</span>
                 </a>
                 <mat-divider></mat-divider>
 
                 <!-- Calendar -->
-                <a mat-list-item
-                   routerLink="calendar"
-                   (click)="groupAction('Calendar', 0); isMobile ? drawer.close() : null"
-                   [ngClass]="{'active': selectedGroup.id === 0}">
-                    <mat-icon class="icon-margin">calendar_month</mat-icon>
-                    Calendar
-                </a>
-                <mat-divider></mat-divider>
+<!--                <a mat-list-item-->
+<!--                   routerLink="calendar"-->
+<!--                   (click)="groupAction(0); isMobile ? drawer.close() : null"-->
+<!--                   [ngClass]="{'active': currentId === '0'}">-->
+<!--                    <mat-icon class="icon-margin">calendar_month</mat-icon>-->
+<!--                    Calendar-->
+<!--                </a>-->
+<!--                <mat-divider></mat-divider>-->
             </mat-nav-list>
 
             <!-- Get user groups -->
             <mat-nav-list style="padding-bottom: 50px">
                 <ng-container *ngFor="let group of groups">
                     <a mat-list-item
-                       [ngClass]="{'active': selectedGroup.id === group.id}"
-                       (click)="groupAction(group.name, group.id); isMobile ? drawer.close() : null">
+                       [ngClass]="{'active': currentId === group.id.toString()}"
+                       (click)="groupAction(group.id, group); isMobile ? drawer.close() : null">
                         {{group.name}}
                     </a>
                 </ng-container>
@@ -64,7 +64,7 @@
             </button>
 
             <!-- Display name of group or page -->
-            <span>{{ selectedGroup }}</span>
+            <span>{{ selectedGroup.name }}</span>
 
             <span class="spacer"></span>
 
@@ -72,7 +72,7 @@
             <button mat-icon-button
                     [matMenuTriggerFor]="menu"
                     aria-label="Group menu"
-                    *ngIf="!['Profile', 'Personal space', 'Calendar'].includes(selectedGroup)">
+                    *ngIf="!['Profile', 'Personal space', 'Calendar'].includes(selectedGroup.name)">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">

@@ -11,6 +11,7 @@ import {AddModalComponent} from '../modals/add-modal/add-modal.component';
 import {SnackBarService} from "../../services/snack-bar.service";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {UserModalComponent} from "../modals/user-modal/user-modal.component";
+import {GroupModel} from "../../models/group.model";
 
 @Component({
     selector: 'app-side-nav',
@@ -26,11 +27,12 @@ export class SideNavComponent implements OnInit {
         );
 
     isLogged = false;
-    groups: any[] = [];
-    selectedGroup: any;
+    groups: GroupModel[] = [];
+    selectedGroup = new GroupModel();
     selectedAvatar = '1';
     panelOpenState = true;
     isMobile = false;
+    currentId = localStorage.getItem('groupId');
 
     constructor(
         private breakpointObserver: BreakpointObserver,
@@ -60,23 +62,27 @@ export class SideNavComponent implements OnInit {
 
         this.authService.changeEmitted.subscribe((value) => {
             this.isLogged = value;
-            if (value) {
-                return this.getGroupByUsername();
+            if (this.isLogged) {
+                this.getGroupByUsername();
             }
         });
 
-        this.userService.groupIdEmitted.subscribe(async (value) => {
-            if (value === 0) return this.getGroupByUsername();
+        this.userService.groupIdEmitted.subscribe(value => {
+            if (value === 0)
+                this.getGroupByUsername();
         });
     }
 
-    async groupAction(groupName: string, id: number) {
-        this.selectedGroup = {name: groupName, id: id};
-        localStorage.setItem('groupId', id.toString());
+     groupAction(id: number, group?: GroupModel) {
+        if (group !== undefined)
+            this.selectedGroup = group;
 
-        if (id > 0) {
-            await this.userService.emitGroupId(id);
+        localStorage.setItem('groupId', id.toString());
+        this.currentId = id.toString();
+
+        if (group && id > 0) {
             this.router.navigate(['notes']).then();
+            this.userService.emitGroupId(id);
         }
     }
 
@@ -121,7 +127,6 @@ export class SideNavComponent implements OnInit {
         });
     }
 
-
     openUserModal() {
         const groupId = localStorage.getItem('groupId');
         const id = groupId !== null ? +groupId : -1;
@@ -131,16 +136,17 @@ export class SideNavComponent implements OnInit {
         this.dialog.open(UserModalComponent);
     }
 
-
     private getGroupByUsername() {
         this.userService
             .getGroupByOwnerId(+localStorage.getItem('ownerId')!)
             .subscribe({
                 next: (groups) => {
                     this.groups = groups;
-                    this.selectedGroup = this.groups.slice(0, 1).shift();
-                    this.userService.emitGroupId( this.selectedGroup.id);
-                    localStorage.setItem('groupId',  this.selectedGroup.id);
+                    const firstGroup = this.groups.slice(0, 1).shift();
+                    if(firstGroup)
+                        this.selectedGroup = firstGroup;
+                        this.userService.emitGroupId( this.selectedGroup.id);
+                        localStorage.setItem('groupId',  this.selectedGroup.id.toString());
                 }
             });
     }
