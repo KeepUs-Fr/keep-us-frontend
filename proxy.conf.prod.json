@@ -1,7 +1,0 @@
-{
-    "/": {
-        "target": "http://keep_us:9000/",
-        "secure": false,
-        "logLevel": "debug"
-    }
-}
