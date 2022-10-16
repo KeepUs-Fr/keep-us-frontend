@@ -1,6 +1,6 @@
 {
-    "/api/v1": {
-        "target": "http://localhost:9000/api/v1",
+    "/": {
+        "target": "http://keep_us:9000/",
         "secure": false,
         "logLevel": "debug"
     }
