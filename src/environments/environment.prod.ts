@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    baseUrl: 'http://localhost:9000/api/v1'
+    baseUrl: 'http://keep-us.fr/api/v1'
 };
