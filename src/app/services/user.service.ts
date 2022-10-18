@@ -32,7 +32,10 @@ export class UserService {
     createUser(username: string): Observable<UserModel> {
         const newUser = { username: username };
 
-        return this.http.post<UserModel>(environment.baseUrl + '/users', newUser);
+        return this.http.post<UserModel>(
+            environment.baseUrl + '/users',
+            newUser
+        );
     }
 
     getGroupByOwnerId(id: number): Observable<GroupModel[]> {

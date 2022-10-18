@@ -1,9 +1,15 @@
-import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {AuthService} from './services/auth.service';
-import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import {SnackBarService} from "./services/snack-bar.service";
+import { Injectable } from '@angular/core';
+import {
+    HttpErrorResponse,
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest
+} from '@angular/common/http';
+import { AuthService } from './services/auth.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { SnackBarService } from './services/snack-bar.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -12,7 +18,10 @@ export class TokenInterceptor implements HttpInterceptor {
         private snackBarService: SnackBarService
     ) {}
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(
+        request: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
         const token = this.authService.getToken();
 
         if (token) {
@@ -24,9 +33,14 @@ export class TokenInterceptor implements HttpInterceptor {
         }
         return next.handle(request).pipe(
             catchError((error) => {
-                if (error instanceof HttpErrorResponse && error.status === 401) {
+                if (
+                    error instanceof HttpErrorResponse &&
+                    error.status === 401
+                ) {
                     this.authService.logout();
-                    this.snackBarService.openSuccess('Your session has expired');
+                    this.snackBarService.openSuccess(
+                        'Your session has expired'
+                    );
                 }
                 return throwError(error);
             })

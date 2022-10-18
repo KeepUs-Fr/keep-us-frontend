@@ -1,8 +1,7 @@
 <div class="note-list">
-    <div class="justify-between note-header" *ngIf="isMobile">
+    <div class="justify-between note-header" *ngIf="isMobile$ | async">
         <div>
-            <button mat-icon-button
-                    style="background-color: #14213D; color: #E5E5E5"
+            <button mat-icon-button class="icon-btn"
                     (click)="openFilterDialog()">
                 <mat-icon>search</mat-icon>
             </button>
@@ -10,7 +9,7 @@
         <button mat-flat-button color="primary" (click)="openCreationDialog()">
             Create a new note
         </button>
-        <button mat-icon-button  style="background-color: #14213D; color: #E5E5E5"
+        <button mat-icon-button class="icon-btn"
                 [disabled]="notes.length <= 0"
                 (click)="isTable = !isTable">
             <mat-icon *ngIf="!isTable">list</mat-icon>
@@ -19,20 +18,20 @@
     </div>
 
     <!-- Display note list -->
-    <div *ngIf="!isTable" [ngClass]="{'justify-start': !isMobile}">
-        <div fxLayout="column" fxLayoutGap="24px" [ngClass]="{'flex-display': !isMobile}">
-            <div class="justify-between" *ngIf="!isMobile">
+    <div *ngIf="!isTable" [ngClass]="{'justify-start': !(isMobile$| async)}">
+        <div fxLayout="column" fxLayoutGap="24px" [ngClass]="{'flex-display': !(isMobile$| async)}">
+            <div class="justify-between" *ngIf="!(isMobile$| async)">
                 <div>
                     <button mat-icon-button class="icon-btn" (click)="openFilterDialog()">
                         <mat-icon>search</mat-icon>
                     </button>
                 </div>
                 <button mat-icon-button class="icon-btn" (click)="openCreationDialog()">
-                    <mat-icon >add</mat-icon>
+                    <mat-icon>add</mat-icon>
                 </button>
             </div>
             <div style="overflow-y: auto">
-                <ng-container *ngFor="let note of notes.reverse()">
+                <ng-container *ngFor="let note of notes">
                     <mat-card [ngStyle]="{ 'background-color': note.color }"
                               [ngClass]="{ 'selected': noteId === note.id }"
                               (click)="goToNoteDetail(note.id)">
@@ -46,9 +45,8 @@
         </div>
 
         <!-- Web detail view -->
-        <div class="note-detail" *ngIf="!isMobile">
-            <h1 style="padding-top: 50%; text-align: center" *ngIf="noteId === -1">Nothing here !</h1>
-            <app-note-detail *ngIf="noteId !== -1" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
+        <div class="note-detail">
+            <app-note-detail *ngIf="noteId" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
         </div>
 
     </div>
@@ -72,7 +70,7 @@
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToNoteDetail(row.id)"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 
     <div class="justify-center" style="padding-top: 10%" *ngIf="isLoading">

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SideNavService } from '../../../services/side-nav.service';
-import {SnackBarService} from "../../../services/snack-bar.service";
+import { SnackBarService } from '../../../services/snack-bar.service';
 
 @Component({
     selector: 'app-avatar-list',
@@ -11,8 +11,10 @@ export class AvatarListComponent implements OnInit {
     avatars = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
     selectedAvatar = localStorage.getItem('avatar');
 
-    constructor(private sideNavService: SideNavService,
-                private snackBarService: SnackBarService) {}
+    constructor(
+        private sideNavService: SideNavService,
+        private snackBarService: SnackBarService
+    ) {}
 
     ngOnInit(): void {}
 
