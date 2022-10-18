@@ -37,12 +37,15 @@ export class NoteListComponent implements OnInit {
         this.userService.groupIdEmitted.subscribe((id) => {
             this.noteId = undefined;
             this.groupId = id;
+            console.log(id);
             this.getNotes();
         });
     }
 
     openCreationDialog(): void {
-        const dialogRef = this.dialog.open(NoteCreationComponent);
+        const dialogRef = this.dialog.open(NoteCreationComponent, {
+            width: '100%'
+        });
 
         dialogRef.afterClosed().subscribe({
             next: (_) => {
@@ -80,6 +83,10 @@ export class NoteListComponent implements OnInit {
 
     goToNoteDetail(id: number) {
         this.noteId = id;
+        this.isMobile$.pipe(untilDestroyed(this)).subscribe(result => {
+            if (result)
+                this.router.navigate(['note', this.noteId]).then();
+        })
     }
 
     reload(doReload: boolean) {
@@ -89,20 +96,15 @@ export class NoteListComponent implements OnInit {
 
     private getNotes() {
         this.isLoading = true;
-        const localId = localStorage.getItem('groupId');
-        if (localId && this.groupId === 0) this.groupId = +localId;
-
-        if (this.groupId > 0) {
-            this.notesService.getNotes(this.groupId).subscribe({
-                next: (notes) => {
-                    this.notes = notes;
-                    this.isLoading = false;
-                },
-                error: (err) => {
-                    this.isLoading = false;
-                    console.error(err);
-                }
-            });
-        }
+        this.notesService.getNotes(this.groupId).subscribe({
+            next: (notes) => {
+                this.notes = notes;
+                this.isLoading = false;
+            },
+            error: (err) => {
+                this.isLoading = false;
+                console.error(err);
+            }
+        });
     }
 }

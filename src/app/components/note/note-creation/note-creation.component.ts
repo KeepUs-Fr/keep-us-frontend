@@ -13,7 +13,7 @@ export class NoteCreationComponent implements OnInit {
     title = '';
     description = '';
     closeModal = false;
-    selectedColor = 'black';
+    selectedColor = 'blue';
 
     constructor(private noteService: NotesService) {}
 
@@ -47,14 +47,6 @@ export class NoteCreationComponent implements OnInit {
             this.tags.push(value);
         }
         event.chipInput!.clear();
-    }
-
-    remove(fruit: string): void {
-        const index = this.tags.indexOf(fruit);
-
-        if (index >= 0) {
-            this.tags.splice(index, 1);
-        }
     }
 
     getColor(color: { key: string; value: string }) {
