@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {CreateNoteModel} from '../../../models/note.model';
-import {NotesService} from '../../../services/notes.service';
+import { Component, OnInit } from '@angular/core';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { CreateNoteModel } from '../../../models/note.model';
+import { NotesService } from '../../../services/notes.service';
 
 @Component({
     selector: 'app-note-creation',
@@ -30,7 +30,7 @@ export class NoteCreationComponent implements OnInit {
         };
 
         this.noteService.createNote(newNote).subscribe({
-            next: _ => {
+            next: (_) => {
                 this.closeModal = true;
             },
             error: (error) => {

@@ -1,8 +1,10 @@
 <mat-sidenav-container>
-    <mat-sidenav #drawer class="sidenav" fixedInViewport
-        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'"
-        [opened]="(isHandset$ | async) === false">
+    <mat-sidenav
+        *ngIf="isLogged"
+        #drawer class="sidenav" fixedInViewport
+        [attr.role]="(isMobile$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isMobile$ | async) ? 'over' : 'side'"
+        [opened]="(isMobile$ | async) === false">
 
         <mat-toolbar class="sticky-item" style="height: 105px" color="primary">
             <img src="assets/images/logo-light.svg" alt="Logo" height="90">
@@ -13,7 +15,7 @@
                 <!-- User profile -->
                 <a mat-list-item
                    routerLink="profile"
-                   (click)="groupAction(-1); isMobile ? drawer.close() : null"
+                   (click)="groupAction(-1)"
                    [ngClass]="{'active': currentId === '-1'}">
                         <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar icon-margin">
                         <span class="profile">{{authService.decodedToken.sub}}</span>
@@ -36,7 +38,7 @@
                 <ng-container *ngFor="let group of groups">
                     <a mat-list-item
                        [ngClass]="{'active': currentId === group.id.toString()}"
-                       (click)="groupAction(group.id, group); isMobile ? drawer.close() : null">
+                       (click)="groupAction(group.id, group);">
                         {{group.name}}
                     </a>
                 </ng-container>
@@ -44,7 +46,7 @@
             </mat-nav-list>
 
             <!-- Add new group -->
-            <mat-nav-list class="bottom-btn" (click)="openAddModal(true); isMobile ? drawer.close() : null">
+            <mat-nav-list class="bottom-btn" (click)="openAddModal(true);">
                 <a mat-list-item>
                     <mat-icon class="icon-margin">add_circle</mat-icon>
                     New group
@@ -52,47 +54,63 @@
             </mat-nav-list>
         </ng-container>
     </mat-sidenav>
+
+    <!-- Content -->
     <mat-sidenav-content>
-        <mat-toolbar *ngIf="isLogged" class="toolbar">
-            <button
-                type="button"
-                aria-label="sidenav"
-                mat-icon-button
-                (click)="drawer.toggle()"
-                *ngIf="isHandset$ | async">
-                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-            </button>
-
-            <!-- Display name of group or page -->
-            <span>{{ selectedGroup.name }}</span>
-
-            <span class="spacer"></span>
-
-            <!-- Display user actions based on rights -->
-            <button mat-icon-button
-                    [matMenuTriggerFor]="menu"
-                    aria-label="Group menu"
-                    *ngIf="!['Profile', 'Personal space', 'Calendar'].includes(selectedGroup.name)">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-<!--                <button mat-menu-item (click)="openUserModal()">-->
-<!--                    <mat-icon>group</mat-icon>-->
-<!--                    <span>Users</span>-->
-<!--                </button>-->
-                <button mat-menu-item (click)="openAddModal(false)">
-                    <mat-icon>group_add</mat-icon>
-                    <span>Add users</span>
+        <mat-toolbar class="toolbar">
+            <ng-container *ngIf="isLogged; else no_auth">
+                <button
+                    type="button"
+                    aria-label="sidenav"
+                    mat-icon-button
+                    (click)="drawer.toggle()"
+                    *ngIf="isMobile$ | async">
+                    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                 </button>
-<!--                <button mat-menu-item>-->
-<!--                    <mat-icon>person_remove</mat-icon>-->
-<!--                    <span>Quit group</span>-->
-<!--                </button>-->
-<!--                <button mat-menu-item>-->
-<!--                    <mat-icon class="delete-color">highlight_off</mat-icon>-->
-<!--                    <span class="delete-color">Delete Group</span>-->
-<!--                </button>-->
-            </mat-menu>
+
+                <!-- Display name of group or page -->
+                <span>{{ selectedGroup.name }}</span>
+
+                <span class="spacer"></span>
+
+                <!-- Display user actions based on rights -->
+                <button mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Group menu"
+                        *ngIf="!['Profile', 'Personal space', 'Calendar'].includes(selectedGroup.name)">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <!--                <button mat-menu-item (click)="openUserModal()">-->
+                    <!--                    <mat-icon>group</mat-icon>-->
+                    <!--                    <span>Users</span>-->
+                    <!--                </button>-->
+                    <button mat-menu-item (click)="openAddModal(false)">
+                        <mat-icon>group_add</mat-icon>
+                        <span>Add users</span>
+                    </button>
+                    <!--                <button mat-menu-item>-->
+                    <!--                    <mat-icon>person_remove</mat-icon>-->
+                    <!--                    <span>Quit group</span>-->
+                    <!--                </button>-->
+                    <!--                <button mat-menu-item>-->
+                    <!--                    <mat-icon class="delete-color">highlight_off</mat-icon>-->
+                    <!--                    <span class="delete-color">Delete Group</span>-->
+                    <!--                </button>-->
+                </mat-menu>
+            </ng-container>
+
+            <ng-template #no_auth>
+                <span>Keep Us</span>
+
+                <span class="spacer"></span>
+                <button mat-flat-button style="margin-right: 12px">
+                    Sign up
+                </button>
+                <button mat-flat-button color="primary">
+                    Sign in
+                </button>
+            </ng-template>
         </mat-toolbar>
 
         <!-- App content -->

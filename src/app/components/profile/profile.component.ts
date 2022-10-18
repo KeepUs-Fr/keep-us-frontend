@@ -6,7 +6,7 @@ import { SideNavService } from '../../services/side-nav.service';
 import { UserService } from '../../services/user.service';
 import { RemoveModalComponent } from '../modals/remove-modal/remove-modal.component';
 import { NotesService } from '../../services/notes.service';
-import {SnackBarService} from "../../services/snack-bar.service";
+import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
     selector: 'app-profile',
@@ -62,7 +62,9 @@ export class ProfileComponent implements OnInit {
                         next: (_) => {
                             this.userService.emitGroupId(0);
                             this.getGroups();
-                            this.snackBarService.openSuccess('Group have been deleted');
+                            this.snackBarService.openSuccess(
+                                'Group have been deleted'
+                            );
                         }
                     });
                 }
