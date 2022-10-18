@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {NotesService} from '../../../services/notes.service';
-import {NoteModel} from '../../../models/note.model';
-import {MatDialog} from '@angular/material/dialog';
-import {NoteCreationComponent} from '../note-creation/note-creation.component';
+import { Component, OnInit } from '@angular/core';
+import { NotesService } from '../../../services/notes.service';
+import { NoteModel } from '../../../models/note.model';
+import { MatDialog } from '@angular/material/dialog';
+import { NoteCreationComponent } from '../note-creation/note-creation.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NoteFiltersComponent} from '../note-filters/note-filters.component';
-import {UserService} from '../../../services/user.service';
-import {DeviceDetectorService} from "ngx-device-detector";
-import {first, fromEvent, Observable, startWith} from "rxjs";
-import {map} from "rxjs/operators";
+import { NoteFiltersComponent } from '../note-filters/note-filters.component';
+import { UserService } from '../../../services/user.service';
+import { ResponsiveService } from '../../../services/responsive.service';
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
     selector: 'app-note-list',
     templateUrl: './note-list.component.html',
@@ -18,9 +18,9 @@ import {map} from "rxjs/operators";
 export class NoteListComponent implements OnInit {
     isLoading = false;
     isTable = false;
-    isMobile = false;
+    isMobile$ = this.responsiveService.isMobile$;
     notes: NoteModel[] = [];
-    noteId = -1;
+    noteId: number | undefined;
     displayedColumns = ['color', 'title', 'description'];
     groupId = 0;
 
@@ -30,19 +30,15 @@ export class NoteListComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private userService: UserService,
-        private deviceService: DeviceDetectorService
+        private responsiveService: ResponsiveService
     ) {}
 
     ngOnInit(): void {
-        this.isMobile = this.deviceService.isMobile();
-        this.getNotes();
-
         this.userService.groupIdEmitted.subscribe((id) => {
+            this.noteId = undefined;
             this.groupId = id;
             this.getNotes();
         });
-
-        this.media('(max-width: 767px)').subscribe((matches) => this.isMobile = matches);
     }
 
     openCreationDialog(): void {
@@ -82,17 +78,12 @@ export class NoteListComponent implements OnInit {
         });
     }
 
-    goToNoteDetail(id: number): void {
-        if(this.isMobile) {
-            this.router.navigate(['note', id]).then();
-        } else {
-            this.noteId = id;
-        }
+    goToNoteDetail(id: number) {
+        this.noteId = id;
     }
 
     reload(doReload: boolean) {
         if (doReload)
-            this.noteId = -1;
             this.getNotes();
     }
 
@@ -113,13 +104,5 @@ export class NoteListComponent implements OnInit {
                 }
             });
         }
-    }
-
-    private media(query: string): Observable<boolean> {
-        const mediaQuery = window.matchMedia(query);
-        return fromEvent<MediaQueryList>(mediaQuery, 'change').pipe(
-            startWith(mediaQuery),
-            map((list: MediaQueryList) => list.matches)
-        );
     }
 }

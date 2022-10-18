@@ -38,11 +38,6 @@
             flex: 0 0 50px;
             white-space: nowrap;
         }
-
-        .mat-row:hover {
-            background-color: rgba(233,30,99,.15);
-            cursor: pointer;
-        }
     }
 
     mat-cell, mat-card-subtitle, p {
@@ -62,5 +57,9 @@
     .note-detail {
         margin-left: 34px;
         width: 100% !important;
+
+        @media screen and (max-width: 786px){
+            margin-left: 0;
+        }
     }
 }

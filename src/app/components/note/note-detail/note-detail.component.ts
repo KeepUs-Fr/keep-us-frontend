@@ -1,4 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    SimpleChanges
+} from '@angular/core';
 import { CreateNoteModel, NoteModel } from '../../../models/note.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotesService } from '../../../services/notes.service';
@@ -10,7 +17,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { UserService } from '../../../services/user.service';
-import {SnackBarService} from "../../../services/snack-bar.service";
+import { SnackBarService } from '../../../services/snack-bar.service';
 
 @Component({
     selector: 'app-note-detail',
@@ -40,7 +47,7 @@ export class NoteDetailComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        if(this.noteId === -1) {
+        if (this.noteId === -1) {
             this.route.params.subscribe((params: Params) => {
                 this.currentId = params['id'];
                 this.getNoteDetail();
@@ -57,7 +64,7 @@ export class NoteDetailComponent implements OnInit {
     }
 
     getNoteDetail(): void {
-        if(this.currentId > 0 && this.currentId !== undefined)
+        if (this.currentId > 0 && this.currentId !== undefined)
             this.notesService.getNoteById(this.currentId).subscribe({
                 next: (note) => {
                     this.note = note;
@@ -121,7 +128,9 @@ export class NoteDetailComponent implements OnInit {
                             } else {
                                 this.reload.emit(true);
                             }
-                            this.snackBarService.openSuccess('Note removed successfully');
+                            this.snackBarService.openSuccess(
+                                'Note removed successfully'
+                            );
                         }
                     });
                 }
