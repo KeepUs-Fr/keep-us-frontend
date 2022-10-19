@@ -1,20 +1,14 @@
-.color-palette{
+.color-palette {
     flex-wrap: wrap;
 
     .circle {
         &:hover {
             cursor: pointer;
-            border: 1.5px solid #E5E5E5;
+            border: 2px solid #E5E5E5;
         }
     }
 
     .active-color {
-        border: 1.5px solid #c2185b;
-    }
-
-    mat-icon {
-        margin-right: 12px;
-        font-size: 28px;
-        margin-bottom: 5px;
+        border: 2px solid #FCA311;
     }
 }

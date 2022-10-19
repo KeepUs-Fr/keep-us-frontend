@@ -3,7 +3,7 @@
         <input matInput [(ngModel)]="title" placeholder="Title" style="font-size: 22px">
     </mat-form-field>
     <br/>
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="standard" style="margin-bottom: 7px">
         <textarea matInput [(ngModel)]="description"
                   style="font-size: 16px"
                   placeholder="Create note..."
@@ -12,23 +12,6 @@
         </textarea>
     </mat-form-field>
     <br/>
-<!--    <mat-form-field appearance="legacy">-->
-<!--        <mat-label>Tags</mat-label>-->
-<!--        <mat-chip-list #chipList aria-label="notes tags">-->
-<!--            <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">-->
-<!--                {{tag}}-->
-<!--                <button matChipRemove>-->
-<!--                    <mat-icon>cancel</mat-icon>-->
-<!--                </button>-->
-<!--            </mat-chip>-->
-<!--            <input placeholder="#work"-->
-<!--                   [matChipInputFor]="chipList"-->
-<!--                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
-<!--                   [matChipInputAddOnBlur]="addOnBlur"-->
-<!--                   (matChipInputTokenEnd)="add($event)">-->
-<!--        </mat-chip-list>-->
-<!--    </mat-form-field>-->
-<!--    <br/>-->
     <app-note-color-palette (eventEmitter)="getColor($event)"></app-note-color-palette>
 </div>
 <div mat-dialog-actions class="justify-between">

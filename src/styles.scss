@@ -91,6 +91,8 @@ $custom-theme: mat.define-light-theme((
 
 /* ======== Global style ======== */
 @include mat.all-component-themes($custom-theme);
+@import url('https://fonts.googleapis.com/css2?family=Magra:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
 
 html, body {
     height: 100%;
@@ -99,14 +101,35 @@ html, body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+    .title {
+        font-weight: bold !important;
+        font-size: 96px;
+        line-height: 101px;
+    }
+
+    .btn {
+        background: linear-gradient(90deg, #1D2F56 0%, #444EA8 89.06%);
+        color: #FFFFFF;
+        border-radius: 30px;
+        padding: 0 50px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 39px;
+
+        &.outline {
+            background: transparent;
+            border: 1px solid #FFFFFF;
+        }
+    }
 
     .circle {
         border-radius: 50%;
-        height: 28px;
-        width: 28px;
+        height: 30px;
+        width: 30px;
         margin-right: 5px;
-        border: 1.5px solid #5f6368;
+        border: 2px solid transparent;
         margin-bottom: 5px;
     }
 

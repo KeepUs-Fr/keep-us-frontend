@@ -101,13 +101,11 @@
             </ng-container>
 
             <ng-template #no_auth>
-                <span>Keep Us</span>
+                <span routerLink="/home">Keep Us</span>
 
                 <span class="spacer"></span>
-                <button mat-flat-button style="margin-right: 12px">
-                    Sign up
-                </button>
-                <button mat-flat-button color="primary">
+
+                <button mat-flat-button class="btn outline" routerLink="/login">
                     Sign in
                 </button>
             </ng-template>
