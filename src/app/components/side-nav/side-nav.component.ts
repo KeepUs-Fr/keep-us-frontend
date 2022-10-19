@@ -10,7 +10,7 @@ import { UserModalComponent } from '../modals/user-modal/user-modal.component';
 import { GroupModel } from '../../models/group.model';
 import { ResponsiveService } from '../../services/responsive.service';
 import { MatSidenav } from '@angular/material/sidenav';
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({

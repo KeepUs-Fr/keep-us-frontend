@@ -85,7 +85,6 @@ export class NoteDetailComponent implements OnInit {
         ) {
             this.userService.emitGroupId(+localStorage.getItem('groupId')!);
             this.router.navigate(['notes']).then();
-
         } else {
             const newNote: CreateNoteModel = {
                 title: this.title,
@@ -98,7 +97,9 @@ export class NoteDetailComponent implements OnInit {
 
             this.notesService.updateNote(this.currentId, newNote).subscribe({
                 next: (_) => {
-                    this.userService.emitGroupId(+localStorage.getItem('groupId')!);
+                    this.userService.emitGroupId(
+                        +localStorage.getItem('groupId')!
+                    );
                     this.router.navigate(['notes']).then();
                     this.snackBarService.openSuccess('Note updated');
                 },

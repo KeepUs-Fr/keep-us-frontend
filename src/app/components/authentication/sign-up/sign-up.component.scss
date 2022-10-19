@@ -1,16 +1,19 @@
 .signup {
-    h1 {
-        text-align: center;
-    }
+    .signup-content {
+        width: 320px;
 
-    mat-form-field, .btn {
-        width: 100%;
-    }
+        h1 {
+            text-align: center;
+        }
 
-    .terms {
-        max-width: 500px;
-        color: #d1cdc5;
-        text-align: center;
-        margin-top: 64px;
+        mat-form-field, .btn {
+            width: 100%;
+        }
+
+        .terms {
+            color: rgba(55, 53, 47, 0.5);
+            text-align: center;
+            margin-top: 45px;
+        }
     }
 }

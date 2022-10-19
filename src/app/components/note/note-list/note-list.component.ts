@@ -3,11 +3,11 @@ import { NotesService } from '../../../services/notes.service';
 import { NoteModel } from '../../../models/note.model';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteCreationComponent } from '../note-creation/note-creation.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NoteFiltersComponent } from '../note-filters/note-filters.component';
 import { UserService } from '../../../services/user.service';
 import { ResponsiveService } from '../../../services/responsive.service';
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -83,15 +83,13 @@ export class NoteListComponent implements OnInit {
 
     goToNoteDetail(id: number) {
         this.noteId = id;
-        this.isMobile$.pipe(untilDestroyed(this)).subscribe(result => {
-            if (result)
-                this.router.navigate(['note', this.noteId]).then();
-        })
+        this.isMobile$.pipe(untilDestroyed(this)).subscribe((result) => {
+            if (result) this.router.navigate(['note', this.noteId]).then();
+        });
     }
 
     reload(doReload: boolean) {
-        if (doReload)
-            this.getNotes();
+        if (doReload) this.getNotes();
     }
 
     private getNotes() {

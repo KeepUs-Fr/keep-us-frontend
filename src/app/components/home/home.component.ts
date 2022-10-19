@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {AnimationItem} from "lottie-web";
-import {AnimationOptions} from "ngx-lottie";
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
     lottieThink: AnimationOptions = {
@@ -32,12 +32,9 @@ export class HomeComponent implements OnInit {
         loop: true
     };
 
-    constructor() { }
+    constructor() {}
 
-    ngOnInit(): void {
-
-    }
+    ngOnInit(): void {}
 
     onAnimate(animationItem: AnimationItem) {}
-
 }
