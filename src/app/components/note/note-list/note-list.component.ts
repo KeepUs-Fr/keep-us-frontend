@@ -3,11 +3,11 @@ import { NotesService } from '../../../services/notes.service';
 import { NoteModel } from '../../../models/note.model';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteCreationComponent } from '../note-creation/note-creation.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NoteFiltersComponent } from '../note-filters/note-filters.component';
 import { UserService } from '../../../services/user.service';
 import { ResponsiveService } from '../../../services/responsive.service';
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -37,12 +37,15 @@ export class NoteListComponent implements OnInit {
         this.userService.groupIdEmitted.subscribe((id) => {
             this.noteId = undefined;
             this.groupId = id;
+            console.log(id);
             this.getNotes();
         });
     }
 
     openCreationDialog(): void {
-        const dialogRef = this.dialog.open(NoteCreationComponent);
+        const dialogRef = this.dialog.open(NoteCreationComponent, {
+            width: '100%'
+        });
 
         dialogRef.afterClosed().subscribe({
             next: (_) => {
@@ -80,29 +83,26 @@ export class NoteListComponent implements OnInit {
 
     goToNoteDetail(id: number) {
         this.noteId = id;
+        this.isMobile$.pipe(untilDestroyed(this)).subscribe((result) => {
+            if (result) this.router.navigate(['note', this.noteId]).then();
+        });
     }
 
     reload(doReload: boolean) {
-        if (doReload)
-            this.getNotes();
+        if (doReload) this.getNotes();
     }
 
     private getNotes() {
         this.isLoading = true;
-        const localId = localStorage.getItem('groupId');
-        if (localId && this.groupId === 0) this.groupId = +localId;
-
-        if (this.groupId > 0) {
-            this.notesService.getNotes(this.groupId).subscribe({
-                next: (notes) => {
-                    this.notes = notes;
-                    this.isLoading = false;
-                },
-                error: (err) => {
-                    this.isLoading = false;
-                    console.error(err);
-                }
-            });
-        }
+        this.notesService.getNotes(this.groupId).subscribe({
+            next: (notes) => {
+                this.notes = notes;
+                this.isLoading = false;
+            },
+            error: (err) => {
+                this.isLoading = false;
+                console.error(err);
+            }
+        });
     }
 }

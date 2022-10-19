@@ -16,7 +16,7 @@ export class NoteColorPaletteComponent implements OnInit {
 
     ngOnInit(): void {
         this.colors
-            .set('bleu', '#5AADF9')
+            .set('blue', '#5AADF9')
             .set('red', '#F95A5A')
             .set('green', '#5AF9DC')
             .set('orange', '#F98A5A')
