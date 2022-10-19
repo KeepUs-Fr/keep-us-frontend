@@ -1,0 +1,39 @@
+section {
+    margin: -24px;
+    height: 30%;
+
+    @media screen and (max-width: 786px){
+        margin: -10px;
+    }
+
+    &.head {
+        background-image: linear-gradient(
+                rgba(0, 0, 0, 0.6),
+                rgba(0, 0, 0, 0.6)
+        ), url("../../../assets/images/home-title.png");
+        background-position: top;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 95vh !important;
+
+        .title {
+            color: #FFFFFF;
+            padding-top: 35%;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #FFFFFF;
+            font-size: 30px;
+            text-align: center;
+            padding: 24px 0;
+        }
+
+        .btn {
+            padding-top: 6px;
+            padding-bottom: 6px;
+            font-size: 16px;
+        }
+
+    }
+}

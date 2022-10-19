@@ -1,34 +1,35 @@
 <div class="login justify-center">
     <div class="login-content">
-        <h1>Keep Us</h1>
 
-        <!-- Login form -->
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="outline">
-                <mat-label>Username</mat-label>
-                <input matInput type="text" id="username" formControlName="username" required>
-                <mat-icon matSuffix>person</mat-icon>
-            </mat-form-field>
-            <br/>
-            <mat-form-field appearance="outline">
-                <mat-label>Password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <h1>Keep Us</h1>
+
+            <!-- Login form -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="outline">
+                    <mat-label>Username</mat-label>
+                    <input matInput type="text" id="username" formControlName="username" required>
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+                <br/>
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <br/>
+                <button mat-flat-button class="btn" type="submit">
+                    <span *ngIf="!isLoading">Log in</span>
+                    <mat-spinner diameter="36" color="accent" *ngIf="isLoading"></mat-spinner>
                 </button>
-            </mat-form-field>
-            <br/>
-            <button mat-flat-button color="primary" class="justify-center" type="submit">
-                <span *ngIf="!isLoading">Log in</span>
-                <mat-spinner diameter="36" color="accent" *ngIf="isLoading"></mat-spinner>
-            </button>
 
-        </form>
-        <div class="or">or</div>
-        <button mat-flat-button
-                color="accent"
-                routerLink="/signup">
-            Sign up
-        </button>
+            </form>
+            <div class="or">or</div>
+            <button mat-flat-button
+                    class="btn signup"
+                    routerLink="/signup">
+                Sign up
+            </button>
     </div>
 </div>

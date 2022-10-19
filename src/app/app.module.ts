@@ -31,8 +31,14 @@ import { AuthService } from './services/auth.service';
 import { TokenInterceptor } from './token.interceptor';
 import { SnackBarService } from './services/snack-bar.service';
 import { UserModalComponent } from './components/modals/user-modal/user-modal.component';
+import { HomeComponent } from './components/home/home.component';
+import { LottieModule } from 'ngx-lottie';
 
 FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
+
+export function playerFactory(): any {
+    return import('lottie-web');
+}
 
 @NgModule({
     declarations: [
@@ -52,12 +58,14 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
         AddModalComponent,
         FooterComponent,
         CalendarComponent,
-        UserModalComponent
+        UserModalComponent,
+        HomeComponent
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
+        LottieModule.forRoot({ player: playerFactory }),
         HttpClientModule,
         ReactiveFormsModule,
         MaterialModule,
