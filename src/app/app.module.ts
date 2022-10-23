@@ -65,7 +65,7 @@ export function playerFactory(): any {
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
-        // LottieModule.forRoot({ player: playerFactory }),
+        LottieModule.forRoot({ player: playerFactory }),
         HttpClientModule,
         ReactiveFormsModule,
         MaterialModule,

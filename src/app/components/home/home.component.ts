@@ -11,29 +11,29 @@ import {Router} from "@angular/router";
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-    // lottieThink: AnimationOptions = {
-    //     path: '/assets/lottie/think.json',
-    //     autoplay: true,
-    //     loop: true
-    // };
-    //
-    // lottieCalendar: AnimationOptions = {
-    //     path: '/assets/lottie/calendar.json',
-    //     autoplay: true,
-    //     loop: true
-    // };
-    //
-    // lottieGroup: AnimationOptions = {
-    //     path: '/assets/lottie/group.json',
-    //     autoplay: true,
-    //     loop: true
-    // };
-    //
-    // lottiePuzzle: AnimationOptions = {
-    //     path: '/assets/lottie/puzzle.json',
-    //     autoplay: true,
-    //     loop: true
-    // };
+    lottieThink: AnimationOptions = {
+        path: '/assets/lottie/think.json',
+        autoplay: true,
+        loop: true
+    };
+
+    lottieCalendar: AnimationOptions = {
+        path: '/assets/lottie/calendar.json',
+        autoplay: true,
+        loop: true
+    };
+
+    lottieGroup: AnimationOptions = {
+        path: '/assets/lottie/group.json',
+        autoplay: true,
+        loop: true
+    };
+
+    lottiePuzzle: AnimationOptions = {
+        path: '/assets/lottie/puzzle.json',
+        autoplay: true,
+        loop: true
+    };
 
     isMobile$ = this.responsiveService.isMobile$;
 
