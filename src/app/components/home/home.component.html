@@ -7,69 +7,135 @@
         </div>
     </div>
 </section>
+<ng-container *ngIf="(isMobile$ | async); else web_view">
+    <section>
+        <div class="description">
+            <h2 class="txt-center">Pense a toi</h2>
+            <hr/>
 
-<!--<section style="display: flex; justify-content: space-evenly; background-color: #14213D">-->
-<!--    <div class="lottie-animation" style="height: 500px">-->
-<!--        <ng-lottie-->
-<!--            [options]="lottieThink"-->
-<!--            (animationCreated)="onAnimate($event)">-->
-<!--        </ng-lottie>-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <h2>Pense a toi</h2>-->
-<!--        <ul>-->
-<!--            <li>Organise tes idées</li>-->
-<!--            <li>Notes tes rappels</li>-->
-<!--            <li>Ecris tes pensées</li>-->
-<!--        </ul>-->
-<!--    </div>-->
+            <p>Organise chacun de tes idées.</p>
+            <p>Notes tes rappels, il sont ajouter dans ton agenda.</p>
+            <p>Ecris tes pensées, des lignes et des lignes sans problème.</p>
+        </div>
 
-<!--</section>-->
-<!--<section style="display: flex; justify-content: space-evenly;">-->
-<!--    <div>-->
-<!--        <h2>Pense a toi</h2>-->
-<!--        <ul>-->
-<!--            <li>Organise tes idées</li>-->
-<!--            <li>Notes tes rappels</li>-->
-<!--            <li>Ecris tes pensées</li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--    <div class="lottie-animation" style="height: 700px; width: 700px">-->
-<!--        <ng-lottie-->
-<!--            [options]="lottieCalendar"-->
-<!--            (animationCreated)="onAnimate($event)">-->
-<!--        </ng-lottie>-->
-<!--    </div>-->
-<!--</section>-->
-<!--<section style="display: flex; justify-content: space-evenly; background-color: #14213D">-->
-<!--    <div class="lottie-animation" style="height: 500px">-->
-<!--        <ng-lottie-->
-<!--            [options]="lottieGroup"-->
-<!--            (animationCreated)="onAnimate($event)">-->
-<!--        </ng-lottie>-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <h2>Pense a toi</h2>-->
-<!--        <ul>-->
-<!--            <li>Organise tes idées</li>-->
-<!--            <li>Notes tes rappels</li>-->
-<!--            <li>Ecris tes pensées</li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</section>-->
-<!--<section style="display: flex; justify-content: space-evenly;">-->
-<!--    <div>-->
-<!--        <h2>Pense a toi</h2>-->
-<!--        <ul>-->
-<!--            <li>Organise tes idées</li>-->
-<!--            <li>Notes tes rappels</li>-->
-<!--            <li>Ecris tes pensées</li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--    <div class="lottie-animation" style="height: 500px">-->
-<!--        <ng-lottie-->
-<!--            [options]="lottiePuzzle"-->
-<!--            (animationCreated)="onAnimate($event)">-->
-<!--        </ng-lottie>-->
-<!--    </div>-->
-<!--</section>-->
+        <div class="lottie-animation lottie">
+            <ng-lottie
+                [options]="lottieThink"
+                (animationCreated)="onAnimate($event)">
+            </ng-lottie>
+        </div>
+    </section>
+    <section>
+        <div class="description">
+            <h2 class="txt-center">Un agenda sur mesure</h2>
+            <hr/>
+
+            <p>N’oublie aucun rendez-vous.</p>
+            <p>Tu pourras voir toutes les tâches partagées.</p>
+        </div>
+        <div class="lottie-animation" style="height: 300px">
+            <ng-lottie
+                [options]="lottieCalendar"
+                (animationCreated)="onAnimate($event)">
+            </ng-lottie>
+        </div>
+    </section>
+    <section>
+        <div fxFlexAlign="center" class="description">
+            <h2 class="txt-center">Organisez vous ensemble</h2>
+            <hr/>
+
+            <p>Entre amis pour les sorties ou soirées.</p>
+            <p>Entre collègue pour le travail.</p>
+            <p>En famille pour une meilleure répartition des tâches.</p>
+        </div>
+        <div class="lottie-animation lottie">
+            <ng-lottie
+                [options]="lottieGroup"
+                (animationCreated)="onAnimate($event)">
+            </ng-lottie>
+        </div>
+    </section>
+    <section>
+        <div class="description">
+            <h2 class="txt-center">Avec Keep Us</h2>
+            <hr/>
+
+            <p class="">Plus facile d’assembler vos idées.</p>
+            <p class="">Une meilleure organisation.</p>
+        </div>
+        <div class="lottie-animation lottie">
+            <ng-lottie
+                [options]="lottiePuzzle"
+                (animationCreated)="onAnimate($event)">
+            </ng-lottie>
+        </div>
+    </section>
+</ng-container>
+
+<ng-template #web_view>
+    <section class="justify-evenly">
+        <div class="lottie-animation lottie">
+            <ng-lottie
+                [options]="lottieThink"
+                (animationCreated)="onAnimate($event)">
+            </ng-lottie>
+        </div>
+        <div fxFlexAlign="center" class="description">
+            <h2>Pense a toi</h2>
+            <hr/>
+
+            <p>Organise chacun de tes idées.</p>
+            <p>Notes tes rappels, il sont ajouter dans ton agenda.</p>
+            <p>Ecris tes pensées, des lignes et des lignes sans problème.</p>
+        </div>
+    </section>
+    <section class="justify-evenly">
+        <div fxFlexAlign="center" class="description">
+            <h2>Un agenda sur mesure</h2>
+            <hr/>
+
+            <p>N’oublie aucun rendez-vous.</p>
+            <p>Tu pourras voir toutes les tâches partagées.</p>
+        </div>
+        <div class="lottie-animation" style="height: 400px">
+            <ng-lottie
+                [options]="lottieCalendar"
+                (animationCreated)="onAnimate($event)">
+            </ng-lottie>
+        </div>
+    </section>
+    <section class="justify-evenly">
+        <div class="lottie-animation lottie">
+            <ng-lottie
+                [options]="lottieGroup"
+                (animationCreated)="onAnimate($event)">
+            </ng-lottie>
+        </div>
+        <div fxFlexAlign="center" class="description">
+            <h2>Organisez vous ensemble</h2>
+            <hr/>
+
+            <p>Entre amis pour les sorties ou soirées.</p>
+            <p>Entre collègue pour le travail.</p>
+            <p>En famille pour une meilleure répartition des tâches.</p>
+        </div>
+    </section>
+    <section class="justify-evenly">
+        <div fxFlexAlign="center" class="description">
+            <h2>Avec l'applicqiton Keep Us</h2>
+            <hr/>
+
+            <p>Plus facile d’assembler vos idées.</p>
+            <p>Une meilleure organisation.</p>
+        </div>
+        <div class="lottie-animation lottie">
+            <ng-lottie
+                [options]="lottiePuzzle"
+                (animationCreated)="onAnimate($event)">
+            </ng-lottie>
+        </div>
+    </section>
+</ng-template>
+
+

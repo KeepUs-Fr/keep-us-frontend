@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
+import {ResponsiveService} from "../../services/responsive.service";
 
 @Component({
     selector: 'app-home',
@@ -32,7 +33,9 @@ export class HomeComponent implements OnInit {
         loop: true
     };
 
-    constructor() {}
+    isMobile$ = this.responsiveService.isMobile$;
+
+    constructor(private responsiveService: ResponsiveService) {}
 
     ngOnInit(): void {}
 
