@@ -1,8 +1,10 @@
 section {
-    margin: -24px;
-    height: 30%;
+    margin: 0 -24px;
+    background-color: rgb(20,33,61,.94);
+    padding-bottom: 3%;
+    padding-top: 3%;
 
-    @media screen and (max-width: 786px){
+    @media (max-width: 786px) {
         margin: -10px;
     }
 
@@ -15,11 +17,20 @@ section {
         background-repeat: no-repeat;
         background-size: cover;
         height: 95vh !important;
+        margin-top: -24px;
+
+        @media (max-width: 786px) {
+            margin: -10px;
+        }
 
         .title {
             color: #FFFFFF;
             padding-top: 35%;
             text-align: center;
+
+            @media (max-width: 786px) {
+                font-size: 64px;
+            }
         }
 
         .subtitle {
@@ -27,6 +38,10 @@ section {
             font-size: 30px;
             text-align: center;
             padding: 24px 0;
+
+            @media (max-width: 786px) {
+                font-size: 28px;
+            }
         }
 
         .btn {
@@ -36,4 +51,34 @@ section {
         }
 
     }
+
+    hr {
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #FCA311;
+        padding-bottom: 24px;
+    }
+
+    .lottie {
+        height: 500px;
+
+        @media (max-width: 786px) {
+            height: 380px;
+        }
+    }
+
+    .description {
+        color: #FFFFFF;
+        font-size: 18px;
+
+        h2 {
+            font-size: 32px;
+        }
+
+        @media (max-width: 786px) {
+            padding: 18px;
+        }
+    }
+
+
 }

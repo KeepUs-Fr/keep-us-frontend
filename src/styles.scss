@@ -133,6 +133,10 @@ body {
         margin-bottom: 5px;
     }
 
+    .txt-center {
+        text-align: center !important;
+    }
+
     .justify-between {
         display: flex;
         justify-content: space-between;
@@ -151,6 +155,11 @@ body {
     .justify-end {
         display: flex;
         justify-content: flex-end;
+    }
+
+    .justify-evenly {
+        display: flex;
+        justify-content: space-evenly;
     }
 
     .spacer {
