@@ -2,10 +2,10 @@ mat-sidenav-container {
     height: 100%;
 
     .sidenav {
-        width: 16%;
+        width: 18%;
         background-color: #14213D;
 
-        @media screen and (max-width: 786px){
+        @media (max-width: 786px) {
             width: 80%;
         }
 
@@ -15,7 +15,6 @@ mat-sidenav-container {
 
         .icon-margin {
             margin-right: 12px;
-            color: #FCA311;
         }
 
         .avatar {
@@ -54,15 +53,10 @@ mat-sidenav-container {
         .bottom-btn {
             position: fixed;
             bottom: 0;
-            width: 16%;
             background-color: #14213D;
 
-            a {
-                color: #FCA311;
-            }
-
-            @media screen and (max-width: 786px){
-                width: 85%;
+            @media (max-width: 786px){
+                width: 80%;
             }
         }
     }

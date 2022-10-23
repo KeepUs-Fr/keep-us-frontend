@@ -122,6 +122,10 @@ body {
             background: transparent;
             border: 1px solid #FFFFFF;
         }
+
+        &.secondary {
+            background: linear-gradient(90deg, #E64602 0%, #FCA311 100%);
+        }
     }
 
     .circle {

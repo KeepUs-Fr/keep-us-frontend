@@ -1,7 +1,7 @@
 <div class="signup">
     <!-- form -->
     <div class="justify-center">
-        <div class="signup-content">
+        <mat-card class="signup-content">
             <h1>Sign up</h1>
             <!-- Sign up form -->
             <form  [formGroup]="signupForm" (ngSubmit)="onSubmit()">
@@ -19,7 +19,7 @@
                     </button>
                 </mat-form-field>
                 <br/>
-                <button mat-flat-button class="btn" type="submit">Create my account</button>
+                <button mat-flat-button class="btn secondary" type="submit">Create my account</button>
             </form>
 
             <div class="justify-center">
@@ -34,7 +34,7 @@
                     I already have an account. Sign in.
                 </a>
             </div>
-        </div>
+        </mat-card>
     </div>
 
 
