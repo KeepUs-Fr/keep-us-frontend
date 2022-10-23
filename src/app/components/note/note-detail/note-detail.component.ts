@@ -18,6 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { UserService } from '../../../services/user.service';
 import { SnackBarService } from '../../../services/snack-bar.service';
+import {retry} from "rxjs";
+import {copyAssets} from "@angular-devkit/build-angular/src/utils/copy-assets";
 
 @Component({
     selector: 'app-note-detail',
@@ -86,11 +88,12 @@ export class NoteDetailComponent implements OnInit {
             this.userService.emitGroupId(+localStorage.getItem('groupId')!);
             this.router.navigate(['notes']).then();
         } else {
+            const noteColor = this.getColorFromHex(this.note?.color!);
+
             const newNote: CreateNoteModel = {
                 title: this.title,
                 content: this.content,
-                tag: this.note?.tag!,
-                color: this.selectedColor.key,
+                color: noteColor,
                 ownerId: this.note?.ownerId!,
                 groupId: this.note?.groupId!
             };
@@ -140,5 +143,20 @@ export class NoteDetailComponent implements OnInit {
                 console.error(err);
             }
         });
+    }
+
+    private getColorFromHex(hex: string): string {
+        switch (hex) {
+            case '#FF6262':
+                return 'red';
+            case  '#22A991':
+                return 'green';
+            case '#F98A5A':
+                return 'orange';
+            case '#B28BB9':
+                return 'purple';
+            default:
+                return 'blue';
+        }
     }
 }

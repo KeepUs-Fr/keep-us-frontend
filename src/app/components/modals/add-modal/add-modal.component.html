@@ -22,7 +22,7 @@
 <div mat-dialog-actions class="justify-between">
     <button mat-flat-button
             [mat-dialog-close]="name"
-            color="primary"
+            class="btn secondary"
             (click)="submit()"
             [disabled]="name.trim() === ''">
         <span *ngIf="data.isCreation">Create Group</span>

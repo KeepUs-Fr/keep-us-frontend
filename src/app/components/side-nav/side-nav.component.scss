@@ -13,10 +13,6 @@ mat-sidenav-container {
             padding-top: 0;
         }
 
-        .icon-margin {
-            margin-right: 12px;
-        }
-
         .avatar {
             vertical-align: middle;
             width: 42px;
@@ -26,6 +22,7 @@ mat-sidenav-container {
 
         .profile {
             font-size: 18px;
+            margin-left: 12px;
         }
 
         .sticky-item {
@@ -42,8 +39,7 @@ mat-sidenav-container {
         }
 
         .active {
-            color: #14213D;
-            background-color: rgba(134,141,205);
+            background: linear-gradient(90deg, #E64602 0%, #FCA311 100%);
 
             mat-icon {
                 color: #14213D;
@@ -54,9 +50,17 @@ mat-sidenav-container {
             position: fixed;
             bottom: 0;
             background-color: #14213D;
+            width: 18%;
 
             @media (max-width: 786px){
                 width: 80%;
+            }
+            a, mat-icon {
+                color: #FCA311;
+            }
+
+            .icon-margin {
+                margin-right: 12px;
             }
         }
     }

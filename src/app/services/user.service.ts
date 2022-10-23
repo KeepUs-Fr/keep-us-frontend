@@ -38,8 +38,14 @@ export class UserService {
         );
     }
 
-    getGroupByOwnerId(id: number): Observable<GroupModel[]> {
+    getGroupsByOwnerId(id: number): Observable<GroupModel[]> {
         return this.http.get<GroupModel[]>(
+            environment.baseUrl + '/groups/owner/' + id
+        );
+    }
+
+    getGroupById(id: number): Observable<GroupModel> {
+        return this.http.get<GroupModel>(
             environment.baseUrl + '/groups/' + id
         );
     }

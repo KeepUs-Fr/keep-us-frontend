@@ -3,14 +3,13 @@
         <mat-icon>arrow_back_ios</mat-icon>
     </button>
 
-    <div class="justify-between">
+    <div class="justify-between detail-header" [ngStyle]="{'background-color': selectedColor.value}">
         <mat-form-field appearance="standard" class="input-title">
             <input matInput
                    placeholder="Title"
                    [value]="note.title"
                    [(ngModel)]="title"
-                   style="font-size: 28px;"
-                   [ngStyle]="{'color': selectedColor.value}">
+                   style="font-size: 28px;">
         </mat-form-field>
         <div>
 <!--            <button mat-icon-button [ngStyle]="{'color': selectedColor.value}">-->
@@ -21,12 +20,11 @@
             </button>
             <!-- <app-note-color-palette (eventEmitter)="getColor($event)" [detailColor]="note.color"></app-note-color-palette>-->
             <button mat-icon-button (click)="openRemoveDialog()">
-                <mat-icon color="warn">delete</mat-icon>
+                <mat-icon>delete</mat-icon>
             </button>
         </div>
     </div>
 
-    <hr [ngStyle]="{'background-color': selectedColor.value}"/>
 
     <mat-hint>{{note.createDate | date:'fullDate'}}</mat-hint>
     <br/>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -14,7 +14,7 @@ import { UserService } from '../../../services/user.service';
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
     hide = true;
     signupForm: FormGroup;
     usernameCtrl: FormControl;
@@ -33,6 +33,12 @@ export class SignUpComponent {
             username: this.usernameCtrl,
             password: this.passwordCtrl
         });
+    }
+
+    ngOnInit() {
+        if (this.authService.isLogged()) {
+            this.router.navigate(['notes']).then();
+        }
     }
 
     onSubmit(): void {

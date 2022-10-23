@@ -2,7 +2,6 @@ export interface NoteModel {
     id: number;
     title: string;
     content: string;
-    tag: string;
     color: string;
     ownerId: number;
     groupId: number;
@@ -12,7 +11,6 @@ export interface NoteModel {
 export interface CreateNoteModel {
     title: string;
     content: string;
-    tag: string;
     color: string;
     ownerId: number;
     groupId: number;

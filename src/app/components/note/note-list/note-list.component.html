@@ -1,12 +1,9 @@
 <div class="note-list">
     <div class="justify-between note-header" *ngIf="isMobile$ | async">
-        <div>
-            <button mat-icon-button class="icon-btn"
-                    (click)="openFilterDialog()">
-                <mat-icon>search</mat-icon>
-            </button>
-        </div>
-        <button mat-flat-button color="primary" (click)="openCreationDialog()">
+        <button mat-icon-button class="icon-btn" (click)="openFilterDialog()">
+            <mat-icon>search</mat-icon>
+        </button>
+        <button mat-flat-button class="btn secondary" (click)="openCreationDialog()">
             Create a new note
         </button>
         <button mat-icon-button class="icon-btn"

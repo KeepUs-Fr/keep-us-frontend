@@ -37,7 +37,7 @@ export class CalendarComponent implements OnInit {
     private getGroups(): void {
         this.isLoading = true;
         this.userService
-            .getGroupByOwnerId(+localStorage.getItem('ownerId')!)
+            .getGroupsByOwnerId(+localStorage.getItem('ownerId')!)
             .subscribe({
                 next: (groups) => {
                     this.addToEventList(groups);

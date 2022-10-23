@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
 
     private getGroups(): void {
         this.userService
-            .getGroupByOwnerId(+localStorage.getItem('ownerId')!)
+            .getGroupsByOwnerId(+localStorage.getItem('ownerId')!)
             .subscribe({
                 next: (groups) => {
                     this.groups = groups;

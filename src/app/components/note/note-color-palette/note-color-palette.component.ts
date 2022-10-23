@@ -17,10 +17,10 @@ export class NoteColorPaletteComponent implements OnInit {
     ngOnInit(): void {
         this.colors
             .set('blue', '#5AADF9')
-            .set('red', '#F95A5A')
-            .set('green', '#5AF9DC')
+            .set('red', '#FF6262')
+            .set('green', '#22A991')
             .set('orange', '#F98A5A')
-            .set('purple', '#E25AF9');
+            .set('purple', '#B28BB9');
 
         if (
             this.detailColor.trim() !== null &&

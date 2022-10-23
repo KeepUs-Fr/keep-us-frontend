@@ -37,7 +37,9 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.authService.isLogged()) this.router.navigate(['notes']).then();
+        if (this.authService.isLogged()) {
+            this.router.navigate(['notes']).then();
+        }
     }
 
     onSubmit(): void {

@@ -25,7 +25,7 @@
                 <!-- Calendar -->
 <!--                <a mat-list-item-->
 <!--                   routerLink="calendar"-->
-<!--                   (click)="groupAction(0); isMobile ? drawer.close() : null"-->
+<!--                   (click)="groupAction(0)"-->
 <!--                   [ngClass]="{'active': currentId === '0'}">-->
 <!--                    <mat-icon class="icon-margin">calendar_month</mat-icon>-->
 <!--                    Calendar-->
@@ -42,15 +42,14 @@
                         {{group.name}}
                     </a>
                 </ng-container>
-
             </mat-nav-list>
 
             <!-- Add new group -->
             <mat-nav-list class="bottom-btn" (click)="openAddModal(true);">
-                <button mat-flat-button class="btn secondary">
+                <a mat-list-item>
                     <mat-icon class="icon-margin">add_circle</mat-icon>
                     Créer un groupe
-                </button>
+                </a>
             </mat-nav-list>
         </ng-container>
     </mat-sidenav>
@@ -69,7 +68,7 @@
                 </button>
 
                 <!-- Display name of group or page -->
-                <span>{{ selectedGroup.name }}</span>
+                <span>{{ currentId !== '-1' ? selectedGroup.name: 'Profile' }}</span>
 
                 <span class="spacer"></span>
 

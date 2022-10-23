@@ -9,7 +9,6 @@ import { NotesService } from '../../../services/notes.service';
     styleUrls: ['./note-creation.component.scss']
 })
 export class NoteCreationComponent implements OnInit {
-    tags: string[] = [];
     title = '';
     description = '';
     closeModal = false;
@@ -23,7 +22,6 @@ export class NoteCreationComponent implements OnInit {
         let newNote: CreateNoteModel = {
             title: this.title,
             content: this.description,
-            tag: this.tags[0],
             color: this.selectedColor,
             ownerId: +localStorage.getItem('ownerId')!,
             groupId: +localStorage.getItem('groupId')!
@@ -37,16 +35,6 @@ export class NoteCreationComponent implements OnInit {
                 console.error(error);
             }
         });
-    }
-
-    add(event: MatChipInputEvent): void {
-        const value = (event.value || '').trim();
-
-        // Add our tags
-        if (value) {
-            this.tags.push(value);
-        }
-        event.chipInput!.clear();
     }
 
     getColor(color: { key: string; value: string }) {

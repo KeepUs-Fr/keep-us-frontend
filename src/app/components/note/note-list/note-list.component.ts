@@ -34,10 +34,17 @@ export class NoteListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        const id = localStorage.getItem('groupId');
+
+        if (id) {
+            this.noteId = undefined;
+            this.groupId = +id;
+            this.getNotes();
+        }
+
         this.userService.groupIdEmitted.subscribe((id) => {
             this.noteId = undefined;
             this.groupId = id;
-            console.log(id);
             this.getNotes();
         });
     }
@@ -96,7 +103,7 @@ export class NoteListComponent implements OnInit {
         this.isLoading = true;
         this.notesService.getNotes(this.groupId).subscribe({
             next: (notes) => {
-                this.notes = notes;
+                this.notes = notes.reverse();
                 this.isLoading = false;
             },
             error: (err) => {
