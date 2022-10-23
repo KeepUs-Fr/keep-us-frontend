@@ -68,7 +68,14 @@ mat-sidenav-container {
     }
 
     .toolbar {
-        background-color: rgb(20,33,61,.94)
+        background-color: rgb(20,33,61,.94);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+
+        .home {
+            cursor: pointer;
+        }
     }
 
     .mat-list-item, mat-panel-title, mat-toolbar {
