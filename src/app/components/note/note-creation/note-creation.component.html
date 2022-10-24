@@ -15,11 +15,11 @@
     <app-note-color-palette (eventEmitter)="getColor($event)"></app-note-color-palette>
 </div>
 <div mat-dialog-actions class="justify-between">
+    <button mat-flat-button mat-dialog-close="true">Annuler</button>
     <button mat-flat-button
             class="btn secondary"
             (click)="submit()"
             [mat-dialog-close]="closeModal">
-        Create
+        Creer
     </button>
-    <button mat-flat-button mat-dialog-close="true">Cancel</button>
 </div>
