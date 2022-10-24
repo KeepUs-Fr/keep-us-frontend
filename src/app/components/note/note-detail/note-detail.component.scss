@@ -2,6 +2,11 @@
     .detail-header {
         padding: 12px;
         border-radius: 8px;
+
+        @media (max-width: 786px) {
+            margin: -10px;
+            border-radius: 0 !important;
+        }
     }
 
     mat-form-field {

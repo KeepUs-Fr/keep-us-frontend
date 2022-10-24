@@ -1,9 +1,22 @@
 <div class="note-detail" *ngIf="note">
-    <button mat-icon-button (click)="updateNote()" *ngIf="noteId === -1">
-        <mat-icon>arrow_back_ios</mat-icon>
-    </button>
+    <div class="detail-header" [ngStyle]="{'background-color': selectedColor.value}">
+        <div [ngClass]="{'justify-between': noteId === -1}">
+            <button mat-icon-button (click)="updateNote()" *ngIf="noteId === -1">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
 
-    <div class="justify-between detail-header" [ngStyle]="{'background-color': selectedColor.value}">
+            <div class="justify-end">
+                <button mat-icon-button>
+                    <mat-icon>palette</mat-icon>
+                </button>
+                <button mat-icon-button (click)="updateNote()" *ngIf="noteId !== -1">
+                    <mat-icon>save</mat-icon>
+                </button>
+                <button mat-icon-button (click)="openRemoveDialog()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
         <mat-form-field appearance="standard" class="input-title">
             <input matInput
                    placeholder="Title"
@@ -11,18 +24,6 @@
                    [(ngModel)]="title"
                    style="font-size: 28px;">
         </mat-form-field>
-        <div>
-<!--            <button mat-icon-button [ngStyle]="{'color': selectedColor.value}">-->
-<!--                <mat-icon>palette</mat-icon>-->
-<!--            </button>-->
-            <button mat-icon-button (click)="updateNote()" *ngIf="noteId !== -1">
-                <mat-icon>save</mat-icon>
-            </button>
-            <!-- <app-note-color-palette (eventEmitter)="getColor($event)" [detailColor]="note.color"></app-note-color-palette>-->
-            <button mat-icon-button (click)="openRemoveDialog()">
-                <mat-icon>delete</mat-icon>
-            </button>
-        </div>
     </div>
 
 
