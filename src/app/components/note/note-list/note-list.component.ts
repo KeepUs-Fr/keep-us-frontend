@@ -51,7 +51,7 @@ export class NoteListComponent implements OnInit {
 
     openCreationDialog(): void {
         const dialogRef = this.dialog.open(NoteCreationComponent, {
-            width: '100%'
+            width: '600px'
         });
 
         dialogRef.afterClosed().subscribe({

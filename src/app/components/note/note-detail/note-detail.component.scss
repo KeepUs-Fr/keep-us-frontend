@@ -2,10 +2,12 @@
     .detail-header {
         padding: 12px;
         border-radius: 8px;
+        margin-bottom: 12px;
 
         @media (max-width: 786px) {
             margin: -10px;
-            border-radius: 0 !important;
+            border-radius: 0;
+            margin-bottom: 16px;
         }
     }
 

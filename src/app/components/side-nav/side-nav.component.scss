@@ -56,13 +56,13 @@ mat-sidenav-container {
             }
         }
 
-        img, mat-icon {
-            margin-right: 12px;
-        }
-
         .pb-50 {
             padding-bottom: 50px;
         }
+    }
+
+    img, mat-icon {
+        margin-right: 12px;
     }
 
     .mat-list-item, mat-panel-title, mat-toolbar {

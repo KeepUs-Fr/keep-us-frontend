@@ -4,7 +4,7 @@
             <mat-icon>search</mat-icon>
         </button>
         <button mat-flat-button class="btn secondary" (click)="openCreationDialog()">
-            Create a new note
+            Créer une note
         </button>
         <button mat-icon-button class="icon-btn"
                 [disabled]="notes.length <= 0"
@@ -57,13 +57,13 @@
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="title">
-            <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef>Titre</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="description">
-            <mat-header-cell *matHeaderCellDef> Content </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.content}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef>Contenu</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
