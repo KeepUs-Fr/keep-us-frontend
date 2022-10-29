@@ -76,7 +76,10 @@ export class NoteDetailComponent implements OnInit {
     }
 
     updateNote() {
-        if (this.note?.title === this.title && this.note.content === this.content)
+        if (
+            this.note?.title === this.title &&
+            this.note.content === this.content
+        )
             return;
 
         const noteColor = this.getColorFromHex(this.note?.color!);
@@ -90,7 +93,7 @@ export class NoteDetailComponent implements OnInit {
         };
 
         this.notesService.updateNote(this.currentId, newNote).subscribe({
-            next: _ => {
+            next: (_) => {
                 this.snackBarService.openSuccess('Note updated');
             },
             error: (err) => {
@@ -135,7 +138,7 @@ export class NoteDetailComponent implements OnInit {
         switch (hex) {
             case '#FF6262':
                 return 'red';
-            case  '#22A991':
+            case '#22A991':
                 return 'green';
             case '#F98A5A':
                 return 'orange';

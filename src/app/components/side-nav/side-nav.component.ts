@@ -150,20 +150,26 @@ export class SideNavComponent implements OnInit {
                 next: (groups) => {
                     this.groups = groups;
 
-                    if (this.currentId
-                        && this.currentId !== '-1'
-                        && this.currentId !== '0') {
-
-                        this.userService.getGroupById(+this.currentId).subscribe(group => {
-                            this.selectedGroup = group;
-                        })
+                    if (
+                        this.currentId &&
+                        this.currentId !== '-1' &&
+                        this.currentId !== '0'
+                    ) {
+                        this.userService
+                            .getGroupById(+this.currentId)
+                            .subscribe((group) => {
+                                this.selectedGroup = group;
+                            });
                     } else {
                         const firstGroup = this.groups.slice(0, 1).shift();
                         if (firstGroup) this.selectedGroup = firstGroup;
                     }
 
                     this.userService.emitGroupId(this.selectedGroup.id);
-                    localStorage.setItem('groupId', this.selectedGroup.id.toString());
+                    localStorage.setItem(
+                        'groupId',
+                        this.selectedGroup.id.toString()
+                    );
                 }
             });
     }
