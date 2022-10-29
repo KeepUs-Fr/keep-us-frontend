@@ -10,16 +10,12 @@ import { CreateNoteModel, NoteModel } from '../../../models/note.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotesService } from '../../../services/notes.service';
 import {
-    MatSnackBar,
     MatSnackBarHorizontalPosition,
     MatSnackBarVerticalPosition
 } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
-import { UserService } from '../../../services/user.service';
 import { SnackBarService } from '../../../services/snack-bar.service';
-import {retry} from "rxjs";
-import {copyAssets} from "@angular-devkit/build-angular/src/utils/copy-assets";
 
 @Component({
     selector: 'app-note-detail',
@@ -44,8 +40,7 @@ export class NoteDetailComponent implements OnInit {
         private notesService: NotesService,
         private router: Router,
         private dialog: MatDialog,
-        private snackBarService: SnackBarService,
-        private userService: UserService
+        private snackBarService: SnackBarService
     ) {}
 
     ngOnInit(): void {
@@ -65,7 +60,7 @@ export class NoteDetailComponent implements OnInit {
         this.getNoteDetail();
     }
 
-    getNoteDetail(): void {
+    getNoteDetail() {
         if (this.currentId > 0 && this.currentId !== undefined)
             this.notesService.getNoteById(this.currentId).subscribe({
                 next: (note) => {
@@ -80,46 +75,40 @@ export class NoteDetailComponent implements OnInit {
             });
     }
 
-    updateNote(): void {
+    updateNote() {
         if (
             this.note?.title === this.title &&
             this.note.content === this.content
-        ) {
-            this.userService.emitGroupId(+localStorage.getItem('groupId')!);
-            this.router.navigate(['notes']).then();
-        } else {
-            const noteColor = this.getColorFromHex(this.note?.color!);
+        )
+            return;
 
-            const newNote: CreateNoteModel = {
-                title: this.title,
-                content: this.content,
-                color: noteColor,
-                ownerId: this.note?.ownerId!,
-                groupId: this.note?.groupId!
-            };
+        const noteColor = this.getColorFromHex(this.note?.color!);
 
-            this.notesService.updateNote(this.currentId, newNote).subscribe({
-                next: (_) => {
-                    this.userService.emitGroupId(
-                        +localStorage.getItem('groupId')!
-                    );
-                    this.router.navigate(['notes']).then();
-                    this.snackBarService.openSuccess('Note updated');
-                },
-                error: (err) => {
-                    console.error(err);
-                }
-            });
-        }
+        const newNote: CreateNoteModel = {
+            title: this.title,
+            content: this.content,
+            color: noteColor,
+            ownerId: this.note?.ownerId!,
+            groupId: this.note?.groupId!
+        };
+
+        this.notesService.updateNote(this.currentId, newNote).subscribe({
+            next: (_) => {
+                this.snackBarService.openSuccess('Note updated');
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
     }
 
-    getColor(color: { key: string; value: string }): void {
+    getColor(color: { key: string; value: string }) {
         this.selectedColor = color;
     }
 
     openRemoveDialog() {
         const dialogRef = this.dialog.open(RemoveModalComponent, {
-            maxWidth: '440px'
+            width: '600px'
         });
 
         dialogRef.afterClosed().subscribe({
@@ -149,7 +138,7 @@ export class NoteDetailComponent implements OnInit {
         switch (hex) {
             case '#FF6262':
                 return 'red';
-            case  '#22A991':
+            case '#22A991':
                 return 'green';
             case '#F98A5A':
                 return 'orange';

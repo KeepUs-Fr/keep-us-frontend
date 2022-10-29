@@ -45,9 +45,7 @@ export class UserService {
     }
 
     getGroupById(id: number): Observable<GroupModel> {
-        return this.http.get<GroupModel>(
-            environment.baseUrl + '/groups/' + id
-        );
+        return this.http.get<GroupModel>(environment.baseUrl + '/groups/' + id);
     }
 
     createGroup(groupName: string): Observable<GroupModel> {

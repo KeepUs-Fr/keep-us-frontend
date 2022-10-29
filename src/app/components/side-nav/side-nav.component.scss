@@ -9,8 +9,8 @@ mat-sidenav-container {
             width: 80%;
         }
 
-        mat-nav-list {
-            padding-top: 0;
+        .active {
+            background: linear-gradient(90deg, #E64602 0%, #FCA311 100%);
         }
 
         .avatar {
@@ -20,9 +20,8 @@ mat-sidenav-container {
             border-radius: 50%;
         }
 
-        .profile {
-            font-size: 18px;
-            margin-left: 12px;
+        mat-divider {
+            background: #F5F5F5;
         }
 
         .sticky-item {
@@ -30,19 +29,15 @@ mat-sidenav-container {
             top: 0;
             z-index: 100;
             background-color: #14213D;
-        }
 
-        mat-expansion-panel {
-            background-color: transparent !important;
-            padding: 0 !important;
-            border: none !important;
-        }
+            &.profile {
+                top: 64px !important;
+                padding-top: 16px;
+                padding-bottom: 8px;
 
-        .active {
-            background: linear-gradient(90deg, #E64602 0%, #FCA311 100%);
-
-            mat-icon {
-                color: #14213D;
+                .pb-8 {
+                    padding-bottom: 8px;
+                }
             }
         }
 
@@ -55,14 +50,23 @@ mat-sidenav-container {
             @media (max-width: 786px){
                 width: 80%;
             }
+
             a, mat-icon {
                 color: #FCA311;
             }
-
-            .icon-margin {
-                margin-right: 12px;
-            }
         }
+
+        .pb-50 {
+            padding-bottom: 50px;
+        }
+    }
+
+    img, mat-icon {
+        margin-right: 12px;
+    }
+
+    .mat-list-item, mat-panel-title, mat-toolbar {
+        color: #FFFFFF;
     }
 
     .toolbar {
@@ -74,10 +78,6 @@ mat-sidenav-container {
         .home {
             cursor: pointer;
         }
-    }
-
-    .mat-list-item, mat-panel-title, mat-toolbar {
-        color: #FFFFFF;
     }
 
     .app-content {
