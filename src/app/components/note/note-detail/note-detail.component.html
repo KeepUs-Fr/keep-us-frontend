@@ -6,12 +6,9 @@
             </button>
 
             <div class="justify-end">
-                <button mat-icon-button>
-                    <mat-icon>palette</mat-icon>
-                </button>
-                <button mat-icon-button (click)="updateNote()">
-                    <mat-icon>save</mat-icon>
-                </button>
+<!--                <button mat-icon-button>-->
+<!--                    <mat-icon>palette</mat-icon>-->
+<!--                </button>-->
                 <button mat-icon-button (click)="openRemoveDialog()">
                     <mat-icon>delete</mat-icon>
                 </button>
@@ -23,7 +20,7 @@
                    placeholder="Titre"
                    [value]="note.title"
                    [(ngModel)]="title"
-                   style="font-size: 28px;">
+                   (focusout)="updateNote()">
         </mat-form-field>
     </div>
 
@@ -31,7 +28,7 @@
 
     <mat-form-field appearance="standard">
         <textarea matInput
-                  style="font-size: 16px"
+                  (focusout)="updateNote()"
                   [value]="note.content"
                   [(ngModel)]="content"
                   placeholder="Créer une note..."

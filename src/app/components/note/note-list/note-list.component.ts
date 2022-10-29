@@ -8,6 +8,7 @@ import { NoteFiltersComponent } from '../note-filters/note-filters.component';
 import { UserService } from '../../../services/user.service';
 import { ResponsiveService } from '../../../services/responsive.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 
 @UntilDestroy()
 @Component({
@@ -97,6 +98,10 @@ export class NoteListComponent implements OnInit {
 
     reload(doReload: boolean) {
         if (doReload) this.getNotes();
+    }
+
+    drop(event: CdkDragDrop<NoteModel[]>) {
+        moveItemInArray(this.notes, event.previousIndex, event.currentIndex);
     }
 
     private getNotes() {
