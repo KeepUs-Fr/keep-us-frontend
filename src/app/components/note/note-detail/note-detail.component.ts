@@ -15,7 +15,6 @@ import {
 } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
-import { UserService } from '../../../services/user.service';
 import { SnackBarService } from '../../../services/snack-bar.service';
 
 @Component({
@@ -41,8 +40,7 @@ export class NoteDetailComponent implements OnInit {
         private notesService: NotesService,
         private router: Router,
         private dialog: MatDialog,
-        private snackBarService: SnackBarService,
-        private userService: UserService
+        private snackBarService: SnackBarService
     ) {}
 
     ngOnInit(): void {
@@ -92,10 +90,7 @@ export class NoteDetailComponent implements OnInit {
         };
 
         this.notesService.updateNote(this.currentId, newNote).subscribe({
-            next: (_) => {
-                this.userService.emitGroupId(
-                    +localStorage.getItem('groupId')!
-                );
+            next: _ => {
                 this.snackBarService.openSuccess('Note updated');
             },
             error: (err) => {
@@ -104,7 +99,7 @@ export class NoteDetailComponent implements OnInit {
         });
     }
 
-    getColor(color: { key: string; value: string }): void {
+    getColor(color: { key: string; value: string }) {
         this.selectedColor = color;
     }
 

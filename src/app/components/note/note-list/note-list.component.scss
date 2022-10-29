@@ -18,12 +18,16 @@
     }
 
     mat-card {
-        margin-bottom: 24px;
+        margin-bottom: 12px;
         border: 2px solid transparent;
 
         &:hover, &.selected {
             border: 2px solid #14213d;
             cursor: pointer;
+        }
+
+        mat-card-subtitle {
+            font-size: 18px;
         }
     }
 
@@ -45,15 +49,17 @@
 
     .flex-display {
         height: 90vh;
-        width: 40%;
+        width: 50%;
         padding: 12px;
         border: 2px solid #14213D;
         border-radius: 20px;
+        overflow-y: auto;
+        overflow-x: unset;
     }
 
     .note-detail {
         margin-left: 34px;
-        width: 100% !important;
+        width: 100%;
 
         @media screen and (max-width: 786px){
             margin-left: 0;

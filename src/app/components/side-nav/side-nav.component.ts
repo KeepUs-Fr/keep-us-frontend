@@ -89,7 +89,8 @@ export class SideNavComponent implements OnInit {
 
     openAddModal(isCreation: boolean): void {
         const dialogRef = this.dialog.open(AddModalComponent, {
-            data: { isCreation: isCreation }
+            data: { isCreation: isCreation },
+            width: '400px'
         });
 
         dialogRef.afterClosed().subscribe({
@@ -98,7 +99,7 @@ export class SideNavComponent implements OnInit {
                     if (username !== false) {
                         this.getGroupByUsername();
                         this.snackBarService.openSuccess(
-                            'Group successfully created'
+                            'Le groupe a été créé'
                         );
                     }
                 } else {

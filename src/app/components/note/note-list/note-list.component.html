@@ -16,23 +16,21 @@
 
     <!-- Display note list -->
     <div *ngIf="!isTable" [ngClass]="{'justify-start': !(isMobile$| async)}">
-        <div fxLayout="column" fxLayoutGap="24px" [ngClass]="{'flex-display': !(isMobile$| async)}">
-            <div class="justify-between" *ngIf="!(isMobile$| async)">
-                <div>
-                    <button mat-icon-button class="icon-btn" (click)="openFilterDialog()">
-                        <mat-icon>search</mat-icon>
-                    </button>
-                </div>
+        <div [ngClass]="{'flex-display': !(isMobile$| async)}">
+            <div class="justify-between mb-20" *ngIf="!(isMobile$| async)">
+                <button mat-icon-button class="icon-btn" (click)="openFilterDialog()">
+                    <mat-icon>search</mat-icon>
+                </button>
                 <button mat-icon-button class="icon-btn" (click)="openCreationDialog()">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <div style="overflow-y: auto">
+            <div class="content-scroll">
                 <ng-container *ngFor="let note of notes">
                     <mat-card [ngStyle]="{ 'background-color': note.color }"
                               [ngClass]="{ 'selected': noteId === note.id }"
                               (click)="goToNoteDetail(note.id)">
-                        <mat-card-subtitle style="font-size: 18px;">{{note.title}}</mat-card-subtitle>
+                        <mat-card-subtitle>{{note.title}}</mat-card-subtitle>
                         <mat-card-content>
                             <p>{{note.content}}</p>
                         </mat-card-content>

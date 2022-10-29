@@ -1,26 +1,19 @@
 .profile {
-    .btn {
-        float: right
+    .avatar {
+        border: 3px solid #FCA311;
+        border-radius: 50%;
+        vertical-align: middle;
+        width: 120px;
+        height: 120px;
     }
 
-    .justify-center {
-        margin-left: 75.89px;
-        .avatar {
-            border: 3px solid #FCA311;
-            border-radius: 50%;
-            vertical-align: middle;
-            width: 120px;
-            height: 120px;
-        }
+    h1 {
+        text-align: center;
+        margin-top: 24px;
+    }
 
-        h1 {
-            text-align: center;
-            margin-top: 24px;
-        }
-
-        .btn-edit {
-            float: right;
-            margin-top: -32px;
-        }
+    .btn-edit {
+        float: right;
+        margin-top: -32px;
     }
 }
