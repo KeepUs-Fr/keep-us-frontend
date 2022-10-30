@@ -44,6 +44,10 @@ export class NotesService {
         );
     }
 
+    updatePosition(notes: NoteModel[]): Observable<void> {
+        return this.http.patch<void>(environment.baseUrl + '/notes/positions', notes);
+    }
+
     deleteNote(id: number): Observable<void> {
         return this.http.delete<void>(environment.baseUrl + '/notes/' + id);
     }

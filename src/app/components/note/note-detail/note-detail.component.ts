@@ -33,9 +33,6 @@ export class NoteDetailComponent implements OnInit {
     content: string = '';
     selectedColor: { key: string; value: string } = { key: '', value: '' };
 
-    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-    verticalPosition: MatSnackBarVerticalPosition = 'top';
-
     constructor(
         private route: ActivatedRoute,
         private notesService: NotesService,
@@ -89,6 +86,7 @@ export class NoteDetailComponent implements OnInit {
         const newNote: CreateNoteModel = {
             title: this.title,
             content: this.content,
+            position: this.note?.position!,
             color: noteColor,
             ownerId: this.note?.ownerId!,
             groupId: this.note?.groupId!
@@ -121,7 +119,7 @@ export class NoteDetailComponent implements OnInit {
                                 this.reload.emit(true);
                             }
                             this.snackBarService.openSuccess(
-                                'Note removed successfully'
+                                'La note a été supprimée'
                             );
                         }
                     });

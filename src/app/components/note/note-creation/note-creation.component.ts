@@ -22,6 +22,7 @@ export class NoteCreationComponent implements OnInit {
         let newNote: CreateNoteModel = {
             title: this.title,
             content: this.description,
+            position: 0,
             color: this.selectedColor,
             ownerId: +localStorage.getItem('ownerId')!,
             groupId: +localStorage.getItem('groupId')!

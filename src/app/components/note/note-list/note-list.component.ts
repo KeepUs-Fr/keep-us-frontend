@@ -8,7 +8,7 @@ import { NoteFiltersComponent } from '../note-filters/note-filters.component';
 import { UserService } from '../../../services/user.service';
 import { ResponsiveService } from '../../../services/responsive.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 @UntilDestroy()
 @Component({
@@ -34,7 +34,7 @@ export class NoteListComponent implements OnInit {
         private responsiveService: ResponsiveService
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit() {
         const id = localStorage.getItem('groupId');
 
         if (id) {
@@ -50,7 +50,7 @@ export class NoteListComponent implements OnInit {
         });
     }
 
-    openCreationDialog(): void {
+    openCreationDialog() {
         const dialogRef = this.dialog.open(NoteCreationComponent, {
             width: '600px'
         });
@@ -102,13 +102,14 @@ export class NoteListComponent implements OnInit {
 
     drop(event: CdkDragDrop<NoteModel[]>) {
         moveItemInArray(this.notes, event.previousIndex, event.currentIndex);
+        this.notesService.updatePosition(this.notes).subscribe(_ => {});
     }
 
     private getNotes() {
         this.isLoading = true;
         this.notesService.getNotes(this.groupId).subscribe({
             next: (notes) => {
-                this.notes = notes.reverse();
+                this.notes = notes.sort((a,b) => a.position - b.position);
                 this.isLoading = false;
             },
             error: (err) => {
@@ -116,5 +117,20 @@ export class NoteListComponent implements OnInit {
                 console.error(err);
             }
         });
+    }
+
+    private getColorFromHex(hex: string): string {
+        switch (hex) {
+            case '#FF6262':
+                return 'red';
+            case '#22A991':
+                return 'green';
+            case '#F98A5A':
+                return 'orange';
+            case '#B28BB9':
+                return 'purple';
+            default:
+                return 'blue';
+        }
     }
 }

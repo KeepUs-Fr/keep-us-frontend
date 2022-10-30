@@ -1,4 +1,9 @@
 <div mat-dialog-content>
+    <div class="justify-end dialog-close">
+        <button mat-icon-button [mat-dialog-close]="false">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
     <div *ngIf="data.isCreation; else add_user">
         <h1 class="txt-center">Créer un nouveau groupe</h1>
         <mat-form-field appearance="outline">
@@ -18,8 +23,7 @@
     </ng-template>
 </div>
 
-<div mat-dialog-actions class="justify-between">
-    <button mat-flat-button [mat-dialog-close]="false">Annuler</button>
+<div mat-dialog-actions class="justify-center">
     <button mat-flat-button
             [mat-dialog-close]="name"
             class="btn secondary"
