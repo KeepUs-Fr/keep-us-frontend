@@ -1,4 +1,9 @@
 <div mat-dialog-content>
+    <div class="justify-end dialog-close">
+        <button mat-icon-button [mat-dialog-close]="false">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
     <mat-form-field appearance="standard">
         <input matInput [(ngModel)]="title" placeholder="Titre" style="font-size: 22px">
     </mat-form-field>
@@ -14,12 +19,11 @@
     <br/>
     <app-note-color-palette (eventEmitter)="getColor($event)"></app-note-color-palette>
 </div>
-<div mat-dialog-actions class="justify-between">
-    <button mat-flat-button mat-dialog-close="true">Annuler</button>
+<div mat-dialog-actions class="justify-center">
     <button mat-flat-button
             class="btn secondary"
             (click)="submit()"
             [mat-dialog-close]="closeModal">
-        Creer
+        Créer
     </button>
 </div>

@@ -16,6 +16,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { SnackBarService } from '../../../services/snack-bar.service';
+import { UserService } from "../../../services/user.service";
 
 @Component({
     selector: 'app-note-detail',
@@ -32,15 +33,13 @@ export class NoteDetailComponent implements OnInit {
     content: string = '';
     selectedColor: { key: string; value: string } = { key: '', value: '' };
 
-    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-    verticalPosition: MatSnackBarVerticalPosition = 'top';
-
     constructor(
         private route: ActivatedRoute,
         private notesService: NotesService,
         private router: Router,
         private dialog: MatDialog,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private userService: UserService
     ) {}
 
     ngOnInit(): void {
@@ -87,6 +86,7 @@ export class NoteDetailComponent implements OnInit {
         const newNote: CreateNoteModel = {
             title: this.title,
             content: this.content,
+            position: this.note?.position!,
             color: noteColor,
             ownerId: this.note?.ownerId!,
             groupId: this.note?.groupId!
@@ -94,7 +94,8 @@ export class NoteDetailComponent implements OnInit {
 
         this.notesService.updateNote(this.currentId, newNote).subscribe({
             next: (_) => {
-                this.snackBarService.openSuccess('Note updated');
+                if (this.noteId !== -1)
+                    this.userService.emitGroupId(+localStorage.getItem('groupId')!);
             },
             error: (err) => {
                 console.error(err);
@@ -102,13 +103,9 @@ export class NoteDetailComponent implements OnInit {
         });
     }
 
-    getColor(color: { key: string; value: string }) {
-        this.selectedColor = color;
-    }
-
     openRemoveDialog() {
         const dialogRef = this.dialog.open(RemoveModalComponent, {
-            width: '600px'
+            width: '400px'
         });
 
         dialogRef.afterClosed().subscribe({
@@ -122,7 +119,7 @@ export class NoteDetailComponent implements OnInit {
                                 this.reload.emit(true);
                             }
                             this.snackBarService.openSuccess(
-                                'Note removed successfully'
+                                'La note a été supprimée'
                             );
                         }
                     });

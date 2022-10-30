@@ -1,8 +1,12 @@
 <div mat-dialog-content>
+    <div class="justify-end dialog-close">
+        <button mat-icon-button [mat-dialog-close]="false">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
     <h2 class="txt-center">Supprimer la note ?</h2>
 </div>
-<div mat-dialog-actions class="justify-between">
-    <button mat-flat-button [mat-dialog-close]="false">Annuler</button>
+<div mat-dialog-actions class="justify-center">
     <button mat-flat-button
             [mat-dialog-close]="true"
             class="btn">

@@ -25,8 +25,10 @@
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <div class="content-scroll">
-                <ng-container *ngFor="let note of notes">
+            <div cdkDropList class="content-scroll" (cdkDropListDropped)="drop($event)">
+                <div *ngFor="let note of notes" cdkDrag>
+                    <div class="placeholder" *cdkDragPlaceholder></div>
+
                     <mat-card [ngStyle]="{ 'background-color': note.color }"
                               [ngClass]="{ 'selected': noteId === note.id }"
                               (click)="goToNoteDetail(note.id)">
@@ -35,7 +37,7 @@
                             <p>{{note.content}}</p>
                         </mat-card-content>
                     </mat-card>
-                </ng-container>
+                </div>
             </div>
         </div>
 
