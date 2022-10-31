@@ -16,11 +16,14 @@
         </div>
 
         <mat-form-field appearance="standard" class="input-title">
-            <input matInput
-                   placeholder="Titre"
-                   [value]="note.title"
-                   [(ngModel)]="title"
-                   (focusout)="updateNote()">
+            <textarea matInput
+                      placeholder="Titre"
+                      [value]="note.title"
+                      [(ngModel)]="title"
+                      (focusout)="updateNote()"
+                      cdkTextareaAutosize
+                      cdkAutosizeMinRows="1">
+            </textarea>
         </mat-form-field>
     </div>
 
@@ -28,9 +31,9 @@
 
     <mat-form-field appearance="standard">
         <textarea matInput
-                  (focusout)="updateNote()"
                   [value]="note.content"
                   [(ngModel)]="content"
+                  (focusout)="updateNote()"
                   placeholder="Créer une note..."
                   cdkTextareaAutosize
                   cdkAutosizeMinRows="1">
