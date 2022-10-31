@@ -5,7 +5,11 @@
         </button>
     </div>
     <mat-form-field appearance="standard">
-        <input matInput [(ngModel)]="title" placeholder="Titre" style="font-size: 22px">
+        <textarea matInput [(ngModel)]="title" placeholder="Titre"
+                  style="font-size: 22px"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1">
+        </textarea>
     </mat-form-field>
     <br/>
     <mat-form-field appearance="standard" style="margin-bottom: 7px">
