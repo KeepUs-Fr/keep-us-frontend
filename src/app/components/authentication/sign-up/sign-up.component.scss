@@ -21,5 +21,17 @@
         .login {
             font-size: 14px;
         }
+
+        small {
+            color: #b00020;
+
+            mat-icon {
+                font-size:18px;
+                width: 18px;
+                height:18px;
+                vertical-align: middle;
+                margin-right: 6px;
+            }
+        }
     }
 }

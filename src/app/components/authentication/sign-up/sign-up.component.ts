@@ -15,9 +15,13 @@ import { UserService } from '../../../services/user.service';
     styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-    hide = true;
+    passwordHidden = true;
+    isPasswordFocus = false;
+
     signupForm: FormGroup;
+
     usernameCtrl: FormControl;
+    emailCtrl: FormControl;
     passwordCtrl: FormControl;
 
     constructor(
@@ -26,12 +30,26 @@ export class SignUpComponent implements OnInit {
         public formBuilder: FormBuilder,
         private userService: UserService
     ) {
-        this.usernameCtrl = formBuilder.control('', Validators.required);
-        this.passwordCtrl = formBuilder.control('', Validators.required);
+        this.usernameCtrl = formBuilder.control(null, [
+            Validators.required,
+            Validators.pattern(/^[A-z0-9]*$/),
+            Validators.minLength(3)
+        ]);
+        this.emailCtrl = formBuilder.control(null,[
+            Validators.required,
+            Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+        ]);
+        this.passwordCtrl = formBuilder.control('', [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(40),
+            Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/),
+        ]);
 
         this.signupForm = formBuilder.group({
             username: this.usernameCtrl,
-            password: this.passwordCtrl
+            email: this.emailCtrl,
+            password: this.passwordCtrl,
         });
     }
 
@@ -41,7 +59,10 @@ export class SignUpComponent implements OnInit {
         }
     }
 
-    onSubmit(): void {
+    onSubmit() {
+        if(this.signupForm.invalid)
+            return
+
         this.authService.signup(this.signupForm.value).subscribe({
             next: (_) => {
                 this.authService.login(this.signupForm.value).subscribe({

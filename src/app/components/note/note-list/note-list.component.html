@@ -15,7 +15,7 @@
     </div>
 
     <!-- Display note list -->
-    <div *ngIf="!isTable" [ngClass]="{'justify-start': !(isMobile$| async)}">
+    <div [ngClass]="{'justify-start': !(isMobile$| async)}">
         <div [ngClass]="{'flex-display': !(isMobile$| async)}">
             <div class="justify-between mb-20" *ngIf="!(isMobile$| async)">
                 <button mat-icon-button class="icon-btn" (click)="openFilterDialog()">
@@ -42,33 +42,8 @@
         </div>
 
         <!-- Web detail view -->
-        <div class="note-detail">
-            <app-note-detail *ngIf="noteId" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
-        </div>
-
+        <app-note-detail *ngIf="noteId" class="note-detail" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
     </div>
-
-    <!-- Table view -->
-    <mat-table [dataSource]="notes" class="mat-elevation-z8" *ngIf="isTable">
-        <ng-container matColumnDef="color">
-            <mat-header-cell *matHeaderCellDef class="fit-content"></mat-header-cell>
-            <mat-cell *matCellDef="let element" class="fit-content">
-                <div class="circle" [ngStyle]="{'background-color': element.color}"></div>
-            </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="title">
-            <mat-header-cell *matHeaderCellDef>Titre</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-            <mat-header-cell *matHeaderCellDef>Contenu</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
 
     <div class="justify-center" style="padding-top: 10%" *ngIf="isLoading">
         <mat-spinner diameter="50"></mat-spinner>
