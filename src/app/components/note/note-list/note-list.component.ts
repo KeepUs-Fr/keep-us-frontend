@@ -100,19 +100,4 @@ export class NoteListComponent implements OnInit {
             }
         });
     }
-
-    private getColorFromHex(hex: string): string {
-        switch (hex) {
-            case '#FF6262':
-                return 'red';
-            case '#22A991':
-                return 'green';
-            case '#F98A5A':
-                return 'orange';
-            case '#B28BB9':
-                return 'purple';
-            default:
-                return 'blue';
-        }
-    }
 }

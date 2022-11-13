@@ -58,6 +58,7 @@ export class AuthService {
 
     logout() {
         localStorage.removeItem('token');
+        localStorage.removeItem('refreshKey');
         localStorage.removeItem('ownerId');
         localStorage.removeItem('groupId');
         this.emitChange(false);
