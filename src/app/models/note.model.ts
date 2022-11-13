@@ -3,6 +3,7 @@ export interface NoteModel {
     title: string;
     content: string;
     position: number;
+    isLock: boolean;
     color: string;
     ownerId: number;
     groupId: number;
@@ -13,6 +14,7 @@ export interface CreateNoteModel {
     title: string;
     content: string;
     position: number;
+    isLock: boolean;
     color: string;
     ownerId: number;
     groupId: number;

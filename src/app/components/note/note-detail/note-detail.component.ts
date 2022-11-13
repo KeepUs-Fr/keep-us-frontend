@@ -9,10 +9,6 @@ import {
 import { CreateNoteModel, NoteModel } from '../../../models/note.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotesService } from '../../../services/notes.service';
-import {
-    MatSnackBarHorizontalPosition,
-    MatSnackBarVerticalPosition
-} from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { SnackBarService } from '../../../services/snack-bar.service';
@@ -28,10 +24,10 @@ export class NoteDetailComponent implements OnInit {
     @Output() reload = new EventEmitter<boolean>();
 
     currentId = -1;
-    note: NoteModel | undefined;
+    note = {} as NoteModel;
     title: string = '';
     content: string = '';
-    selectedColor: { key: string; value: string } = { key: '', value: '' };
+    selectedColor = { key: '', value: '' };
 
     constructor(
         private route: ActivatedRoute,
@@ -60,36 +56,35 @@ export class NoteDetailComponent implements OnInit {
     }
 
     getNoteDetail() {
-        if (this.currentId > 0 && this.currentId !== undefined)
-            this.notesService.getNoteById(this.currentId).subscribe({
-                next: (note) => {
-                    this.note = note;
-                    this.title = this.note.title;
-                    this.content = this.note.content;
-                    this.selectedColor.value = this.note.color;
-                },
-                error: (err) => {
-                    console.error(err);
-                }
-            });
+        this.notesService.getNoteById(this.currentId).subscribe({
+            next: (note) => {
+                console.log(note);
+                this.note = note;
+                this.title = this.note.title;
+                this.content = this.note.content;
+                this.selectedColor.value = this.note.color;
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
     }
 
     updateNote() {
         if (
-            this.note?.title === this.title &&
-            this.note.content === this.content
-        )
-            return;
-
-        const noteColor = this.getColorFromHex(this.note?.color!);
+            this.note.title === this.title &&
+            this.note.content === this.content &&
+            this.note.color === this.selectedColor.value
+        ) return;
 
         const newNote: CreateNoteModel = {
             title: this.title,
             content: this.content,
-            position: this.note?.position!,
-            color: noteColor,
-            ownerId: this.note?.ownerId!,
-            groupId: this.note?.groupId!
+            isLock: true,
+            position: this.note.position,
+            color: this.selectedColor.key,
+            ownerId: this.note.ownerId,
+            groupId: this.note.groupId
         };
 
         this.notesService.updateNote(this.currentId, newNote).subscribe({
@@ -131,18 +126,8 @@ export class NoteDetailComponent implements OnInit {
         });
     }
 
-    private getColorFromHex(hex: string): string {
-        switch (hex) {
-            case '#FF6262':
-                return 'red';
-            case '#22A991':
-                return 'green';
-            case '#F98A5A':
-                return 'orange';
-            case '#B28BB9':
-                return 'purple';
-            default:
-                return 'blue';
-        }
+    getCurrentColor(color: {key: string, value: string}) {
+        this.selectedColor = color;
+        this.updateNote();
     }
 }

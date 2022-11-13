@@ -203,6 +203,10 @@ body {
         margin-right: -20px;
     }
 
+    .vertical-center {
+        margin: auto 0;
+    }
+
     .mb-20 {
         margin-bottom: 20px;
     }
@@ -213,5 +217,9 @@ body {
 
     .mt-24 {
       margin-top: 24px;
+    }
+
+    .spinner {
+        padding-top: 10%;
     }
 }

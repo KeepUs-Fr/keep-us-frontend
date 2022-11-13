@@ -4,7 +4,6 @@ import { NoteModel } from '../../../models/note.model';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteCreationComponent } from '../note-creation/note-creation.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NoteFiltersComponent } from '../note-filters/note-filters.component';
 import { UserService } from '../../../services/user.service';
 import { ResponsiveService } from '../../../services/responsive.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -58,30 +57,6 @@ export class NoteListComponent implements OnInit {
         dialogRef.afterClosed().subscribe({
             next: (_) => {
                 this.getNotes();
-            },
-            error: (err) => {
-                console.error(err);
-            }
-        });
-    }
-
-    openFilterDialog(): void {
-        const dialogRef = this.dialog.open(NoteFiltersComponent);
-
-        dialogRef.afterClosed().subscribe({
-            next: (color) => {
-                if (!color) {
-                    this.getNotes();
-                } else {
-                    this.notesService
-                        .filterNoteByColor(
-                            color,
-                            +localStorage.getItem('groupId')!
-                        )
-                        .subscribe(
-                            (filteredNotes) => (this.notes = filteredNotes)
-                        );
-                }
             },
             error: (err) => {
                 console.error(err);

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { CreateNoteModel } from '../../../models/note.model';
 import { NotesService } from '../../../services/notes.service';
 
@@ -23,6 +22,7 @@ export class NoteCreationComponent implements OnInit {
             title: this.title,
             content: this.description,
             position: 0,
+            isLock: true,
             color: this.selectedColor,
             ownerId: +localStorage.getItem('ownerId')!,
             groupId: +localStorage.getItem('groupId')!

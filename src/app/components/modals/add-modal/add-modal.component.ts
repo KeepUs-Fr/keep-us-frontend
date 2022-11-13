@@ -1,6 +1,7 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CreateGroupModel } from "../../../models/group.model";
 
 @Component({
     selector: 'app-add-modal',
@@ -17,7 +18,14 @@ export class AddModalComponent {
     ) {}
 
     submit() {
-        if (this.data.isCreation)
-            this.userService.createGroup(this.name.trim()).subscribe((_) => {});
+        if (this.data.isCreation) {
+            const group: CreateGroupModel = {
+                name: this.name,
+                ownerId: +localStorage.getItem('ownerId')!,
+                members: []
+            };
+
+            this.userService.createGroup(group).subscribe((_) => {});
+        }
     }
 }

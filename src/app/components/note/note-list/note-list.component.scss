@@ -1,20 +1,13 @@
 .note-list {
     .note-header {
         padding: 8px;
-        margin-bottom: 24px;
+        margin-bottom: 12px;
         align-items: center;
     }
 
     .icon-btn {
         background: linear-gradient(90deg, #1D2F56 0%, #444EA8 89.06%);
         color: #FFFFFF;
-        width: 30px;
-        height: 30px;
-
-        mat-icon {
-            vertical-align: top;
-            padding-top: 4px;
-        }
     }
 
     mat-card {

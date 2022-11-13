@@ -1,34 +1,22 @@
 <div class="note-list">
-    <div class="justify-between note-header" *ngIf="isMobile$ | async">
-        <button mat-icon-button class="icon-btn" (click)="openFilterDialog()">
-            <mat-icon>search</mat-icon>
-        </button>
-        <button mat-flat-button class="btn secondary" (click)="openCreationDialog()">
-            Créer une note
-        </button>
-        <button mat-icon-button class="icon-btn"
-                [disabled]="notes.length <= 0"
-                (click)="isTable = !isTable">
-            <mat-icon *ngIf="!isTable">list</mat-icon>
-            <mat-icon *ngIf="isTable">splitscreen</mat-icon>
-        </button>
-    </div>
+    <button mat-fab class="icon-btn" aria-label="Add note" *ngIf="isMobile$ | async"
+            style="position: fixed; bottom: 10px; z-index: 100; right: 10px"
+            (click)="openCreationDialog()">
+        <mat-icon>add</mat-icon>
+    </button>
 
     <!-- Display note list -->
     <div [ngClass]="{'justify-start': !(isMobile$| async)}">
         <div [ngClass]="{'flex-display': !(isMobile$| async)}">
-            <div class="justify-between mb-20" *ngIf="!(isMobile$| async)">
-                <button mat-icon-button class="icon-btn" (click)="openFilterDialog()">
-                    <mat-icon>search</mat-icon>
-                </button>
+            <div class="justify-between mb-12" *ngIf="!(isMobile$| async)">
+                <h2>Les notes</h2>
                 <button mat-icon-button class="icon-btn" (click)="openCreationDialog()">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
             <div cdkDropList class="content-scroll" (cdkDropListDropped)="drop($event)">
-                <div *ngFor="let note of notes" cdkDrag>
+                <div *ngFor="let note of notes" cdkDrag [cdkDragStartDelay]="200">
                     <div class="placeholder" *cdkDragPlaceholder></div>
-
                     <mat-card [ngStyle]="{ 'background-color': note.color }"
                               [ngClass]="{ 'selected': noteId === note.id }"
                               (click)="goToNoteDetail(note.id)">
@@ -45,7 +33,7 @@
         <app-note-detail *ngIf="noteId" class="note-detail" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
     </div>
 
-    <div class="justify-center" style="padding-top: 10%" *ngIf="isLoading">
+    <div class="justify-center spinner" *ngIf="isLoading">
         <mat-spinner diameter="50"></mat-spinner>
     </div>
 </div>

@@ -82,8 +82,8 @@ export class SideNavComponent implements OnInit {
         });
     }
 
-    getAvatar(): void {
-        const avatar = localStorage.getItem('avatar');
+    getAvatar() {
+        const avatar = localStorage.getItem('avatarId');
         this.selectedAvatar = avatar ? avatar : '1';
     }
 

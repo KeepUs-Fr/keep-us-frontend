@@ -8,6 +8,7 @@ import {
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
+import { CreateGroupModel } from "../../../models/group.model";
 
 @Component({
     selector: 'app-sign-up',
@@ -64,23 +65,23 @@ export class SignUpComponent implements OnInit {
             return
 
         this.authService.signup(this.signupForm.value).subscribe({
-            next: (_) => {
+            next: (res) => {
                 this.authService.login(this.signupForm.value).subscribe({
                     next: (result) => {
                         localStorage.setItem('token', result.token);
-                        this.authService.decodedToken =
-                            this.authService.decodeToken(result.token);
+                        localStorage.setItem('refreshKey', result.refreshKey);
+                        this.authService.decodedToken = this.authService.decodeToken(result.token);
+                        localStorage.setItem('ownerId', this.authService.decodedToken.id.toString());
 
-                        this.userService
-                            .createUser(this.authService.decodedToken.sub)
-                            .subscribe((user) => {
-                                localStorage.setItem(
-                                    'ownerId',
-                                    user.id.toString()
-                                );
-                                this.authService.emitChange(true);
-                                this.router.navigate(['notes']).then();
-                            });
+                        const group: CreateGroupModel = {
+                            name: "Personal Space",
+                            ownerId: res.id,
+                            members: []
+                        }
+                        this.userService.createGroup(group).subscribe(_ => {
+                            this.authService.emitChange(true);
+                            this.router.navigate(['notes']).then();
+                        });
                     },
                     error: (error) => {
                         console.error(error);

@@ -29,14 +29,6 @@ export class UserService {
         });
     }
 
-    createUser(username: string): Observable<UserModel> {
-        const newUser = { username: username };
-
-        return this.http.post<UserModel>(
-            environment.baseUrl + '/users',
-            newUser
-        );
-    }
 
     getGroupsByOwnerId(id: number): Observable<GroupModel[]> {
         return this.http.get<GroupModel[]>(
@@ -48,13 +40,7 @@ export class UserService {
         return this.http.get<GroupModel>(environment.baseUrl + '/groups/' + id);
     }
 
-    createGroup(groupName: string): Observable<GroupModel> {
-        const group: CreateGroupModel = {
-            name: groupName,
-            ownerId: +localStorage.getItem('ownerId')!,
-            members: []
-        };
-
+    createGroup(group: CreateGroupModel): Observable<GroupModel> {
         return this.http.post<GroupModel>(
             environment.baseUrl + '/groups',
             group
