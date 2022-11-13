@@ -23,13 +23,13 @@
                         <span>{{authService.decodedToken.sub}}</span>
                     </a>
                     <!-- Calendar -->
-                    <!--                <a mat-list-item-->
-                    <!--                   routerLink="calendar"-->
-                    <!--                   (click)="groupAction(0)"-->
-                    <!--                   [ngClass]="{'active': currentId === '0'}">-->
-                    <!--                    <mat-icon class="icon-margin">calendar_month</mat-icon>-->
-                    <!--                    Calendar-->
-                    <!--                </a>-->
+<!--                    <a mat-list-item-->
+<!--                       routerLink="calendar"-->
+<!--                       (click)="groupAction(0)"-->
+<!--                       [ngClass]="{'active': currentId === '0'}">-->
+<!--                        <mat-icon>calendar_month</mat-icon>-->
+<!--                        <span class="ml-12">Calendrier</span>-->
+<!--                    </a>-->
                 </mat-nav-list>
                 <mat-divider></mat-divider>
             </div>
@@ -40,7 +40,7 @@
                     <a mat-list-item
                        [ngClass]="{'active': currentId === group.id.toString()}"
                        (click)="groupAction(group.id, group);">
-                        {{group.name}}
+                        {{group.name === 'Personal space' ? 'Espace personnel' : group.name}}
                     </a>
                 </ng-container>
             </mat-nav-list>
@@ -69,7 +69,12 @@
                 </button>
 
                 <!-- Display name of group or page -->
-                <span>{{ currentId !== '-1' ? selectedGroup.name : 'Profile' }}</span>
+                <span *ngIf="selectedGroup.name !== 'Personal space'">
+                    {{ currentId !== '-1' ? selectedGroup.name : 'Profile' }}
+                </span>
+
+                <span *ngIf="selectedGroup.name === 'Personal space'">Espace personnel</span>
+
                 <span class="spacer"></span>
 
                 <!-- Display user actions based on rights -->
