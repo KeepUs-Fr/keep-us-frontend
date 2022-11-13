@@ -8,6 +8,7 @@ import { UserService } from '../../../services/user.service';
 import { ResponsiveService } from '../../../services/responsive.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { AnimationOptions } from "ngx-lottie";
 
 @UntilDestroy()
 @Component({
@@ -23,6 +24,12 @@ export class NoteListComponent implements OnInit {
     noteId: number | undefined;
     displayedColumns = ['color', 'title', 'description'];
     groupId = 0;
+
+    lottieNoDetails: AnimationOptions = {
+        path: '/assets/lottie/no-details.json',
+        autoplay: true,
+        loop: true
+    };
 
     constructor(
         private notesService: NotesService,
