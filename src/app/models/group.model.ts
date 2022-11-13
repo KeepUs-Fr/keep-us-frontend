@@ -1,15 +1,9 @@
-export class GroupModel {
+export interface GroupModel {
     id: number;
     name: string;
     ownerId: number;
     members: number[];
-
-    constructor() {
-        this.id = 0;
-        this.name = '';
-        this.ownerId = 0;
-        this.members = [];
-    }
+    createDate: Date;
 }
 
 export interface CreateGroupModel {

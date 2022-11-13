@@ -1,10 +1,11 @@
 <div mat-dialog-content>
-    <div class="justify-end dialog-close">
+    <div class="justify-end">
         <button mat-icon-button [mat-dialog-close]="false">
             <mat-icon>close</mat-icon>
         </button>
     </div>
-    <h2 class="txt-center">Supprimer la note ?</h2>
+    <h2 *ngIf="!data.isGroup" class="txt-center">Supprimer la note ?</h2>
+    <h2 *ngIf="data.isGroup" class="txt-center">Supprimer le groupe ?</h2>
 </div>
 <div mat-dialog-actions class="justify-center">
     <button mat-flat-button

@@ -29,10 +29,14 @@
             <mat-cell *matCellDef="let element"> {{element.createDate | date:'dd/MM/yyyy'}}</mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="members">
+            <mat-header-cell *matHeaderCellDef>Nombre de membres</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.members.length + 1}}</mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <button mat-icon-button><mat-icon>group</mat-icon></button>
                 <button mat-icon-button
                         color="warn"
                         *ngIf="element.ownerId === this.ownerId && this.element.name !== 'Personal space'"

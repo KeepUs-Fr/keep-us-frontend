@@ -169,6 +169,13 @@ body {
         text-align: center !important;
     }
 
+    .sticky-item {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: #E5E5E5;
+    }
+
     .justify-between {
         display: flex;
         justify-content: space-between;
@@ -198,11 +205,6 @@ body {
         flex: 1 1 auto !important;
     }
 
-    .dialog-close {
-        margin-top: -14px;
-        margin-right: -20px;
-    }
-
     .vertical-center {
         margin: auto 0;
     }
@@ -213,6 +215,10 @@ body {
 
     .mb-12 {
         margin-bottom: 12px;
+    }
+
+    .ml-12 {
+        margin-left: 12px;
     }
 
     .mt-24 {

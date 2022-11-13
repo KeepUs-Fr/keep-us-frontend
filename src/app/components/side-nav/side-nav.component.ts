@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddModalComponent } from '../modals/add-modal/add-modal.component';
 import { SnackBarService } from '../../services/snack-bar.service';
-import { UserModalComponent } from '../modals/user-modal/user-modal.component';
 import { GroupModel } from '../../models/group.model';
 import { ResponsiveService } from '../../services/responsive.service';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -20,7 +19,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class SideNavComponent implements OnInit {
     groups: GroupModel[] = [];
-    selectedGroup = new GroupModel();
+    selectedGroup = {} as GroupModel;
     selectedAvatar = '1';
     panelOpenState = true;
     isLogged = false;
@@ -118,14 +117,6 @@ export class SideNavComponent implements OnInit {
                 console.error(err);
             }
         });
-    }
-
-    openUserModal() {
-        const groupId = localStorage.getItem('groupId');
-        const id = groupId !== null ? +groupId : -1;
-
-        const group = this.groups.filter((g) => g.id === id)[0];
-        this.dialog.open(UserModalComponent);
     }
 
     private getGroupByUsername() {

@@ -5,18 +5,17 @@
         <mat-icon>add</mat-icon>
     </button>
 
-    <!-- Display note list -->
-<!--    <div [ngClass]="{'justify-start': !(isMobile$| async)}" >-->
     <div [ngClass]="{'row': !(isMobile$| async)}">
+        <!-- Display note list -->
         <div [ngClass]="{'column-left': !(isMobile$| async)}">
-            <div class="justify-between mb-12" *ngIf="!(isMobile$| async)">
-                <h2>Les notes</h2>
+            <div class="justify-between sticky-item mb-12" *ngIf="!(isMobile$| async)">
+                <h2 class="vertical-center">Les notes</h2>
                 <button mat-icon-button class="icon-btn" (click)="openCreationDialog()">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
             <div cdkDropList class="content-scroll" (cdkDropListDropped)="drop($event)">
-                <div *ngFor="let note of notes" cdkDrag [cdkDragStartDelay]="200">
+                <div *ngFor="let note of notes" cdkDrag [cdkDragStartDelay]="250">
                     <div class="placeholder" *cdkDragPlaceholder></div>
                     <mat-card [ngStyle]="{ 'background-color': note.color }"
                               [ngClass]="{ 'selected': noteId === note.id }"
@@ -31,7 +30,7 @@
         </div>
 
         <!-- Web detail view -->
-        <div class="column-right">
+        <div [ngClass]="{'column-right': !(isMobile$| async)}">
             <app-note-detail *ngIf="noteId" class="note-detail" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
         </div>
     </div>

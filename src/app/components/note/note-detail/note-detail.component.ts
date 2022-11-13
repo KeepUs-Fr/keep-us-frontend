@@ -58,7 +58,6 @@ export class NoteDetailComponent implements OnInit {
     getNoteDetail() {
         this.notesService.getNoteById(this.currentId).subscribe({
             next: (note) => {
-                console.log(note);
                 this.note = note;
                 this.title = this.note.title;
                 this.content = this.note.content;
@@ -100,7 +99,8 @@ export class NoteDetailComponent implements OnInit {
 
     openRemoveDialog() {
         const dialogRef = this.dialog.open(RemoveModalComponent, {
-            width: '400px'
+            width: '400px',
+            data: { isGroup: false },
         });
 
         dialogRef.afterClosed().subscribe({
