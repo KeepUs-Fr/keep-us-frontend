@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CreateGroupModel, GroupModel } from '../models/group.model';
 import { UserModel } from '../models/user.model';
+import { query } from "@angular/animations";
 
 @Injectable({
     providedIn: 'root'
@@ -47,15 +48,13 @@ export class UserService {
         );
     }
 
-    addGroupMember(groupId: number, memberId: number): Observable<GroupModel> {
-        const newMember = {
-            groupId: groupId,
-            memberId: memberId
-        };
+    addGroupMember(groupId: number, username: string): Observable<GroupModel> {
+        let queryParam = new HttpParams();
+        queryParam = queryParam.append('username', username);
 
         return this.http.patch<GroupModel>(
-            environment.baseUrl + '/groups/member',
-            newMember
+            environment.baseUrl + '/groups/' + groupId + '/member',{},
+            {params: queryParam}
         );
     }
 

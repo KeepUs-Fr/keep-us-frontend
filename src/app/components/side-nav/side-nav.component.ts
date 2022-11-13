@@ -104,26 +104,11 @@ export class SideNavComponent implements OnInit {
                     }
                 } else {
                     if (username !== false) {
-                        this.userService.getUserByUsername(username).subscribe({
-                            next: (user) => {
-                                console.log(user);
-                                this.userService
-                                    .addGroupMember(
-                                        +localStorage.getItem('groupId')!,
-                                        user.id
-                                    )
-                                    .subscribe((_) =>
-                                        this.snackBarService.openSuccess(
-                                            'User ' +
-                                                user.username +
-                                                ' has been added'
-                                        )
-                                    );
-                            },
+                        this.userService.addGroupMember(
+                            +localStorage.getItem('groupId')!, username).subscribe({
+                            next: _ => this.snackBarService.openSuccess('User ' + username + ' has been added'),
                             error: (err) => {
-                                this.snackBarService.openError(
-                                    err.error.message
-                                );
+                                this.snackBarService.openError(err.error.message);
                             }
                         });
                     }

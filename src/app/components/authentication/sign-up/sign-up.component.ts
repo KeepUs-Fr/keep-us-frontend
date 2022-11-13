@@ -74,7 +74,7 @@ export class SignUpComponent implements OnInit {
                         localStorage.setItem('ownerId', this.authService.decodedToken.id.toString());
 
                         const group: CreateGroupModel = {
-                            name: "Personal Space",
+                            name: "Personal space",
                             ownerId: res.id,
                             members: []
                         }

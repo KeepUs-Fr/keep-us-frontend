@@ -21,10 +21,7 @@
         </mat-form-field>
     </div>
 
-    <div class="justify-between">
-        <app-note-color-palette [detailColor]="selectedColor.value" (eventEmitter)="getCurrentColor($event)"></app-note-color-palette>
-        <mat-hint class="vertical-center">{{note.createDate | date:'dd/MM/yyyy'}}</mat-hint>
-    </div>
+    <mat-hint class="vertical-center">{{note.createDate | date:'dd/MM/yyyy'}}</mat-hint>
 
     <mat-form-field appearance="standard">
         <textarea matInput
