@@ -15,11 +15,11 @@ const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignUpComponent },
-    {
-        path: 'calendar',
-        component: CalendarComponent,
-        canActivate: [AuthGuardService]
-    },
+    // {
+    //     path: 'calendar',
+    //     component: CalendarComponent,
+    //     canActivate: [AuthGuardService]
+    // },
     {
         path: 'notes',
         component: NoteListComponent,

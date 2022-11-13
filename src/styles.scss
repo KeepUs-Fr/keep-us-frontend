@@ -96,7 +96,7 @@ $custom-theme: mat.define-light-theme((
 
 html, body {
     height: 100%;
-    background-color: #E5E5E5;
+    background-color: #FFFFFF;
 }
 
 body {
@@ -165,8 +165,23 @@ body {
         }
     }
 
+    .lottie {
+        height: 500px;
+
+        @media (max-width: 786px) {
+            height: 380px;
+        }
+    }
+
     .txt-center {
         text-align: center !important;
+    }
+
+    .sticky-item {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: #FFFFFF;
     }
 
     .justify-between {
@@ -198,9 +213,8 @@ body {
         flex: 1 1 auto !important;
     }
 
-    .dialog-close {
-        margin-top: -14px;
-        margin-right: -20px;
+    .vertical-center {
+        margin: auto 0;
     }
 
     .mb-20 {
@@ -209,5 +223,17 @@ body {
 
     .mb-12 {
         margin-bottom: 12px;
+    }
+
+    .ml-12 {
+        margin-left: 12px;
+    }
+
+    .mt-24 {
+      margin-top: 24px;
+    }
+
+    .spinner {
+        padding-top: 10%;
     }
 }

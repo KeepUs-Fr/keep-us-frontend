@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
     selector: 'app-remove-modal',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
     styleUrls: ['./remove-modal.component.scss']
 })
 export class RemoveModalComponent {
-    constructor() {}
+    constructor(
+        @Inject(MAT_DIALOG_DATA)
+        public data: { isGroup: boolean }
+    ) {}
 }

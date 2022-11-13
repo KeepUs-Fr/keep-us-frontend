@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CreateGroupModel, GroupModel } from '../models/group.model';
 import { UserModel } from '../models/user.model';
+import { query } from "@angular/animations";
 
 @Injectable({
     providedIn: 'root'
@@ -29,14 +30,6 @@ export class UserService {
         });
     }
 
-    createUser(username: string): Observable<UserModel> {
-        const newUser = { username: username };
-
-        return this.http.post<UserModel>(
-            environment.baseUrl + '/users',
-            newUser
-        );
-    }
 
     getGroupsByOwnerId(id: number): Observable<GroupModel[]> {
         return this.http.get<GroupModel[]>(
@@ -48,28 +41,20 @@ export class UserService {
         return this.http.get<GroupModel>(environment.baseUrl + '/groups/' + id);
     }
 
-    createGroup(groupName: string): Observable<GroupModel> {
-        const group: CreateGroupModel = {
-            name: groupName,
-            ownerId: +localStorage.getItem('ownerId')!,
-            members: []
-        };
-
+    createGroup(group: CreateGroupModel): Observable<GroupModel> {
         return this.http.post<GroupModel>(
             environment.baseUrl + '/groups',
             group
         );
     }
 
-    addGroupMember(groupId: number, memberId: number): Observable<GroupModel> {
-        const newMember = {
-            groupId: groupId,
-            memberId: memberId
-        };
+    addGroupMember(groupId: number, username: string): Observable<GroupModel> {
+        let queryParam = new HttpParams();
+        queryParam = queryParam.append('username', username);
 
         return this.http.patch<GroupModel>(
-            environment.baseUrl + '/groups/member',
-            newMember
+            environment.baseUrl + '/groups/' + groupId + '/member',{},
+            {params: queryParam}
         );
     }
 

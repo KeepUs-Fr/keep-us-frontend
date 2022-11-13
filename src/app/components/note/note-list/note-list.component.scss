@@ -1,20 +1,7 @@
 .note-list {
-    .note-header {
-        padding: 8px;
-        margin-bottom: 24px;
-        align-items: center;
-    }
-
     .icon-btn {
         background: linear-gradient(90deg, #1D2F56 0%, #444EA8 89.06%);
         color: #FFFFFF;
-        width: 30px;
-        height: 30px;
-
-        mat-icon {
-            vertical-align: top;
-            padding-top: 4px;
-        }
     }
 
     mat-card {
@@ -48,19 +35,37 @@
         text-overflow: ellipsis;
     }
 
-    .flex-display {
-        height: 90vh;
-        width: 50%;
-        padding: 12px;
-        border: 2px solid #14213D;
-        border-radius: 20px;
-        overflow-y: auto;
-        overflow-x: unset;
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .column-left {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 90vh;
+            padding: 0 12px 12px 12px;
+            border: 2px solid #14213D;
+            border-radius: 20px;
+            overflow-y: auto;
+            overflow-x: unset;
+        }
+
+        .column-right {
+            display: flex;
+            flex-direction: column;
+            flex: 2;
+        }
+
+        .sticky-item {
+            padding: 12px;
+            margin: 0 -12px;
+        }
     }
 
     .note-detail {
         margin-left: 24px;
-        width: 100%;
 
         @media screen and (max-width: 786px){
             margin-left: 0;

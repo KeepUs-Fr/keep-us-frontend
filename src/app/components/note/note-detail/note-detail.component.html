@@ -4,15 +4,9 @@
             <button *ngIf="noteId === -1" mat-icon-button routerLink="/notes">
                 <mat-icon>arrow_back_ios</mat-icon>
             </button>
-
-            <div class="justify-end">
-<!--                <button mat-icon-button>-->
-<!--                    <mat-icon>palette</mat-icon>-->
-<!--                </button>-->
-                <button mat-icon-button (click)="openRemoveDialog()">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </div>
+            <button mat-icon-button (click)="openRemoveDialog()" class="float-r">
+                <mat-icon>delete</mat-icon>
+            </button>
         </div>
 
         <mat-form-field appearance="standard" class="input-title">
@@ -27,7 +21,7 @@
         </mat-form-field>
     </div>
 
-    <mat-hint>{{note.createDate | date:'dd/MM/yyyy'}}</mat-hint>
+    <mat-hint class="vertical-center">{{note.createDate | date:'dd/MM/yyyy'}}</mat-hint>
 
     <mat-form-field appearance="standard">
         <textarea matInput
@@ -40,4 +34,6 @@
         </textarea>
     </mat-form-field>
 </div>
-
+<div class="justify-center spinner" *ngIf="!note">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>

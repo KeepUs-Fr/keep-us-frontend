@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { DecodedTokenModel } from '../models/decoded-token.model';
 import jwt_decode from 'jwt-decode';
-import { AuthModel } from '../models/auth.model';
+import { AuthModel, AuthRegisterModel } from '../models/auth.model';
+import { UserModel } from "../models/user.model";
 
 @Injectable({
     providedIn: 'root'
@@ -31,19 +32,29 @@ export class AuthService {
         this.emitChangeSource.next(change);
     }
 
-    signup(registerData: AuthModel): Observable<void> {
-        return this.http.post<void>(
+    signup(registerData: AuthRegisterModel): Observable<UserModel> {
+        return this.http.post<UserModel>(
             environment.baseUrl + '/auth/register',
             registerData
         );
     }
 
-    login(credential: AuthModel): Observable<{ token: string }> {
-        return this.http.post<{ token: string }>(
+    login(credential: AuthModel): Observable<{ token: string, refreshKey: string }> {
+        return this.http.post<{ token: string, refreshKey: string }>(
             environment.baseUrl + '/auth/login',
             credential
         );
     }
+
+    refresh(): Observable<{ token: string, refreshKey: string }> {
+        let queryParam = new HttpParams();
+        queryParam = queryParam.append('refreshKey', localStorage.getItem('refreshKey')!);
+
+        return this.http.get<{ token: string, refreshKey: string }>(
+            environment.baseUrl + '/auth/refresh/' + localStorage.getItem('ownerId')!,
+            {params: queryParam});
+    }
+
 
     logout() {
         localStorage.removeItem('token');

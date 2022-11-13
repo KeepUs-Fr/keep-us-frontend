@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { RemoveModalComponent } from '../modals/remove-modal/remove-modal.component';
 import { NotesService } from '../../services/notes.service';
 import { SnackBarService } from '../../services/snack-bar.service';
+import { GroupModel } from "../../models/group.model";
 
 @Component({
     selector: 'app-profile',
@@ -15,8 +16,8 @@ import { SnackBarService } from '../../services/snack-bar.service';
 })
 export class ProfileComponent implements OnInit {
     selectedAvatar = '';
-    groups: any[] = [];
-    displayedColumns = ['name', 'date', 'actions'];
+    groups: GroupModel[] = [];
+    displayedColumns = ['name', 'date', 'members', 'actions'];
     ownerId = 0;
 
     constructor(
@@ -49,7 +50,8 @@ export class ProfileComponent implements OnInit {
 
     openRemoveDialog(groupId: number): void {
         const dialogRef = this.dialog.open(RemoveModalComponent, {
-            maxWidth: '440px'
+            maxWidth: '440px',
+            data: { isGroup: true },
         });
 
         dialogRef.afterClosed().subscribe({
@@ -63,7 +65,7 @@ export class ProfileComponent implements OnInit {
                             this.userService.emitGroupId(0);
                             this.getGroups();
                             this.snackBarService.openSuccess(
-                                'Group have been deleted'
+                                'Le groupe a été supprimé'
                             );
                         }
                     });

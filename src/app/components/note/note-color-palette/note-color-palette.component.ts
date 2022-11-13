@@ -14,7 +14,7 @@ export class NoteColorPaletteComponent implements OnInit {
 
     constructor() {}
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.colors
             .set('blue', '#5AADF9')
             .set('red', '#FF6262')
@@ -22,10 +22,7 @@ export class NoteColorPaletteComponent implements OnInit {
             .set('orange', '#F98A5A')
             .set('purple', '#B28BB9');
 
-        if (
-            this.detailColor.trim() !== null &&
-            this.detailColor.trim() !== ''
-        ) {
+        if (this.detailColor !== '') {
             let key = [...this.colors.entries()]
                 .filter(({ 1: n }) => n === this.detailColor)
                 .map(([k]) => k);
@@ -36,6 +33,7 @@ export class NoteColorPaletteComponent implements OnInit {
                 value: this.detailColor
             });
         }
+
     }
 
     getCurrentColor(color: string): void {

@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddModalComponent } from '../modals/add-modal/add-modal.component';
 import { SnackBarService } from '../../services/snack-bar.service';
-import { UserModalComponent } from '../modals/user-modal/user-modal.component';
 import { GroupModel } from '../../models/group.model';
 import { ResponsiveService } from '../../services/responsive.service';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -20,7 +19,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class SideNavComponent implements OnInit {
     groups: GroupModel[] = [];
-    selectedGroup = new GroupModel();
+    selectedGroup = {} as GroupModel;
     selectedAvatar = '1';
     panelOpenState = true;
     isLogged = false;
@@ -82,8 +81,8 @@ export class SideNavComponent implements OnInit {
         });
     }
 
-    getAvatar(): void {
-        const avatar = localStorage.getItem('avatar');
+    getAvatar() {
+        const avatar = localStorage.getItem('avatarId');
         this.selectedAvatar = avatar ? avatar : '1';
     }
 
@@ -104,26 +103,11 @@ export class SideNavComponent implements OnInit {
                     }
                 } else {
                     if (username !== false) {
-                        this.userService.getUserByUsername(username).subscribe({
-                            next: (user) => {
-                                console.log(user);
-                                this.userService
-                                    .addGroupMember(
-                                        +localStorage.getItem('groupId')!,
-                                        user.id
-                                    )
-                                    .subscribe((_) =>
-                                        this.snackBarService.openSuccess(
-                                            'User ' +
-                                                user.username +
-                                                ' has been added'
-                                        )
-                                    );
-                            },
+                        this.userService.addGroupMember(
+                            +localStorage.getItem('groupId')!, username).subscribe({
+                            next: _ => this.snackBarService.openSuccess('User ' + username + ' has been added'),
                             error: (err) => {
-                                this.snackBarService.openError(
-                                    err.error.message
-                                );
+                                this.snackBarService.openError(err.error.message);
                             }
                         });
                     }
@@ -133,14 +117,6 @@ export class SideNavComponent implements OnInit {
                 console.error(err);
             }
         });
-    }
-
-    openUserModal() {
-        const groupId = localStorage.getItem('groupId');
-        const id = groupId !== null ? +groupId : -1;
-
-        const group = this.groups.filter((g) => g.id === id)[0];
-        this.dialog.open(UserModalComponent);
     }
 
     private getGroupByUsername() {

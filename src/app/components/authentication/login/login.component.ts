@@ -7,7 +7,6 @@ import {
     FormGroup,
     Validators
 } from '@angular/forms';
-import { UserService } from '../../../services/user.service';
 
 @Component({
     selector: 'app-login',
@@ -24,8 +23,7 @@ export class LoginComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private router: Router,
-        public formBuilder: FormBuilder,
-        private userService: UserService
+        public formBuilder: FormBuilder
     ) {
         this.usernameCtrl = formBuilder.control('', Validators.required);
         this.passwordCtrl = formBuilder.control('', Validators.required);
@@ -47,18 +45,15 @@ export class LoginComponent implements OnInit {
         this.authService.login(this.loginForm.value).subscribe({
             next: (result) => {
                 localStorage.setItem('token', result.token);
-                this.authService.decodedToken = this.authService.decodeToken(
-                    result.token
-                );
+                localStorage.setItem('refreshKey', result.refreshKey);
 
-                this.userService
-                    .getUserByUsername(this.authService.decodedToken.sub)
-                    .subscribe((user) => {
-                        localStorage.setItem('ownerId', user.id.toString());
-                        this.authService.emitChange(true);
-                        this.isLoading = false;
-                        this.router.navigate(['notes']).then();
-                    });
+                this.authService.decodedToken = this.authService.decodeToken(result.token);
+
+                localStorage.setItem('ownerId', this.authService.decodedToken.id.toString());
+
+                this.authService.emitChange(true);
+                this.isLoading = false;
+                this.router.navigate(['notes']).then();
             },
             error: (error) => {
                 this.isLoading = false;

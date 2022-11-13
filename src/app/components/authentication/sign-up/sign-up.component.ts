@@ -8,6 +8,7 @@ import {
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
+import { CreateGroupModel } from "../../../models/group.model";
 
 @Component({
     selector: 'app-sign-up',
@@ -15,9 +16,14 @@ import { UserService } from '../../../services/user.service';
     styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-    hide = true;
+    passwordHidden = true;
+    isPasswordFocus = false;
+    isLoading = false;
+
     signupForm: FormGroup;
+
     usernameCtrl: FormControl;
+    emailCtrl: FormControl;
     passwordCtrl: FormControl;
 
     constructor(
@@ -26,12 +32,26 @@ export class SignUpComponent implements OnInit {
         public formBuilder: FormBuilder,
         private userService: UserService
     ) {
-        this.usernameCtrl = formBuilder.control('', Validators.required);
-        this.passwordCtrl = formBuilder.control('', Validators.required);
+        this.usernameCtrl = formBuilder.control(null, [
+            Validators.required,
+            Validators.pattern(/^[A-z0-9]*$/),
+            Validators.minLength(3)
+        ]);
+        this.emailCtrl = formBuilder.control(null,[
+            Validators.required,
+            Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+        ]);
+        this.passwordCtrl = formBuilder.control('', [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(40),
+            Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/),
+        ]);
 
         this.signupForm = formBuilder.group({
             username: this.usernameCtrl,
-            password: this.passwordCtrl
+            email: this.emailCtrl,
+            password: this.passwordCtrl,
         });
     }
 
@@ -41,27 +61,33 @@ export class SignUpComponent implements OnInit {
         }
     }
 
-    onSubmit(): void {
+    onSubmit() {
+        if(this.signupForm.invalid)
+            return
+
+        this.isLoading = true;
         this.authService.signup(this.signupForm.value).subscribe({
-            next: (_) => {
+            next: (res) => {
                 this.authService.login(this.signupForm.value).subscribe({
                     next: (result) => {
                         localStorage.setItem('token', result.token);
-                        this.authService.decodedToken =
-                            this.authService.decodeToken(result.token);
+                        localStorage.setItem('refreshKey', result.refreshKey);
+                        this.authService.decodedToken = this.authService.decodeToken(result.token);
+                        localStorage.setItem('ownerId', this.authService.decodedToken.id.toString());
 
-                        this.userService
-                            .createUser(this.authService.decodedToken.sub)
-                            .subscribe((user) => {
-                                localStorage.setItem(
-                                    'ownerId',
-                                    user.id.toString()
-                                );
-                                this.authService.emitChange(true);
-                                this.router.navigate(['notes']).then();
-                            });
+                        const group: CreateGroupModel = {
+                            name: "Personal space",
+                            ownerId: res.id,
+                            members: []
+                        }
+                        this.userService.createGroup(group).subscribe(_ => {
+                            this.authService.emitChange(true);
+                            this.isLoading = false;
+                            this.router.navigate(['notes']).then();
+                        });
                     },
                     error: (error) => {
+                        this.isLoading = false;
                         console.error(error);
                     }
                 });
