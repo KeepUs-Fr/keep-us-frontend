@@ -18,6 +18,7 @@ import { CreateGroupModel } from "../../../models/group.model";
 export class SignUpComponent implements OnInit {
     passwordHidden = true;
     isPasswordFocus = false;
+    isLoading = false;
 
     signupForm: FormGroup;
 
@@ -64,6 +65,7 @@ export class SignUpComponent implements OnInit {
         if(this.signupForm.invalid)
             return
 
+        this.isLoading = true;
         this.authService.signup(this.signupForm.value).subscribe({
             next: (res) => {
                 this.authService.login(this.signupForm.value).subscribe({
@@ -80,10 +82,12 @@ export class SignUpComponent implements OnInit {
                         }
                         this.userService.createGroup(group).subscribe(_ => {
                             this.authService.emitChange(true);
+                            this.isLoading = false;
                             this.router.navigate(['notes']).then();
                         });
                     },
                     error: (error) => {
+                        this.isLoading = false;
                         console.error(error);
                     }
                 });

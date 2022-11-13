@@ -33,11 +33,11 @@
                 <mat-icon>cancel</mat-icon>Contient un charactère spécial
             </small>
             <br/>
-            <button mat-flat-button type="button" class="btn secondary"
+            <button mat-flat-button type="button" class="btn secondary justify-center"
                     [ngClass]="{'mt-24': isPasswordFocus && passwordCtrl.invalid}"
-                    (click)="onSubmit()"
-                    [disabled]="signupForm.invalid">
-                Créer mon compte
+                    (click)="onSubmit()">
+                <span *ngIf="!isLoading">Créer mon compte</span>
+                <mat-spinner diameter="36" color="primary" *ngIf="isLoading"></mat-spinner>
             </button>
         </form>
 
