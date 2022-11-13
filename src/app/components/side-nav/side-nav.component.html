@@ -69,14 +69,14 @@
                 </button>
 
                 <!-- Display name of group or page -->
-                <span>{{ currentId !== '-1' ? selectedGroup.name: 'Profile' }}</span>
+                <span>{{ currentId !== '-1' ? selectedGroup.name : 'Profile' }}</span>
                 <span class="spacer"></span>
 
                 <!-- Display user actions based on rights -->
                 <button mat-icon-button
                         [matMenuTriggerFor]="menu"
                         aria-label="Group menu"
-                        *ngIf="!['Profile', 'Personal space', 'Calendar'].includes(selectedGroup.name)">
+                        *ngIf="selectedGroup.name !== 'Personal space' && currentId !== '-1'">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">

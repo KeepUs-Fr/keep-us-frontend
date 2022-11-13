@@ -48,11 +48,10 @@ export class AuthService {
 
     refresh(): Observable<{ token: string, refreshKey: string }> {
         let queryParam = new HttpParams();
-        queryParam = queryParam.append('userId', localStorage.getItem('ownerId')!);
         queryParam = queryParam.append('refreshKey', localStorage.getItem('refreshKey')!);
 
         return this.http.get<{ token: string, refreshKey: string }>(
-            environment.baseUrl + '/auth/refresh',
+            environment.baseUrl + '/auth/refresh/' + localStorage.getItem('ownerId')!,
             {params: queryParam});
     }
 

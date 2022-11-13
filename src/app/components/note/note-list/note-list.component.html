@@ -6,8 +6,9 @@
     </button>
 
     <!-- Display note list -->
-    <div [ngClass]="{'justify-start': !(isMobile$| async)}">
-        <div [ngClass]="{'flex-display': !(isMobile$| async)}">
+<!--    <div [ngClass]="{'justify-start': !(isMobile$| async)}" >-->
+    <div [ngClass]="{'row': !(isMobile$| async)}">
+        <div [ngClass]="{'column-left': !(isMobile$| async)}">
             <div class="justify-between mb-12" *ngIf="!(isMobile$| async)">
                 <h2>Les notes</h2>
                 <button mat-icon-button class="icon-btn" (click)="openCreationDialog()">
@@ -30,7 +31,9 @@
         </div>
 
         <!-- Web detail view -->
-        <app-note-detail *ngIf="noteId" class="note-detail" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
+        <div class="column-right">
+            <app-note-detail *ngIf="noteId" class="note-detail" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
+        </div>
     </div>
 
     <div class="justify-center spinner" *ngIf="isLoading">
