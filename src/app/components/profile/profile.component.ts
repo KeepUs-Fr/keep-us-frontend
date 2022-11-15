@@ -62,7 +62,8 @@ export class ProfileComponent implements OnInit {
                         .subscribe((_) => {});
                     this.userService.deleteGroup(groupId).subscribe({
                         next: (_) => {
-                            this.userService.emitGroupId(0);
+                            const change = {id: 0, clearNoteId: false};
+                            this.userService.emitGroupId(change);
                             this.getGroups();
                             this.snackBarService.openSuccess(
                                 'Le groupe a été supprimé'
@@ -77,13 +78,11 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    private getGroups(): void {
-        this.userService
-            .getGroupsByOwnerId(+localStorage.getItem('ownerId')!)
-            .subscribe({
-                next: (groups) => {
-                    this.groups = groups;
-                }
-            });
+    private getGroups() {
+        this.userService.getGroupsByOwnerId(+localStorage.getItem('ownerId')!).subscribe({
+            next: (groups) => {
+                this.groups = groups;
+            }
+        });
     }
 }

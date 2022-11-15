@@ -49,9 +49,11 @@ export class NoteListComponent implements OnInit {
             this.getNotes();
         }
 
-        this.userService.groupIdEmitted.subscribe((id) => {
-            this.noteId = undefined;
-            this.groupId = id;
+        this.userService.groupIdEmitted.subscribe(change => {
+            if (change.clearNoteId)
+                this.noteId = undefined;
+
+            this.groupId = change.id;
             this.getNotes();
         });
     }

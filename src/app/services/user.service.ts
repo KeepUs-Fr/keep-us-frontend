@@ -4,20 +4,19 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CreateGroupModel, GroupModel } from '../models/group.model';
 import { UserModel } from '../models/user.model';
-import { query } from "@angular/animations";
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
     // Observable string sources
-    private emitGroupIdSource = new Subject<number>();
+    private emitGroupIdSource = new Subject<{id: number, clearNoteId: boolean}>();
     // Observable string streams
     groupIdEmitted = this.emitGroupIdSource.asObservable();
 
     constructor(private http: HttpClient) {}
 
-    emitGroupId(change: number) {
+    emitGroupId(change: {id: number, clearNoteId: boolean}) {
         this.emitGroupIdSource.next(change);
     }
 

@@ -1,6 +1,6 @@
 <mat-sidenav-container>
     <mat-sidenav
-        *ngIf="isLogged"
+        *ngIf="authService.isLogged()"
         #drawer class="sidenav" fixedInViewport
         [attr.role]="(isMobile$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isMobile$ | async) ? 'over' : 'side'"
@@ -11,7 +11,7 @@
             <span>Keep Us</span>
         </mat-toolbar>
 
-        <ng-container *ngIf="isLogged && authService.decodedToken">
+        <ng-container *ngIf="authService.isLogged() && authService.decodedToken">
             <div class="sticky-item profile">
                 <mat-nav-list class="pb-8">
                     <!-- User profile -->
@@ -35,7 +35,7 @@
             </div>
 
             <!-- Get user groups -->
-            <mat-nav-list class="pb-50">
+            <mat-nav-list class="pb-50" *ngIf="groups">
                 <ng-container *ngFor="let group of groups">
                     <a mat-list-item
                        [ngClass]="{'active': currentId === group.id.toString()}"
@@ -58,7 +58,7 @@
     <!-- Content -->
     <mat-sidenav-content>
         <mat-toolbar class="toolbar">
-            <ng-container *ngIf="isLogged; else no_auth">
+            <ng-container *ngIf="authService.isLogged(); else no_auth">
                 <button
                     type="button"
                     aria-label="sidenav"
@@ -85,22 +85,22 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <!--                <button mat-menu-item (click)="openUserModal()">-->
-                    <!--                    <mat-icon>group</mat-icon>-->
-                    <!--                    <span>Users</span>-->
-                    <!--                </button>-->
+                    <button mat-menu-item>
+                        <mat-icon>group</mat-icon>
+                        <span>Liste des membres</span>
+                    </button>
                     <button mat-menu-item (click)="openAddModal(false)">
                         <mat-icon>group_add</mat-icon>
                         <span>Ajouter un membre</span>
                     </button>
-                    <!--                <button mat-menu-item>-->
-                    <!--                    <mat-icon>person_remove</mat-icon>-->
-                    <!--                    <span>Quit group</span>-->
-                    <!--                </button>-->
-                    <!--                <button mat-menu-item>-->
-                    <!--                    <mat-icon class="delete-color">highlight_off</mat-icon>-->
-                    <!--                    <span class="delete-color">Delete Group</span>-->
-                    <!--                </button>-->
+                    <button mat-menu-item *ngIf="true">
+                        <mat-icon>person_remove</mat-icon>
+                        <span>Quitter le groupe</span>
+                    </button>
+                    <button mat-menu-item *ngIf="true">
+                        <mat-icon color="warn">highlight_off</mat-icon>
+                        <span class="txt-warn">Supprimer ce groupe</span>
+                    </button>
                 </mat-menu>
             </ng-container>
 

@@ -1,7 +1,7 @@
 import {
     Component,
     EventEmitter,
-    Input,
+    Input, OnChanges,
     OnInit,
     Output,
     SimpleChanges
@@ -13,13 +13,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { SnackBarService } from '../../../services/snack-bar.service';
 import { UserService } from "../../../services/user.service";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
     selector: 'app-note-detail',
     templateUrl: './note-detail.component.html',
     styleUrls: ['./note-detail.component.scss']
 })
-export class NoteDetailComponent implements OnInit {
+export class NoteDetailComponent implements OnInit, OnChanges {
     @Input() noteId = -1;
     @Output() reload = new EventEmitter<boolean>();
 
@@ -28,6 +29,8 @@ export class NoteDetailComponent implements OnInit {
     title: string = '';
     content: string = '';
     selectedColor = { key: '', value: '' };
+    isLocked = false;
+    userId = 0;
 
     constructor(
         private route: ActivatedRoute,
@@ -35,10 +38,13 @@ export class NoteDetailComponent implements OnInit {
         private router: Router,
         private dialog: MatDialog,
         private snackBarService: SnackBarService,
-        private userService: UserService
+        private userService: UserService,
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {
+        this.userId = this.authService.decodedToken?.id!;
+
         if (this.noteId === -1) {
             this.route.params.subscribe((params: Params) => {
                 this.currentId = params['id'];
@@ -58,10 +64,12 @@ export class NoteDetailComponent implements OnInit {
     getNoteDetail() {
         this.notesService.getNoteById(this.currentId).subscribe({
             next: (note) => {
+                console.log(note)
                 this.note = note;
                 this.title = this.note.title;
                 this.content = this.note.content;
                 this.selectedColor.value = this.note.color;
+                this.isLocked = this.note.lock;
             },
             error: (err) => {
                 console.error(err);
@@ -73,23 +81,22 @@ export class NoteDetailComponent implements OnInit {
         if (
             this.note.title === this.title &&
             this.note.content === this.content &&
-            this.note.color === this.selectedColor.value
+            this.note.color === this.selectedColor.value &&
+            this.note.lock === this.isLocked
         ) return;
 
-        const newNote: CreateNoteModel = {
-            title: this.title,
-            content: this.content,
-            isLock: true,
-            position: this.note.position,
-            color: this.selectedColor.key,
-            ownerId: this.note.ownerId,
-            groupId: this.note.groupId
-        };
+        this.note.title = this.title;
+        this.note.content = this.content;
+        this.note.lock = this.isLocked;
+        this.note.color = this.selectedColor.key;
 
-        this.notesService.updateNote(this.currentId, newNote).subscribe({
-            next: (_) => {
-                if (this.noteId !== -1)
-                    this.userService.emitGroupId(+localStorage.getItem('groupId')!);
+        this.notesService.updateNote(this.note).subscribe({
+            next: (note) => {
+                this.note = note;
+                if (this.noteId !== -1) {
+                    const change = {id: +localStorage.getItem('groupId')!, clearNoteId: false};
+                    this.userService.emitGroupId(change);
+                }
             },
             error: (err) => {
                 console.error(err);
