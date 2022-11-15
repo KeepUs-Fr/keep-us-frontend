@@ -22,7 +22,6 @@ export class SideNavComponent implements OnInit {
     selectedGroup = {} as GroupModel;
     selectedAvatar = '1';
     panelOpenState = true;
-    isLogged = false;
     currentId = localStorage.getItem('groupId');
 
     @ViewChild('drawer') drawer!: MatSidenav;
@@ -40,29 +39,22 @@ export class SideNavComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.isLogged = this.authService.isLogged();
-        if (this.isLogged) {
-            this.getGroupByUsername();
+        if (this.authService.isLogged()) {
             this.getAvatar();
+            this.getGroupByUsername();
 
-            /*
-             * Subscribe to avatar observable to get selected avatar
-             */
             this.sideNavService.avatarEmitted.subscribe((msg) => {
                 this.selectedAvatar = msg;
             });
+
+            this.authService.changeEmitted.subscribe(change => {
+                if (change) this.getGroupByUsername();
+            })
+
+            this.userService.groupIdEmitted.subscribe(change => {
+                if (change.id === 0) this.getGroupByUsername();
+            });
         }
-
-        this.authService.changeEmitted.subscribe((value) => {
-            this.isLogged = value;
-            if (this.isLogged) {
-                this.getGroupByUsername();
-            }
-        });
-
-        this.userService.groupIdEmitted.subscribe((value) => {
-            if (value === 0) this.getGroupByUsername();
-        });
     }
 
     groupAction(id: number, group?: GroupModel) {
@@ -73,7 +65,8 @@ export class SideNavComponent implements OnInit {
 
         if (group && id > 0) {
             this.router.navigate(['notes']).then();
-            this.userService.emitGroupId(id);
+            const change = {id: id, clearNoteId: true};
+            this.userService.emitGroupId(change);
         }
 
         this.isMobile$.pipe(untilDestroyed(this)).subscribe((result) => {
@@ -120,33 +113,17 @@ export class SideNavComponent implements OnInit {
     }
 
     private getGroupByUsername() {
-        this.userService
-            .getGroupsByOwnerId(+localStorage.getItem('ownerId')!)
-            .subscribe({
-                next: (groups) => {
-                    this.groups = groups;
-
-                    if (
-                        this.currentId &&
-                        this.currentId !== '-1' &&
-                        this.currentId !== '0'
-                    ) {
-                        this.userService
-                            .getGroupById(+this.currentId)
-                            .subscribe((group) => {
-                                this.selectedGroup = group;
-                            });
-                    } else {
-                        const firstGroup = this.groups.slice(0, 1).shift();
-                        if (firstGroup) this.selectedGroup = firstGroup;
-                    }
-
-                    this.userService.emitGroupId(this.selectedGroup.id);
-                    localStorage.setItem(
-                        'groupId',
-                        this.selectedGroup.id.toString()
-                    );
+        this.userService.getGroupsByOwnerId(+localStorage.getItem('ownerId')!).subscribe({
+            next: (groups) => {
+                this.groups = groups;
+                if (this.currentId && this.currentId !== '-1' && this.currentId !== '0') {
+                    this.userService.getGroupById(+this.currentId).subscribe((group) => {
+                        this.selectedGroup = group;
+                    });
+                } else {
+                    this.selectedGroup = this.groups.slice(0, 1).shift()!;
                 }
-            });
+            }
+        });
     }
 }

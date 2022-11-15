@@ -3,6 +3,7 @@ export interface NoteModel {
     title: string;
     content: string;
     position: number;
+    lock: boolean;
     isLock: boolean;
     color: string;
     ownerId: number;

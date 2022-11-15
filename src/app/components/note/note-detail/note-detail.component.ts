@@ -1,7 +1,7 @@
 import {
     Component,
     EventEmitter,
-    Input,
+    Input, OnChanges,
     OnInit,
     Output,
     SimpleChanges
@@ -19,7 +19,7 @@ import { UserService } from "../../../services/user.service";
     templateUrl: './note-detail.component.html',
     styleUrls: ['./note-detail.component.scss']
 })
-export class NoteDetailComponent implements OnInit {
+export class NoteDetailComponent implements OnInit, OnChanges {
     @Input() noteId = -1;
     @Output() reload = new EventEmitter<boolean>();
 
@@ -28,6 +28,7 @@ export class NoteDetailComponent implements OnInit {
     title: string = '';
     content: string = '';
     selectedColor = { key: '', value: '' };
+    isLocked = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -58,10 +59,12 @@ export class NoteDetailComponent implements OnInit {
     getNoteDetail() {
         this.notesService.getNoteById(this.currentId).subscribe({
             next: (note) => {
+                console.log(note)
                 this.note = note;
                 this.title = this.note.title;
                 this.content = this.note.content;
                 this.selectedColor.value = this.note.color;
+                this.isLocked = this.note.lock;
             },
             error: (err) => {
                 console.error(err);
@@ -73,13 +76,14 @@ export class NoteDetailComponent implements OnInit {
         if (
             this.note.title === this.title &&
             this.note.content === this.content &&
-            this.note.color === this.selectedColor.value
+            this.note.color === this.selectedColor.value &&
+            this.note.lock === this.isLocked
         ) return;
 
         const newNote: CreateNoteModel = {
             title: this.title,
             content: this.content,
-            isLock: true,
+            isLock: this.isLocked,
             position: this.note.position,
             color: this.selectedColor.key,
             ownerId: this.note.ownerId,
@@ -87,9 +91,12 @@ export class NoteDetailComponent implements OnInit {
         };
 
         this.notesService.updateNote(this.currentId, newNote).subscribe({
-            next: (_) => {
-                if (this.noteId !== -1)
-                    this.userService.emitGroupId(+localStorage.getItem('groupId')!);
+            next: (note) => {
+                this.note = note;
+                if (this.noteId !== -1) {
+                    const change = {id: +localStorage.getItem('groupId')!, clearNoteId: false};
+                    this.userService.emitGroupId(change);
+                }
             },
             error: (err) => {
                 console.error(err);

@@ -1,12 +1,18 @@
-<div class="note-detail" *ngIf="note">
+<div class="note-detail" *ngIf="note.id">
     <div class="detail-header" [ngStyle]="{'background-color': selectedColor.value}">
         <div [ngClass]="{'justify-between': noteId === -1}">
             <button *ngIf="noteId === -1" mat-icon-button routerLink="/notes">
                 <mat-icon>arrow_back_ios</mat-icon>
             </button>
-            <button mat-icon-button (click)="openRemoveDialog()" class="float-r">
-                <mat-icon>delete</mat-icon>
-            </button>
+            <div class="justify-end">
+                <button mat-icon-button (click)="isLocked = !isLocked; updateNote()">
+                    <mat-icon *ngIf="isLocked">lock</mat-icon>
+                    <mat-icon *ngIf="!isLocked">lock_open</mat-icon>
+                </button>
+                <button mat-icon-button (click)="openRemoveDialog()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </div>
 
         <mat-form-field appearance="standard" class="input-title">
@@ -16,12 +22,20 @@
                       [(ngModel)]="title"
                       (focusout)="updateNote()"
                       cdkTextareaAutosize
-                      cdkAutosizeMinRows="1">
+                      cdkAutosizeMinRows="1"
+                      [disabled]="isLocked">
             </textarea>
         </mat-form-field>
     </div>
 
-    <mat-hint class="vertical-center">{{note.createDate | date:'dd/MM/yyyy'}}</mat-hint>
+    <div class="justify-between">
+        <app-note-color-palette
+            *ngIf="!isLocked"
+            [detailColor]="note.color"
+            (eventEmitter)="getCurrentColor($event)">
+        </app-note-color-palette>
+        <mat-hint class="vertical-center">{{note.createDate | date:'dd/MM/yyyy'}}</mat-hint>
+    </div>
 
     <mat-form-field appearance="standard">
         <textarea matInput
@@ -30,10 +44,11 @@
                   (focusout)="updateNote()"
                   placeholder="Créer une note..."
                   cdkTextareaAutosize
-                  cdkAutosizeMinRows="1">
+                  cdkAutosizeMinRows="1"
+                  [disabled]="isLocked">
         </textarea>
     </mat-form-field>
 </div>
-<div class="justify-center spinner" *ngIf="!note">
+<div class="justify-center spinner" *ngIf="!note.id">
     <mat-spinner diameter="50"></mat-spinner>
 </div>
