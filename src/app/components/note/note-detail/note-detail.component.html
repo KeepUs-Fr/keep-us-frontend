@@ -5,11 +5,15 @@
                 <mat-icon>arrow_back_ios</mat-icon>
             </button>
             <div class="justify-end">
-                <button mat-icon-button (click)="isLocked = !isLocked; updateNote()">
+                <button mat-icon-button
+                        (click)="isLocked = !isLocked; updateNote()"
+                        [disabled]="userId !== note.ownerId">
                     <mat-icon *ngIf="isLocked">lock</mat-icon>
                     <mat-icon *ngIf="!isLocked">lock_open</mat-icon>
                 </button>
-                <button mat-icon-button (click)="openRemoveDialog()">
+                <button mat-icon-button
+                        (click)="openRemoveDialog()"
+                        [disabled]="userId !== note.ownerId">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
@@ -23,14 +27,14 @@
                       (focusout)="updateNote()"
                       cdkTextareaAutosize
                       cdkAutosizeMinRows="1"
-                      [disabled]="isLocked">
+                      [disabled]="isLocked && userId !== note.ownerId">
             </textarea>
         </mat-form-field>
     </div>
 
     <div class="justify-between">
         <app-note-color-palette
-            *ngIf="!isLocked"
+            *ngIf="!isLocked || userId === note.ownerId"
             [detailColor]="note.color"
             (eventEmitter)="getCurrentColor($event)">
         </app-note-color-palette>
@@ -45,7 +49,7 @@
                   placeholder="Créer une note..."
                   cdkTextareaAutosize
                   cdkAutosizeMinRows="1"
-                  [disabled]="isLocked">
+                  [disabled]="isLocked && userId !== note.ownerId">
         </textarea>
     </mat-form-field>
 </div>

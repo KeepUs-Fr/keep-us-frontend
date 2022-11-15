@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { SnackBarService } from '../../../services/snack-bar.service';
 import { UserService } from "../../../services/user.service";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
     selector: 'app-note-detail',
@@ -29,6 +30,7 @@ export class NoteDetailComponent implements OnInit, OnChanges {
     content: string = '';
     selectedColor = { key: '', value: '' };
     isLocked = false;
+    userId = 0;
 
     constructor(
         private route: ActivatedRoute,
@@ -36,10 +38,13 @@ export class NoteDetailComponent implements OnInit, OnChanges {
         private router: Router,
         private dialog: MatDialog,
         private snackBarService: SnackBarService,
-        private userService: UserService
+        private userService: UserService,
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {
+        this.userId = this.authService.decodedToken?.id!;
+
         if (this.noteId === -1) {
             this.route.params.subscribe((params: Params) => {
                 this.currentId = params['id'];
@@ -80,17 +85,12 @@ export class NoteDetailComponent implements OnInit, OnChanges {
             this.note.lock === this.isLocked
         ) return;
 
-        const newNote: CreateNoteModel = {
-            title: this.title,
-            content: this.content,
-            isLock: this.isLocked,
-            position: this.note.position,
-            color: this.selectedColor.key,
-            ownerId: this.note.ownerId,
-            groupId: this.note.groupId
-        };
+        this.note.title = this.title;
+        this.note.content = this.content;
+        this.note.lock = this.isLocked;
+        this.note.color = this.selectedColor.key;
 
-        this.notesService.updateNote(this.currentId, newNote).subscribe({
+        this.notesService.updateNote(this.note).subscribe({
             next: (note) => {
                 this.note = note;
                 if (this.noteId !== -1) {

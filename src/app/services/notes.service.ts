@@ -37,9 +37,9 @@ export class NotesService {
         return this.http.post<NoteModel>(environment.baseUrl + '/notes', note);
     }
 
-    updateNote(id: number, note: CreateNoteModel): Observable<NoteModel> {
+    updateNote(note: NoteModel): Observable<NoteModel> {
         return this.http.patch<NoteModel>(
-            environment.baseUrl + '/notes/' + id,
+            environment.baseUrl + '/notes',
             note
         );
     }

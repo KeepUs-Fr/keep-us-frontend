@@ -21,7 +21,13 @@
         </textarea>
     </mat-form-field>
     <br/>
-    <app-note-color-palette (eventEmitter)="getColor($event)"></app-note-color-palette>
+    <div class="justify-between">
+        <app-note-color-palette (eventEmitter)="getColor($event)"></app-note-color-palette>
+        <button mat-icon-button (click)="isLocked = !isLocked">
+            <mat-icon *ngIf="isLocked">lock</mat-icon>
+            <mat-icon *ngIf="!isLocked">lock_open</mat-icon>
+        </button>
+    </div>
 </div>
 <div mat-dialog-actions class="justify-center">
     <button mat-flat-button
