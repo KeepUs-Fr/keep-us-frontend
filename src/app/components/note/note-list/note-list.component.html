@@ -14,8 +14,7 @@
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <div *ngIf="!isLoading; else is_loading" class="content-scroll"
-                 cdkDropList (cdkDropListDropped)="drop($event)">
+            <div class="content-scroll" cdkDropList (cdkDropListDropped)="drop($event)">
                 <div *ngFor="let note of notes" cdkDrag [cdkDragStartDelay]="250">
                     <div class="placeholder" *cdkDragPlaceholder></div>
                     <mat-card [ngStyle]="{ 'background-color': note.color }"
@@ -28,12 +27,6 @@
                     </mat-card>
                 </div>
             </div>
-
-            <ng-template #is_loading>
-                <div class="justify-center spinner">
-                    <mat-spinner diameter="50"></mat-spinner>
-                </div>
-            </ng-template>
         </div>
 
         <!-- Web detail view -->

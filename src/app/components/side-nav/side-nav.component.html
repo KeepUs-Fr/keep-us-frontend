@@ -1,6 +1,6 @@
 <mat-sidenav-container>
     <mat-sidenav
-        *ngIf="authService.isLogged()"
+        *ngIf="authService.isLogged() && authService.decodedToken.id"
         #drawer class="sidenav" fixedInViewport
         [attr.role]="(isMobile$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isMobile$ | async) ? 'over' : 'side'"
@@ -11,7 +11,7 @@
             <span>Keep Us</span>
         </mat-toolbar>
 
-        <ng-container *ngIf="authService.isLogged() && authService.decodedToken">
+        <ng-container>
             <div class="sticky-item profile">
                 <mat-nav-list class="pb-8">
                     <!-- User profile -->
@@ -19,17 +19,11 @@
                        routerLink="profile"
                        (click)="groupAction(-1)"
                        [ngClass]="{'active': currentId === '-1'}">
-                        <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar icon-margin">
+                        <img src="assets/images/avatars/avatar-{{avatarId}}.png"
+                             alt="Avatar"
+                             class="avatar icon-margin">
                         <span>{{authService.decodedToken.sub}}</span>
                     </a>
-                    <!-- Calendar -->
-<!--                    <a mat-list-item-->
-<!--                       routerLink="calendar"-->
-<!--                       (click)="groupAction(0)"-->
-<!--                       [ngClass]="{'active': currentId === '0'}">-->
-<!--                        <mat-icon>calendar_month</mat-icon>-->
-<!--                        <span class="ml-12">Calendrier</span>-->
-<!--                    </a>-->
                 </mat-nav-list>
                 <mat-divider></mat-divider>
             </div>
@@ -59,6 +53,7 @@
     <mat-sidenav-content>
         <mat-toolbar class="toolbar">
             <ng-container *ngIf="authService.isLogged(); else no_auth">
+                <!-- Display menu button in mobile view -->
                 <button
                     type="button"
                     aria-label="sidenav"
@@ -68,11 +63,10 @@
                     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                 </button>
 
-                <!-- Display name of group or page -->
+                <!-- Display name of groups and profile -->
                 <span *ngIf="selectedGroup.name !== 'Personal space'">
-                    {{ currentId !== '-1' ? selectedGroup.name : 'Profile' }}
+                    {{ selectedGroup.name }}
                 </span>
-
                 <span *ngIf="selectedGroup.name === 'Personal space'">Espace personnel</span>
 
                 <span class="spacer"></span>
@@ -81,26 +75,35 @@
                 <button mat-icon-button
                         [matMenuTriggerFor]="menu"
                         aria-label="Group menu"
-                        *ngIf="selectedGroup.name !== 'Personal space' && currentId !== '-1'">
+                        *ngIf="selectedGroup.name !== 'Personal space'">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
-                        <mat-icon>group</mat-icon>
-                        <span>Liste des membres</span>
-                    </button>
-                    <button mat-menu-item (click)="openAddModal(false)">
-                        <mat-icon>group_add</mat-icon>
-                        <span>Ajouter un membre</span>
-                    </button>
-                    <button mat-menu-item *ngIf="true">
-                        <mat-icon>person_remove</mat-icon>
-                        <span>Quitter le groupe</span>
-                    </button>
-                    <button mat-menu-item *ngIf="true">
-                        <mat-icon color="warn">highlight_off</mat-icon>
-                        <span class="txt-warn">Supprimer ce groupe</span>
-                    </button>
+                    <ng-container *ngIf="currentId !== '-1'; else logout">
+                        <button mat-menu-item>
+                            <mat-icon>group</mat-icon>
+                            <span>Liste des membres</span>
+                        </button>
+                        <button mat-menu-item (click)="openAddModal(false)">
+                            <mat-icon>group_add</mat-icon>
+                            <span>Ajouter un membre</span>
+                        </button>
+                        <button mat-menu-item *ngIf="selectedGroup.ownerId !== authService.decodedToken.id">
+                            <mat-icon>person_remove</mat-icon>
+                            <span>Quitter le groupe</span>
+                        </button>
+                        <button mat-menu-item *ngIf="selectedGroup.ownerId === authService.decodedToken.id">
+                            <mat-icon color="warn">highlight_off</mat-icon>
+                            <span class="txt-warn">Supprimer ce groupe</span>
+                        </button>
+                    </ng-container>
+
+                    <ng-template #logout>
+                        <button mat-menu-item (click)="authService.logout()">
+                            <mat-icon>logout</mat-icon>
+                            <span>Me deconnecter</span>
+                        </button>
+                    </ng-template>
                 </mat-menu>
             </ng-container>
 

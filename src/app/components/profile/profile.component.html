@@ -1,13 +1,5 @@
-<div class="profile">
-    <div class="justify-end mb-12">
-        <button mat-flat-button
-                class="btn"
-                (click)="authService.logout()">
-            Se déconnecter
-        </button>
-    </div>
-
-    <div class="justify-center" *ngIf="authService.decodedToken">
+<div class="profile" *ngIf="authService.decodedToken.id && selectedAvatar !== ''">
+    <div class="justify-center">
         <div>
             <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar">
             <div>
@@ -38,8 +30,8 @@
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <button mat-icon-button
+                        *ngIf="element.ownerId === authService.decodedToken.id && this.element.name !== 'Personal space'"
                         color="warn"
-                        *ngIf="element.ownerId === this.ownerId && this.element.name !== 'Personal space'"
                         (click)="openRemoveDialog(element.id)">
                     <mat-icon>delete</mat-icon>
                 </button>

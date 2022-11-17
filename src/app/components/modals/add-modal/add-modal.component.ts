@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreateGroupModel } from "../../../models/group.model";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
     selector: 'app-add-modal',
@@ -13,6 +14,7 @@ export class AddModalComponent {
 
     constructor(
         private userService: UserService,
+        private authService: AuthService,
         @Inject(MAT_DIALOG_DATA)
         public data: { isCreation: boolean }
     ) {}
@@ -21,7 +23,7 @@ export class AddModalComponent {
         if (this.data.isCreation) {
             const group: CreateGroupModel = {
                 name: this.name,
-                ownerId: +localStorage.getItem('ownerId')!,
+                ownerId: this.authService.decodedToken.id,
                 members: []
             };
 

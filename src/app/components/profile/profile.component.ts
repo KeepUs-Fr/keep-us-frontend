@@ -9,6 +9,7 @@ import { NotesService } from '../../services/notes.service';
 import { SnackBarService } from '../../services/snack-bar.service';
 import { GroupModel } from "../../models/group.model";
 
+
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
@@ -18,37 +19,38 @@ export class ProfileComponent implements OnInit {
     selectedAvatar = '';
     groups: GroupModel[] = [];
     displayedColumns = ['name', 'date', 'members', 'actions'];
-    ownerId = 0;
 
     constructor(
         public authService: AuthService,
         private dialog: MatDialog,
         private sideNavService: SideNavService,
-        private userService: UserService,
         private snackBarService: SnackBarService,
-        private notesService: NotesService
+        private notesService: NotesService,
+        private userService: UserService
     ) {}
 
-    ngOnInit(): void {
-        const avatar = localStorage.getItem('avatar');
-        this.selectedAvatar = avatar ? avatar : '1';
-
-        this.ownerId = +localStorage.getItem('ownerId')!;
-
-        this.sideNavService.avatarEmitted.subscribe((msg) => {
-            this.selectedAvatar = msg;
-        });
-
+    ngOnInit() {
         this.getGroups();
+        this.getAvatar();
     }
 
     openAvatarDialog(): void {
-        this.dialog.open(AvatarListComponent, {
+        const dialogRef = this.dialog.open(AvatarListComponent, {
             maxWidth: '440px'
+        });
+        dialogRef.afterClosed().subscribe({
+            next: (avatarId) => {
+                if (this.selectedAvatar !== avatarId)
+                    this.userService.updateAvatar(this.authService.decodedToken.id, avatarId)
+                        .subscribe(user => this.selectedAvatar = user.avatarId.toString());
+            },
+            error: (err) => {
+                console.error(err);
+            }
         });
     }
 
-    openRemoveDialog(groupId: number): void {
+    openRemoveDialog(groupId: number) {
         const dialogRef = this.dialog.open(RemoveModalComponent, {
             maxWidth: '440px',
             data: { isGroup: true },
@@ -79,9 +81,17 @@ export class ProfileComponent implements OnInit {
     }
 
     private getGroups() {
-        this.userService.getGroupsByOwnerId(+localStorage.getItem('ownerId')!).subscribe({
+        this.userService.getGroupsByOwnerId(this.authService.decodedToken.id).subscribe({
             next: (groups) => {
                 this.groups = groups;
+            }
+        });
+    }
+
+    private getAvatar() {
+        this.userService.getUserById(this.authService.decodedToken.id).subscribe({
+            next: (user) => {
+                this.selectedAvatar = user.avatarId.toString();
             }
         });
     }

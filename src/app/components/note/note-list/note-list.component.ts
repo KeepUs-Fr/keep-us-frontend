@@ -42,8 +42,7 @@ export class NoteListComponent implements OnInit {
 
     ngOnInit() {
         const id = localStorage.getItem('groupId');
-
-        if (id) {
+        if (id && id !== '-1') {
             this.noteId = undefined;
             this.groupId = +id;
             this.getNotes();

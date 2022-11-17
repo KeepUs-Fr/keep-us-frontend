@@ -25,7 +25,7 @@
                     <mat-icon>{{passwordHidden ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
-            <small *ngIf="isPasswordFocus && passwordCtrl.invalid">
+            <small *ngIf="isPasswordFocus">
                 <mat-icon>cancel</mat-icon>Au moins 8 caractères<br/>
                 <mat-icon>cancel</mat-icon>Contient une majuscule <br/>
                 <mat-icon>cancel</mat-icon>Contient une minuscule <br/>
@@ -34,7 +34,7 @@
             </small>
             <br/>
             <button mat-flat-button type="button" class="btn secondary justify-center"
-                    [ngClass]="{'mt-24': isPasswordFocus && passwordCtrl.invalid}"
+                    [ngClass]="{'mt-24': isPasswordFocus}"
                     (click)="onSubmit()">
                 <span *ngIf="!isLoading">Créer mon compte</span>
                 <mat-spinner diameter="36" color="primary" *ngIf="isLoading"></mat-spinner>

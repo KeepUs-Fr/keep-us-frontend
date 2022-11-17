@@ -11,6 +11,7 @@ import { ResponsiveService } from '../../services/responsive.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+
 @UntilDestroy()
 @Component({
     selector: 'app-side-nav',
@@ -20,35 +21,37 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class SideNavComponent implements OnInit {
     groups: GroupModel[] = [];
     selectedGroup = {} as GroupModel;
-    selectedAvatar = '1';
-    panelOpenState = true;
     currentId = localStorage.getItem('groupId');
+    avatarId = '1';
 
     @ViewChild('drawer') drawer!: MatSidenav;
+    panelOpenState = true;
 
     isMobile$ = this.responsiveService.isMobile$;
 
     constructor(
         public authService: AuthService,
         private sideNavService: SideNavService,
-        private userService: UserService,
         private router: Router,
         private dialog: MatDialog,
         private snackBarService: SnackBarService,
-        private responsiveService: ResponsiveService
-    ) {}
+        private responsiveService: ResponsiveService,
+        private userService: UserService
+    ){
+    }
+
 
     ngOnInit() {
         if (this.authService.isLogged()) {
-            this.getAvatar();
-            this.getGroupByUsername();
+            this.router.navigate(['notes']).then();
+            this.getUserById();
 
             this.sideNavService.avatarEmitted.subscribe((msg) => {
-                this.selectedAvatar = msg;
+                this.avatarId = msg;
             });
 
             this.authService.changeEmitted.subscribe(change => {
-                if (change) this.getGroupByUsername();
+                if (change) this.getUserById();
             })
 
             this.userService.groupIdEmitted.subscribe(change => {
@@ -74,9 +77,16 @@ export class SideNavComponent implements OnInit {
         });
     }
 
-    getAvatar() {
-        const avatar = localStorage.getItem('avatarId');
-        this.selectedAvatar = avatar ? avatar : '1';
+    getUserById() {
+        this.userService.getUserById(this.authService.decodedToken?.id!).subscribe({
+            next: user => {
+               this.avatarId = user.avatarId.toString();
+               this.getGroupByUsername();
+            },
+            error: err => {
+                console.error(err);
+            }
+        })
     }
 
     openAddModal(isCreation: boolean): void {
@@ -113,16 +123,14 @@ export class SideNavComponent implements OnInit {
     }
 
     private getGroupByUsername() {
-        this.userService.getGroupsByOwnerId(+localStorage.getItem('ownerId')!).subscribe({
+        this.userService.getGroupsByOwnerId(this.authService.decodedToken.id).subscribe({
             next: (groups) => {
                 this.groups = groups;
-                if (this.currentId && this.currentId !== '-1' && this.currentId !== '0') {
-                    this.userService.getGroupById(+this.currentId).subscribe((group) => {
-                        this.selectedGroup = group;
-                    });
-                } else {
-                    this.selectedGroup = this.groups.slice(0, 1).shift()!;
-                }
+                this.selectedGroup = this.groups.slice(0, 1).shift()!;
+                this.currentId = this.selectedGroup.id.toString();
+                localStorage.setItem('groupId', this.currentId);
+                const change = {id: +this.currentId, clearNoteId: true};
+                this.userService.emitGroupId(change);
             }
         });
     }
