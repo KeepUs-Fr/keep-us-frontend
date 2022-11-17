@@ -34,6 +34,13 @@
             flex: 0 0 50px;
             white-space: nowrap;
         }
+
+        .circle {
+            @media (max-width: 786px) {
+                height: 18px;
+                width: 18px;
+            }
+        }
     }
 
     mat-cell, mat-card-subtitle, p {

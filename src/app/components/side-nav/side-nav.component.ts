@@ -61,7 +61,17 @@ export class SideNavComponent implements OnInit {
     }
 
     groupAction(id: number, group?: GroupModel) {
-        if (group !== undefined) this.selectedGroup = group;
+        if (group === undefined) {
+            this.selectedGroup = {
+                id: -1,
+                name: 'Profile',
+                ownerId: this.authService.decodedToken.id,
+                members: [],
+                createDate: new Date()
+            };
+        } else {
+            this.selectedGroup = group;
+        }
 
         localStorage.setItem('groupId', id.toString());
         this.currentId = id.toString();

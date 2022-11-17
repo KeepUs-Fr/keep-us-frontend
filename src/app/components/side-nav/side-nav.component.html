@@ -64,9 +64,7 @@
                 </button>
 
                 <!-- Display name of groups and profile -->
-                <span *ngIf="selectedGroup.name !== 'Personal space'">
-                    {{ selectedGroup.name }}
-                </span>
+                <span *ngIf="selectedGroup.name !== 'Personal space'">{{ selectedGroup.name }}</span>
                 <span *ngIf="selectedGroup.name === 'Personal space'">Espace personnel</span>
 
                 <span class="spacer"></span>

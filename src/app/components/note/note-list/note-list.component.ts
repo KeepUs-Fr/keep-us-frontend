@@ -81,7 +81,10 @@ export class NoteListComponent implements OnInit {
     }
 
     reload(doReload: boolean) {
-        if (doReload) this.getNotes();
+        if (doReload) {
+            this.noteId = undefined;
+            this.getNotes();
+        }
     }
 
     drop(event: CdkDragDrop<NoteModel[]>) {

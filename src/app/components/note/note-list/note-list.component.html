@@ -22,7 +22,8 @@
                                 <mat-icon>add</mat-icon>
                             </button>
                         </div>
-                        <div class="content-scroll" cdkDropList (cdkDropListDropped)="drop($event)">
+                        <p *ngIf="notes.length === 0" class="txt-center">Aucune note</p>
+                        <div xclass="content-scroll" cdkDropList (cdkDropListDropped)="drop($event)">
                             <div *ngFor="let note of notes" cdkDrag [cdkDragStartDelay]="250">
                                 <div class="placeholder" *cdkDragPlaceholder></div>
                                 <mat-card [ngStyle]="{ 'background-color': note.color }"
@@ -59,7 +60,7 @@
             </ng-template>
 
             <div class="mt-12">
-                <mat-table [dataSource]="notes" class="mat-elevation-z8">
+                <mat-table [dataSource]="notes" class="fit-content">
                     <ng-container matColumnDef="title">
                         <mat-header-cell *matHeaderCellDef>Titre</mat-header-cell>
                         <mat-cell *matCellDef="let element">
@@ -69,12 +70,12 @@
                     </ng-container>
 
                     <ng-container matColumnDef="description">
-                        <mat-header-cell *matHeaderCellDef>Contenue</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.content}}</mat-cell>
+                        <mat-header-cell *matHeaderCellDef>Contenu</mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="ml-12">{{element.content}}</mat-cell>
                     </ng-container>
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToNoteDetail(row.id)"></mat-row>
                 </mat-table>
             </div>
         </mat-tab>

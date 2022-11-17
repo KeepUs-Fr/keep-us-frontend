@@ -6,7 +6,7 @@ import {
     Output,
     SimpleChanges
 } from '@angular/core';
-import { CreateNoteModel, NoteModel } from '../../../models/note.model';
+import { NoteModel } from '../../../models/note.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotesService } from '../../../services/notes.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,21 +30,18 @@ export class NoteDetailComponent implements OnInit, OnChanges {
     content: string = '';
     selectedColor = { key: '', value: '' };
     isLocked = false;
-    userId = 0;
 
     constructor(
+        public authService: AuthService,
         private route: ActivatedRoute,
         private notesService: NotesService,
         private router: Router,
         private dialog: MatDialog,
         private snackBarService: SnackBarService,
-        private userService: UserService,
-        private authService: AuthService
+        private userService: UserService
     ) {}
 
     ngOnInit(): void {
-        this.userId = this.authService.decodedToken?.id!;
-
         if (this.noteId === -1) {
             this.route.params.subscribe((params: Params) => {
                 this.currentId = params['id'];
