@@ -6,14 +6,14 @@
             </button>
             <div class="justify-end">
                 <button mat-icon-button
-                        (click)="isLocked = !isLocked; updateNote()"
-                        [disabled]="userId !== note.ownerId">
+                        *ngIf="userId === note.ownerId"
+                        (click)="isLocked = !isLocked; updateNote()">
                     <mat-icon *ngIf="isLocked">lock</mat-icon>
                     <mat-icon *ngIf="!isLocked">lock_open</mat-icon>
                 </button>
                 <button mat-icon-button
-                        (click)="openRemoveDialog()"
-                        [disabled]="userId !== note.ownerId">
+                        *ngIf="userId === note.ownerId"
+                        (click)="openRemoveDialog()">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>

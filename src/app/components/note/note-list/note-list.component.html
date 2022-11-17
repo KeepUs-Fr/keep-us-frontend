@@ -1,42 +1,94 @@
 <div class="note-list">
-    <button mat-fab class="icon-btn" aria-label="Add note" *ngIf="isMobile$ | async"
-            style="position: fixed; bottom: 10px; z-index: 100; right: 10px"
-            (click)="openCreationDialog()">
-        <mat-icon>add</mat-icon>
-    </button>
+    <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="center">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>view_stream</mat-icon>
+                <span class="ml-12" *ngIf="!(isMobile$ | async)">Notes</span>
+            </ng-template>
 
-    <div [ngClass]="{'row': !(isMobile$| async)}">
-        <!-- Display note list -->
-        <div [ngClass]="{'column-left': !(isMobile$| async)}">
-            <div class="justify-between sticky-item mb-12" *ngIf="!(isMobile$| async)">
-                <h2 class="vertical-center">Les notes</h2>
-                <button mat-icon-button class="icon-btn" (click)="openCreationDialog()">
+            <!-- Content -->
+            <div class="mt-12">
+                <button mat-fab class="icon-btn" aria-label="Add note" *ngIf="isMobile$ | async"
+                        style="position: fixed; bottom: 10px; z-index: 100; right: 10px"
+                        (click)="openCreationDialog()">
                     <mat-icon>add</mat-icon>
                 </button>
-            </div>
-            <div class="content-scroll" cdkDropList (cdkDropListDropped)="drop($event)">
-                <div *ngFor="let note of notes" cdkDrag [cdkDragStartDelay]="250">
-                    <div class="placeholder" *cdkDragPlaceholder></div>
-                    <mat-card [ngStyle]="{ 'background-color': note.color }"
-                              [ngClass]="{ 'selected': noteId === note.id }"
-                              (click)="goToNoteDetail(note.id)">
-                        <mat-card-subtitle>{{note.title}}</mat-card-subtitle>
-                        <mat-card-content>
-                            <p>{{note.content}}</p>
-                        </mat-card-content>
-                    </mat-card>
+                <div [ngClass]="{'row': !(isMobile$| async)}">
+                    <!-- Display note list -->
+                    <div [ngClass]="{'column-left': !(isMobile$| async)}">
+                        <div class="justify-between sticky-item mb-12" *ngIf="!(isMobile$| async)">
+                            <h2 class="vertical-center">Les notes</h2>
+                            <button mat-icon-button class="icon-btn" (click)="openCreationDialog()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div class="content-scroll" cdkDropList (cdkDropListDropped)="drop($event)">
+                            <div *ngFor="let note of notes" cdkDrag [cdkDragStartDelay]="250">
+                                <div class="placeholder" *cdkDragPlaceholder></div>
+                                <mat-card [ngStyle]="{ 'background-color': note.color }"
+                                          [ngClass]="{ 'selected': noteId === note.id }"
+                                          (click)="goToNoteDetail(note.id)">
+                                    <mat-card-content>
+                                        <div class="justify-between">
+                                            <mat-card-subtitle>{{note.title}}</mat-card-subtitle>
+                                            <mat-icon *ngIf="note.lock" class="icon-lock">lock</mat-icon>
+                                            <mat-icon *ngIf="!note.lock" class="icon-lock">lock_open</mat-icon>
+                                        </div>
+                                        <p>{{note.content}}</p>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Web detail view -->
+                    <div class="column-right" *ngIf="!(isMobile$| async)">
+                        <div class="lottie-animation lottie vertical-center" *ngIf="!noteId">
+                            <ng-lottie [options]="lottieNoDetails"></ng-lottie>
+                        </div>
+                        <app-note-detail *ngIf="noteId" class="note-detail" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
+                    </div>
                 </div>
             </div>
-        </div>
+        </mat-tab>
 
-        <!-- Web detail view -->
-        <div class="column-right" *ngIf="!(isMobile$| async)">
-            <div class="lottie-animation lottie vertical-center" *ngIf="!noteId">
-                <ng-lottie [options]="lottieNoDetails"></ng-lottie>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>view_list</mat-icon>
+                <span class="ml-12" *ngIf="!(isMobile$ | async)">Tableau</span>
+            </ng-template>
+
+            <div class="mt-12">
+                <mat-table [dataSource]="notes" class="mat-elevation-z8">
+                    <ng-container matColumnDef="title">
+                        <mat-header-cell *matHeaderCellDef>Titre</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <div class="circle" [ngStyle]="{ 'background-color': element.color }"></div>
+                            <span class="ml-12">{{element.title}}</span>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <mat-header-cell *matHeaderCellDef>Contenue</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.content}}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
             </div>
-            <app-note-detail *ngIf="noteId" class="note-detail" [noteId]="noteId" (reload)="reload($event)"></app-note-detail>
-        </div>
-    </div>
+        </mat-tab>
+        <mat-tab disabled>
+            <ng-template mat-tab-label>
+                <mat-icon>calendar_month</mat-icon>
+                <span class="ml-12" *ngIf="!(isMobile$ | async)">Calendrier</span>
+            </ng-template>
+
+            <div class="mt-12">
+                <app-calendar [notes]="notes"></app-calendar>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
 </div>
 
 

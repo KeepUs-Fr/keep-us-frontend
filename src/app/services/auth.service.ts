@@ -52,7 +52,7 @@ export class AuthService {
         queryParam = queryParam.append('refreshKey', localStorage.getItem('refreshKey')!);
 
         return this.http.get<{ token: string, refreshKey: string }>(
-            environment.baseUrl + '/auth/refresh/' + localStorage.getItem('ownerId')!,
+            environment.baseUrl + '/auth/refresh/' + this.decodedToken.id,
             {params: queryParam});
     }
 

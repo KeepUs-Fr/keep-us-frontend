@@ -19,10 +19,11 @@ import { AnimationOptions } from "ngx-lottie";
 export class NoteListComponent implements OnInit {
     isLoading = false;
     isTable = false;
+    showCalendar = false;
     isMobile$ = this.responsiveService.isMobile$;
     notes: NoteModel[] = [];
     noteId: number | undefined;
-    displayedColumns = ['color', 'title', 'description'];
+    displayedColumns = ['title', 'description'];
     groupId = 0;
 
     lottieNoDetails: AnimationOptions = {

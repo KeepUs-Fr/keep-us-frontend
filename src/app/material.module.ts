@@ -26,6 +26,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
     declarations: [],
@@ -58,7 +59,8 @@ import { FormsModule } from '@angular/forms';
         FlexModule,
         FormsModule,
         MatTableModule,
-        DragDropModule
+        DragDropModule,
+        MatTabsModule
     ]
 })
 export class MaterialModule {}
