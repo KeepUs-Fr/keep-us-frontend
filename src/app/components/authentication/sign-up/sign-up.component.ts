@@ -19,12 +19,7 @@ export class SignUpComponent implements OnInit {
     passwordHidden = true;
     isPasswordFocus = false;
     isLoading = false;
-
     signupForm: FormGroup;
-
-    usernameCtrl: FormControl;
-    emailCtrl: FormControl;
-    passwordCtrl: FormControl;
 
     constructor(
         private authService: AuthService,
@@ -32,26 +27,31 @@ export class SignUpComponent implements OnInit {
         public formBuilder: FormBuilder,
         private userService: UserService
     ) {
-        this.usernameCtrl = formBuilder.control(null, [
-            Validators.required,
-            Validators.pattern(/^[A-z0-9]*$/),
-            Validators.minLength(3)
-        ]);
-        this.emailCtrl = formBuilder.control(null,[
-            Validators.required,
-            Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
-        ]);
-        this.passwordCtrl = formBuilder.control('', [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.maxLength(40),
-            Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/),
-        ]);
-
-        this.signupForm = formBuilder.group({
-            username: this.usernameCtrl,
-            email: this.emailCtrl,
-            password: this.passwordCtrl,
+        this.signupForm = this.formBuilder.group({
+            username: [
+                null,
+                [
+                    Validators.required,
+                    Validators.pattern(/^[A-z0-9]*$/),
+                    Validators.minLength(3)
+                ]
+            ],
+            email: [
+                null,
+                [
+                    Validators.required,
+                    Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+                ]
+            ],
+            password: [
+                null,
+                [
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.maxLength(40),
+                    Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)
+                ]
+            ]
         });
     }
 
@@ -72,8 +72,8 @@ export class SignUpComponent implements OnInit {
                     next: (result) => {
                         localStorage.setItem('token', result.token);
                         localStorage.setItem('refreshKey', result.refreshKey);
+
                         this.authService.decodedToken = this.authService.decodeToken(result.token);
-                        localStorage.setItem('ownerId', this.authService.decodedToken.id.toString());
 
                         const group: CreateGroupModel = {
                             name: "Personal space",

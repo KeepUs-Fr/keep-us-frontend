@@ -17,6 +17,13 @@
         mat-card-subtitle {
             font-size: 18px;
         }
+
+        .icon-lock {
+            margin-left: 8px;
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+        }
     }
 
     mat-table {
@@ -26,6 +33,13 @@
         .fit-content {
             flex: 0 0 50px;
             white-space: nowrap;
+        }
+
+        .circle {
+            @media (max-width: 786px) {
+                height: 18px;
+                width: 18px;
+            }
         }
     }
 

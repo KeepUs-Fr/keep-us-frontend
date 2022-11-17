@@ -19,10 +19,11 @@ import { AnimationOptions } from "ngx-lottie";
 export class NoteListComponent implements OnInit {
     isLoading = false;
     isTable = false;
+    showCalendar = false;
     isMobile$ = this.responsiveService.isMobile$;
     notes: NoteModel[] = [];
     noteId: number | undefined;
-    displayedColumns = ['color', 'title', 'description'];
+    displayedColumns = ['title', 'description'];
     groupId = 0;
 
     lottieNoDetails: AnimationOptions = {
@@ -42,8 +43,7 @@ export class NoteListComponent implements OnInit {
 
     ngOnInit() {
         const id = localStorage.getItem('groupId');
-
-        if (id) {
+        if (id && id !== '-1') {
             this.noteId = undefined;
             this.groupId = +id;
             this.getNotes();
@@ -81,7 +81,10 @@ export class NoteListComponent implements OnInit {
     }
 
     reload(doReload: boolean) {
-        if (doReload) this.getNotes();
+        if (doReload) {
+            this.noteId = undefined;
+            this.getNotes();
+        }
     }
 
     drop(event: CdkDragDrop<NoteModel[]>) {

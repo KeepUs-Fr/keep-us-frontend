@@ -17,6 +17,7 @@
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
+            <p *ngIf="displayError && !isLoading" class="txt-warn txt-center">Nom d'utilisateur ou mot de passe incorrect</p>
             <br/>
             <button mat-flat-button class="btn justify-center" type="button" (click)="onSubmit()">
                 <span *ngIf="!isLoading">Connexion</span>

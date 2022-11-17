@@ -20,6 +20,19 @@ export class UserService {
         this.emitGroupIdSource.next(change);
     }
 
+    getUserById(id: number): Observable<UserModel> {
+        return this.http.get<UserModel>(environment.baseUrl + '/auth/account/' + id);
+    }
+
+   updateAvatar(id: number, avatarId: number): Observable<UserModel> {
+       let queryParam = new HttpParams();
+       queryParam = queryParam.append('avatar', avatarId);
+
+       return this.http.patch<UserModel>(environment.baseUrl + '/auth/account/' + id, {}, {
+           params: queryParam
+        });
+    }
+
     getUserByUsername(username: string): Observable<UserModel> {
         let queryParam = new HttpParams();
         queryParam = queryParam.append('username', username);
@@ -28,7 +41,6 @@ export class UserService {
             params: queryParam
         });
     }
-
 
     getGroupsByOwnerId(id: number): Observable<GroupModel[]> {
         return this.http.get<GroupModel[]>(

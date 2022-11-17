@@ -1,4 +1,4 @@
-<div class="note-detail" *ngIf="note.id">
+<div class="note-detail" *ngIf="note.id && authService.decodedToken.id">
     <div class="detail-header" [ngStyle]="{'background-color': selectedColor.value}">
         <div [ngClass]="{'justify-between': noteId === -1}">
             <button *ngIf="noteId === -1" mat-icon-button routerLink="/notes">
@@ -6,14 +6,14 @@
             </button>
             <div class="justify-end">
                 <button mat-icon-button
-                        (click)="isLocked = !isLocked; updateNote()"
-                        [disabled]="userId !== note.ownerId">
+                        *ngIf="authService.decodedToken.id === note.ownerId"
+                        (click)="isLocked = !isLocked; updateNote()">
                     <mat-icon *ngIf="isLocked">lock</mat-icon>
                     <mat-icon *ngIf="!isLocked">lock_open</mat-icon>
                 </button>
                 <button mat-icon-button
-                        (click)="openRemoveDialog()"
-                        [disabled]="userId !== note.ownerId">
+                        *ngIf="authService.decodedToken.id === note.ownerId"
+                        (click)="openRemoveDialog()">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
@@ -27,14 +27,14 @@
                       (focusout)="updateNote()"
                       cdkTextareaAutosize
                       cdkAutosizeMinRows="1"
-                      [disabled]="isLocked && userId !== note.ownerId">
+                      [disabled]="isLocked && authService.decodedToken.id !== note.ownerId">
             </textarea>
         </mat-form-field>
     </div>
 
     <div class="justify-between">
         <app-note-color-palette
-            *ngIf="!isLocked || userId === note.ownerId"
+            *ngIf="!isLocked || authService.decodedToken.id === note.ownerId"
             [detailColor]="note.color"
             (eventEmitter)="getCurrentColor($event)">
         </app-note-color-palette>
@@ -49,7 +49,7 @@
                   placeholder="Créer une note..."
                   cdkTextareaAutosize
                   cdkAutosizeMinRows="1"
-                  [disabled]="isLocked && userId !== note.ownerId">
+                  [disabled]="isLocked && authService.decodedToken.id !== note.ownerId">
         </textarea>
     </mat-form-field>
 </div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CreateNoteModel } from '../../../models/note.model';
 import { NotesService } from '../../../services/notes.service';
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
     selector: 'app-note-creation',
@@ -14,7 +15,8 @@ export class NoteCreationComponent {
     isLocked = false;
     selectedColor = 'blue';
 
-    constructor(private noteService: NotesService) {}
+    constructor(private noteService: NotesService,
+                private authService: AuthService) {}
 
     submit(): void {
         let newNote: CreateNoteModel = {
@@ -23,7 +25,7 @@ export class NoteCreationComponent {
             position: 0,
             lock: this.isLocked,
             color: this.selectedColor,
-            ownerId: +localStorage.getItem('ownerId')!,
+            ownerId: this.authService.decodedToken.id,
             groupId: +localStorage.getItem('groupId')!
         };
 

@@ -16,21 +16,17 @@ import {
 export class LoginComponent implements OnInit {
     hide = true;
     isLoading = false;
+    displayError = false;
     loginForm: FormGroup;
-    usernameCtrl: FormControl;
-    passwordCtrl: FormControl;
 
     constructor(
         private authService: AuthService,
         private router: Router,
         public formBuilder: FormBuilder
     ) {
-        this.usernameCtrl = formBuilder.control('', Validators.required);
-        this.passwordCtrl = formBuilder.control('', Validators.required);
-
-        this.loginForm = formBuilder.group({
-            username: this.usernameCtrl,
-            password: this.passwordCtrl
+        this.loginForm = this.formBuilder.group({
+            username: [null, Validators.required],
+            password: [null, Validators.required]
         });
     }
 
@@ -49,8 +45,6 @@ export class LoginComponent implements OnInit {
 
                 this.authService.decodedToken = this.authService.decodeToken(result.token);
 
-                localStorage.setItem('ownerId', this.authService.decodedToken.id.toString());
-
                 this.authService.emitChange(true);
                 this.isLoading = false;
                 this.router.navigate(['notes']).then();
@@ -58,6 +52,10 @@ export class LoginComponent implements OnInit {
             error: (error) => {
                 this.isLoading = false;
                 console.error(error);
+
+                if (error.status === 401) {
+                    this.displayError = true;
+                }
             }
         });
     }

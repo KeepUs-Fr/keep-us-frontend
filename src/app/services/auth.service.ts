@@ -16,7 +16,8 @@ export class AuthService {
     private emitChangeSource = new Subject<boolean>();
     // Observable string streams
     changeEmitted = this.emitChangeSource.asObservable();
-    decodedToken: DecodedTokenModel | undefined;
+
+    decodedToken = {} as DecodedTokenModel;
 
     constructor(private router: Router, private http: HttpClient) {
         if (this.isLogged()) {
@@ -51,7 +52,7 @@ export class AuthService {
         queryParam = queryParam.append('refreshKey', localStorage.getItem('refreshKey')!);
 
         return this.http.get<{ token: string, refreshKey: string }>(
-            environment.baseUrl + '/auth/refresh/' + localStorage.getItem('ownerId')!,
+            environment.baseUrl + '/auth/refresh/' + this.decodedToken.id,
             {params: queryParam});
     }
 
@@ -59,10 +60,9 @@ export class AuthService {
     logout() {
         localStorage.removeItem('token');
         localStorage.removeItem('refreshKey');
-        localStorage.removeItem('ownerId');
         localStorage.removeItem('groupId');
         this.emitChange(false);
-        this.router.navigate(['login']).then();
+        this.router.navigate(['home']).then();
     }
 
     isLogged(): boolean {

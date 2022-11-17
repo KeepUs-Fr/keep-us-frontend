@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
 import { ResponsiveService } from '../../services/responsive.service';
 import { AuthService } from '../../services/auth.service';

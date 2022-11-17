@@ -139,7 +139,6 @@ body {
         width: 30px;
         margin-right: 5px;
         border: 2px solid transparent;
-        margin-bottom: 5px;
     }
 
     .or {
@@ -236,7 +235,11 @@ body {
       margin-top: 24px;
     }
 
+    .mt-12 {
+        margin-top: 12px;
+    }
+
     .spinner {
-        padding-top: 10%;
+        padding-top: 20%;
     }
 }

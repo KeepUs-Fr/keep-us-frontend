@@ -8,7 +8,7 @@ import { SideNavService } from '../../../services/side-nav.service';
 })
 export class AvatarListComponent {
     avatars = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    selectedAvatar = localStorage.getItem('avatarId');
+    selectedAvatar = '1';
 
     constructor(
         private sideNavService: SideNavService,
@@ -17,7 +17,6 @@ export class AvatarListComponent {
 
     selectAvatar(avatar: string) {
         this.selectedAvatar = avatar;
-        localStorage.setItem('avatarId', avatar);
         this.sideNavService.emitSelectedAvatar(this.selectedAvatar);
     }
 }
