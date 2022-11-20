@@ -125,6 +125,10 @@ body {
             border: 1px solid #FFFFFF;
         }
 
+        &.delete {
+            background: #b00020 !important;
+        }
+
         &.cancel {
             background: transparent;
             border: 1px solid rgba(55, 53, 47, 0.16);
@@ -135,6 +139,7 @@ body {
             background: linear-gradient(90deg, #E64602 0%, #FCA311 100%);
         }
     }
+
     .txt-warn {
         color: #b00020;
     }

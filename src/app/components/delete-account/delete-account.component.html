@@ -1,0 +1,46 @@
+<div class="account-delete">
+    <div>
+        <h1>Voulez-vous vraiment supprimer le compte ?</h1>
+
+        <p>
+            <mat-icon color="warn">warning</mat-icon>
+            Le profil, les groupes, et les notes associées à ce compte ne seront plus disponible.
+        </p>
+        <p>
+            <mat-icon color="warn">warning</mat-icon>
+            Vous ne pourrez plus accéder aux informations du compte ni groupe et au notes.
+        </p>
+        <p>
+            <mat-icon color="warn">warning</mat-icon>
+            La suppression du compte est une action irreversible, le compte et toute les donnees associées seront supprimer.
+        </p>
+
+        <p class="delete">Je veux suppirmer définitivement le compte.</p>
+
+        <form>
+            <mat-form-field appearance="outline">
+                <mat-label>Mot de passe</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" required>
+                <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+
+        <button mat-flat-button
+                [mat-dialog-close]="true"
+                class="btn delete"
+                type="button"
+                [disabled]="password.trim() === ''"
+                (click)="deleteAccount()">
+            Supprimer le compte
+        </button>
+        <button mat-flat-button
+                mat-dialog-close
+                type="button"
+                class="btn cancel"
+                routerLink="/profile">
+            Annuler
+        </button>
+    </div>
+</div>

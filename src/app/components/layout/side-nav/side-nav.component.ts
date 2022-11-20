@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { SideNavService } from '../../services/side-nav.service';
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../../services/auth.service';
+import { SideNavService } from '../../../services/side-nav.service';
+import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { AddModalComponent } from '../modals/add-modal/add-modal.component';
-import { SnackBarService } from '../../services/snack-bar.service';
-import { GroupModel } from '../../models/group.model';
-import { ResponsiveService } from '../../services/responsive.service';
+import { AddModalComponent } from '../../modals/add-modal/add-modal.component';
+import { SnackBarService } from '../../../services/snack-bar.service';
+import { GroupModel } from '../../../models/group.model';
+import { ResponsiveService } from '../../../services/responsive.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { RemoveModalComponent } from "../modals/remove-modal/remove-modal.component";
-import { NotesService } from "../../services/notes.service";
+import { RemoveModalComponent } from "../../modals/remove-modal/remove-modal.component";
+import { NotesService } from "../../../services/notes.service";
 
 
 @UntilDestroy()

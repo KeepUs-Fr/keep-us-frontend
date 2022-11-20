@@ -57,6 +57,17 @@ export class AuthService {
     }
 
 
+    deleteAccount(password: string): Observable<void> {
+        let queryParam = new HttpParams();
+        queryParam = queryParam.append('password', password);
+
+        return this.http.delete<void>(
+            environment.baseUrl + '/auth/' + this.decodedToken.id, {
+                params: queryParam
+            });
+    }
+
+
     logout() {
         localStorage.removeItem('token');
         localStorage.removeItem('refreshKey');

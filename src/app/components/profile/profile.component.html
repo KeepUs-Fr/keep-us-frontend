@@ -11,6 +11,11 @@
     </div>
     <h1>{{user.username}}</h1>
     <p>Membre Keep Us depuis le {{user.creationDate | date:'dd/MM/yyyy'}}</p>
+
+    <div class="delete-account">
+        <p>Besoin de supprimer votre compte ?</p>
+        <a class="justify-center" routerLink="/account-delete">Je m'en occupe maintenant</a>
+    </div>
 </div>
 
 

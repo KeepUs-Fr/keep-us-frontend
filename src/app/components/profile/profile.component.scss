@@ -7,7 +7,7 @@
         height: 120px;
     }
 
-    h1, p {
+    h1, p, a {
         text-align: center;
         margin-top: 5px;
     }
@@ -15,5 +15,9 @@
     .btn-edit {
         float: right;
         margin-top: -32px;
+    }
+
+    .delete-account {
+        padding-top: 44px;
     }
 }

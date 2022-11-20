@@ -4,22 +4,17 @@ import { NoteListComponent } from './components/note/note-list/note-list.compone
 import { NoteDetailComponent } from './components/note/note-detail/note-detail.component';
 import { LoginComponent } from './components/authentication/login/login.component';
 import { SignUpComponent } from './components/authentication/sign-up/sign-up.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NotFoundComponent } from './components/layout/not-found/not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { ProfileComponent } from './components/profile/profile.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { HomeComponent } from './components/home/home.component';
+import { DeleteAccountComponent } from "./components/delete-account/delete-account.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignUpComponent },
-    // {
-    //     path: 'calendar',
-    //     component: CalendarComponent,
-    //     canActivate: [AuthGuardService]
-    // },
     {
         path: 'notes',
         component: NoteListComponent,
@@ -33,6 +28,11 @@ const routes: Routes = [
     {
         path: 'profile',
         component: ProfileComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'account-delete',
+        component: DeleteAccountComponent,
         canActivate: [AuthGuardService]
     },
     { path: '**', pathMatch: 'full', component: NotFoundComponent }
