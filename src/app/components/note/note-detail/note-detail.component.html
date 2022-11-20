@@ -1,22 +1,12 @@
 <div class="note-detail" *ngIf="note.id && authService.decodedToken.id">
     <div class="detail-header" [ngStyle]="{'background-color': selectedColor.value}">
         <div [ngClass]="{'justify-between': noteId === -1}">
-            <button *ngIf="noteId === -1" mat-icon-button routerLink="/notes">
+            <button mat-icon-button *ngIf="noteId === -1"
+                    routerLink="/notes"
+                    (click)="updateNote()">
                 <mat-icon>arrow_back_ios</mat-icon>
             </button>
-            <div class="justify-end">
-                <button mat-icon-button
-                        *ngIf="authService.decodedToken.id === note.ownerId"
-                        (click)="isLocked = !isLocked; updateNote()">
-                    <mat-icon *ngIf="isLocked">lock</mat-icon>
-                    <mat-icon *ngIf="!isLocked">lock_open</mat-icon>
-                </button>
-                <button mat-icon-button
-                        *ngIf="authService.decodedToken.id === note.ownerId"
-                        (click)="openRemoveDialog()">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </div>
+<!--            <app-note-menu class="float-r" [note]="note"></app-note-menu>-->
         </div>
 
         <mat-form-field appearance="standard" class="input-title">
@@ -29,6 +19,10 @@
                       cdkAutosizeMinRows="1"
                       [disabled]="isLocked && authService.decodedToken.id !== note.ownerId">
             </textarea>
+            <mat-hint align="end">Dernière modification le {{ note.updateDate
+                ? (note.updateDate  | date:'dd/MM/yyyy')
+                : (note.createDate | date:'dd/MM/yyyy') }}
+            </mat-hint>
         </mat-form-field>
     </div>
 
@@ -38,7 +32,6 @@
             [detailColor]="note.color"
             (eventEmitter)="getCurrentColor($event)">
         </app-note-color-palette>
-        <mat-hint class="vertical-center">{{note.createDate | date:'dd/MM/yyyy'}}</mat-hint>
     </div>
 
     <mat-form-field appearance="standard">
@@ -53,6 +46,7 @@
         </textarea>
     </mat-form-field>
 </div>
+
 <div class="justify-center spinner" *ngIf="!note.id">
     <mat-spinner diameter="50"></mat-spinner>
 </div>

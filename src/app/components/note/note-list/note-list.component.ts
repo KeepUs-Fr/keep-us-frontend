@@ -9,6 +9,7 @@ import { ResponsiveService } from '../../../services/responsive.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { AnimationOptions } from "ngx-lottie";
+import { AuthService } from "../../../services/auth.service";
 
 @UntilDestroy()
 @Component({
@@ -33,6 +34,7 @@ export class NoteListComponent implements OnInit {
     };
 
     constructor(
+        public authService: AuthService,
         private notesService: NotesService,
         private dialog: MatDialog,
         private router: Router,
@@ -80,8 +82,8 @@ export class NoteListComponent implements OnInit {
         });
     }
 
-    reload(doReload: boolean) {
-        if (doReload) {
+    reload(reload: boolean) {
+        if (reload) {
             this.noteId = undefined;
             this.getNotes();
         }

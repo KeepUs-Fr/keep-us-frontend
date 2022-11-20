@@ -33,6 +33,7 @@ import { SnackBarService } from './services/snack-bar.service';
 import { UserModalComponent } from './components/modals/user-modal/user-modal.component';
 import { HomeComponent } from './components/home/home.component';
 import { LottieModule } from 'ngx-lottie';
+import { NoteMenuComponent } from './components/note/note-menu/note-menu.component';
 
 FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
 
@@ -59,7 +60,8 @@ export function playerFactory(): any {
         FooterComponent,
         CalendarComponent,
         UserModalComponent,
-        HomeComponent
+        HomeComponent,
+        NoteMenuComponent
     ],
     imports: [
         BrowserModule,

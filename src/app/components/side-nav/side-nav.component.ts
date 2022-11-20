@@ -10,6 +10,8 @@ import { GroupModel } from '../../models/group.model';
 import { ResponsiveService } from '../../services/responsive.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { RemoveModalComponent } from "../modals/remove-modal/remove-modal.component";
+import { NotesService } from "../../services/notes.service";
 
 
 @UntilDestroy()
@@ -36,7 +38,8 @@ export class SideNavComponent implements OnInit {
         private dialog: MatDialog,
         private snackBarService: SnackBarService,
         private responsiveService: ResponsiveService,
-        private userService: UserService
+        private userService: UserService,
+        private notesService: NotesService
     ){
     }
 
@@ -129,6 +132,26 @@ export class SideNavComponent implements OnInit {
             error: (err) => {
                 console.error(err);
             }
+        });
+    }
+
+    openRemoveDialog() {
+        const dialogRef = this.dialog.open(RemoveModalComponent, {
+            maxWidth: '400px',
+            data: { isGroup: true, id: this.selectedGroup.id },
+        });
+
+        dialogRef.afterClosed().subscribe({
+            next: isRemovable => {
+                if (isRemovable) this.userService.deleteGroup(this.selectedGroup.id).subscribe({
+                    next: _ => {
+                        this.getGroupByUsername();
+                        this.snackBarService.openSuccess('Le groupe a été supprimé');
+                    },
+                    error: err => console.error(err)
+                });
+            },
+            error: err => console.error(err)
         });
     }
 
