@@ -56,9 +56,8 @@ export class SignUpComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.authService.isLogged()) {
+        if (this.authService.isLogged())
             this.router.navigate(['notes']).then();
-        }
     }
 
     onSubmit() {

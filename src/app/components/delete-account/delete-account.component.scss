@@ -12,6 +12,11 @@
 
     p {
         font-size: 18px;
+        margin-top: 24px;
+
+        &.txt-warn {
+            margin: 0;
+        }
     }
 
     .delete {

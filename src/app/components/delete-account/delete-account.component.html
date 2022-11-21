@@ -4,18 +4,20 @@
 
         <p>
             <mat-icon color="warn">warning</mat-icon>
-            Le profil, les groupes, et les notes associées à ce compte ne seront plus disponible.
+            Le profil, les groupes, ainsi que les notes associés à ce compte ne seront plus disponibles.
         </p>
         <p>
             <mat-icon color="warn">warning</mat-icon>
-            Vous ne pourrez plus accéder aux informations du compte ni groupe et au notes.
+            Vous ne pourrez plus accéder aux informations du compte, à l'espace personnel,
+            aux differents groupes, ni aux notes.
         </p>
         <p>
             <mat-icon color="warn">warning</mat-icon>
-            La suppression du compte est une action irreversible, le compte et toute les donnees associées seront supprimer.
+            La suppression du compte est une action irreversible. Toutes
+            les données seront supprimées.
         </p>
 
-        <p class="delete">Je veux suppirmer définitivement le compte.</p>
+        <p class="delete">Je veux supprimer définitivement le compte.</p>
 
         <form>
             <mat-form-field appearance="outline">
@@ -27,6 +29,7 @@
             </mat-form-field>
         </form>
 
+        <p class="txt-warn txt-center" *ngIf="errorMsg.trim() !== ''">{{errorMsg}}</p>
         <button mat-flat-button
                 [mat-dialog-close]="true"
                 class="btn delete"

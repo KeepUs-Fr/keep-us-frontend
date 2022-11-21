@@ -2,8 +2,7 @@
     <div class="detail-header" [ngStyle]="{'background-color': selectedColor.value}">
         <div [ngClass]="{'justify-between': noteId === -1}">
             <button mat-icon-button *ngIf="noteId === -1"
-                    routerLink="/notes"
-                    (click)="updateNote()">
+                    (click)="updateNote(); router.navigate(['notes']).then();">
                 <mat-icon>arrow_back_ios</mat-icon>
             </button>
 <!--            <app-note-menu class="float-r" [note]="note"></app-note-menu>-->

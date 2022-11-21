@@ -31,10 +31,10 @@ export class NoteDetailComponent implements OnInit, OnChanges {
     isLocked = false;
 
     constructor(
+        public router: Router,
         public authService: AuthService,
         private route: ActivatedRoute,
         private notesService: NotesService,
-        private router: Router,
         private dialog: MatDialog,
         private snackBarService: SnackBarService,
         private userService: UserService
@@ -88,10 +88,8 @@ export class NoteDetailComponent implements OnInit, OnChanges {
         this.notesService.updateNote(this.note).subscribe({
             next: (note) => {
                 this.note = note;
-                if (this.noteId !== -1) {
-                    const change = {id: +localStorage.getItem('groupId')!, clearNoteId: false};
-                    this.userService.emitGroupId(change);
-                }
+                const change = {id: +localStorage.getItem('groupId')!, clearNoteId: false};
+                this.userService.emitGroupId(change);
             },
             error: (err) => {
                 console.error(err);

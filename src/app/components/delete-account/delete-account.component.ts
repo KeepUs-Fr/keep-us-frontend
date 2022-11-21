@@ -9,6 +9,7 @@ import { AuthService } from "../../services/auth.service";
 export class DeleteAccountComponent {
     hide = true;
     password = '';
+    errorMsg = '';
 
     constructor(private authService: AuthService) { }
 
@@ -18,7 +19,11 @@ export class DeleteAccountComponent {
             next: _ => {
                 this.authService.logout();
             },
-            error: err => console.error(err)
+            error: err => {
+                console.error(err);
+                if (err.status === 403)
+                    this.errorMsg = 'Suppression impossible, le mot de passe est incorrect'
+            }
         })
     }
 }

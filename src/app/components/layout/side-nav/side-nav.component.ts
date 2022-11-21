@@ -67,7 +67,7 @@ export class SideNavComponent implements OnInit {
         if (group === undefined) {
             this.selectedGroup = {
                 id: -1,
-                name: 'Profile',
+                name: 'Profil',
                 ownerId: this.authService.decodedToken.id,
                 members: [],
                 createDate: new Date()
