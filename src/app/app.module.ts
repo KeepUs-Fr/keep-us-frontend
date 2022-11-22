@@ -30,7 +30,6 @@ import { ExtendedModule } from '@angular/flex-layout';
 import { AuthService } from './services/auth.service';
 import { TokenInterceptor } from './token.interceptor';
 import { SnackBarService } from './services/snack-bar.service';
-import { UserModalComponent } from './components/modals/user-modal/user-modal.component';
 import { HomeComponent } from './components/home/home.component';
 import { LottieModule } from 'ngx-lottie';
 import { NoteMenuComponent } from './components/note/note-menu/note-menu.component';
@@ -60,10 +59,9 @@ export function playerFactory(): any {
         AddModalComponent,
         FooterComponent,
         CalendarComponent,
-        UserModalComponent,
         HomeComponent,
         NoteMenuComponent,
-        DeleteAccountComponent
+        DeleteAccountComponent,
     ],
     imports: [
         BrowserModule,

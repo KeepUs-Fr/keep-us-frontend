@@ -7,7 +7,7 @@
         [opened]="(isMobile$ | async) === false">
 
         <mat-toolbar class="sticky-item" style="height: 64px;" color="primary">
-            <img src="../../../../assets/images/logo.svg" alt="Logo" width="48" height="48">
+            <img src="./assets/images/logo.svg" alt="Logo" width="48" height="48">
             <span>Keep Us</span>
         </mat-toolbar>
 
@@ -73,43 +73,39 @@
                 <button mat-icon-button
                         [matMenuTriggerFor]="menu"
                         aria-label="Group menu"
-                        *ngIf="selectedGroup.name !== 'Personal space'">
+                        *ngIf="selectedGroup.name !== 'Personal space' && currentId !== '-1'">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <ng-container *ngIf="currentId !== '-1'; else logout">
-                        <button mat-menu-item>
-                            <mat-icon>group</mat-icon>
-                            <span>Liste des membres</span>
-                        </button>
-                        <button mat-menu-item (click)="openAddModal(false)">
-                            <mat-icon>group_add</mat-icon>
-                            <span>Ajouter un membre</span>
-                        </button>
-                        <button mat-menu-item *ngIf="selectedGroup.ownerId !== authService.decodedToken.id">
-                            <mat-icon>person_remove</mat-icon>
-                            <span>Quitter le groupe</span>
-                        </button>
-                        <button mat-menu-item
-                                *ngIf="selectedGroup.ownerId === authService.decodedToken.id"
-                                (click)="openRemoveDialog()">
-                            <mat-icon color="warn">highlight_off</mat-icon>
-                            <span class="txt-warn">Supprimer ce groupe</span>
-                        </button>
-                    </ng-container>
-
-                    <ng-template #logout>
-                        <button mat-menu-item (click)="authService.logout()">
-                            <mat-icon>logout</mat-icon>
-                            <span>Me deconnecter</span>
-                        </button>
-                    </ng-template>
+                    <button mat-menu-item>
+                        <mat-icon>group</mat-icon>
+                        <span>Liste des membres</span>
+                    </button>
+                    <button mat-menu-item (click)="openAddModal(false)">
+                        <mat-icon>group_add</mat-icon>
+                        <span>Ajouter un membre</span>
+                    </button>
+                    <button mat-menu-item *ngIf="selectedGroup.ownerId !== authService.decodedToken.id">
+                        <mat-icon>person_remove</mat-icon>
+                        <span>Quitter le groupe</span>
+                    </button>
+                    <button mat-menu-item
+                            *ngIf="selectedGroup.ownerId === authService.decodedToken.id"
+                            (click)="openRemoveDialog()">
+                        <mat-icon color="warn">delete</mat-icon>
+                        <span class="txt-warn">Supprimer ce groupe</span>
+                    </button>
                 </mat-menu>
+
+                <a mat-menu-item *ngIf="currentId === '-1'" class="txt-white" (click)="authService.logout()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Me deconnecter</span>
+                </a>
             </ng-container>
 
             <ng-template #no_auth>
-                <img src="../../../../assets/images/logo.svg" alt="Logo" width="48" height="48"
-                     class="home" routerLink="/home">
+                <img src="./assets/images/logo.svg" alt="Logo" width="48" height="48"
+                class="home" routerLink="/home">
                 <span *ngIf="!(isMobile$ | async)" class="home" routerLink="/home">Keep Us</span>
                 <span class="spacer"></span>
                 <button mat-flat-button class="btn outline" routerLink="/login">
@@ -122,8 +118,6 @@
         <div class="app-content">
             <router-outlet></router-outlet>
         </div>
-
         <app-footer></app-footer>
-
     </mat-sidenav-content>
 </mat-sidenav-container>

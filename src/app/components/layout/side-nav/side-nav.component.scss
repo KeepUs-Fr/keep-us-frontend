@@ -72,6 +72,15 @@ mat-sidenav-container {
         top: 0;
         z-index: 100;
 
+        a mat-icon {
+            color: #FFFFFF;
+            margin-right: 8px;
+        }
+        
+        a span {
+            vertical-align: middle;
+        }
+
         .home {
             cursor: pointer;
         }

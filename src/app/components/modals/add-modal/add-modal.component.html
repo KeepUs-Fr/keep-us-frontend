@@ -1,18 +1,15 @@
 <div mat-dialog-content>
-    <div class="justify-end">
-        <button mat-icon-button [mat-dialog-close]="false">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
     <div *ngIf="data.isCreation; else add_user">
-        <h1 class="txt-center">Créer un nouveau groupe</h1>
-        <mat-form-field appearance="outline">
-            <mat-label>Nom du groupe</mat-label>
-            <input matInput type="text" [(ngModel)]="name" placeholder="La team" maxlength="25" required>
-        </mat-form-field>
+        <h2 class="txt-center">Créer un nouveau groupe</h2>
+        <form>
+            <mat-form-field appearance="outline">
+                <mat-label>Nom du groupe</mat-label>
+                <input matInput type="text" [(ngModel)]="name" placeholder="La team" maxlength="25" required>
+            </mat-form-field>
+        </form>
     </div>
     <ng-template #add_user>
-        <h1 class="txt-center">Ajouter un membre</h1>
+        <h2 class="txt-center">Ajouter un membre</h2>
         <div class="search">
             <mat-form-field appearance="outline">
                 <mat-icon matSuffix>search</mat-icon>
@@ -21,15 +18,20 @@
             </mat-form-field>
         </div>
     </ng-template>
-</div>
 
-<div mat-dialog-actions class="justify-center">
     <button mat-flat-button
-            [mat-dialog-close]="name"
+            mat-dialog-close
             class="btn secondary"
-            (click)="submit()"
+            type="button"
+            (click)="onSubmit()"
             [disabled]="name.trim() === ''">
         <span *ngIf="data.isCreation">Créer le group</span>
         <span *ngIf="!data.isCreation">Ajouter un membre</span>
+    </button>
+    <button mat-flat-button
+            mat-dialog-close
+            type="button"
+            class="btn cancel">
+        Annuler
     </button>
 </div>

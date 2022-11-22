@@ -108,44 +108,17 @@ export class SideNavComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe({
-            next: (username) => {
-                if (isCreation) {
-                    if (username !== false) {
-                        this.getGroupByUsername();
-                        this.snackBarService.openSuccess(
-                            'Le groupe a été créé'
-                        );
-                    }
-                } else {
-                    if (username !== false) {
-                        this.userService
-                            .addGroupMember(
-                                +localStorage.getItem('groupId')!,
-                                username
-                            )
-                            .subscribe({
-                                next: (_) =>
-                                    this.snackBarService.openSuccess(
-                                        'User ' + username + ' has been added'
-                                    ),
-                                error: (err) => {
-                                    this.snackBarService.openError(
-                                        err.error.message
-                                    );
-                                }
-                            });
-                    }
-                }
+            next: _ => {
+                if (isCreation)
+                    this.getGroupByUsername();
             },
-            error: (err) => {
-                console.error(err);
-            }
+            error: (err) => console.error(err)
         });
     }
 
     openRemoveDialog() {
         const dialogRef = this.dialog.open(RemoveModalComponent, {
-            maxWidth: '400px',
+            width: '400px',
             data: { isGroup: true, id: this.selectedGroup.id }
         });
 

@@ -3,6 +3,7 @@ import { NoteModel } from '../../../models/note.model';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotesService } from '../../../services/notes.service';
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
     selector: 'app-note-menu',
@@ -14,6 +15,7 @@ export class NoteMenuComponent {
     @Output() reload = new EventEmitter<boolean>();
 
     constructor(
+        public authService: AuthService,
         private dialog: MatDialog,
         private notesService: NotesService
     ) {}

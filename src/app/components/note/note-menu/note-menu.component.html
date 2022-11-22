@@ -6,26 +6,28 @@
 </button>
 
 <mat-menu #menu="matMenu">
-<!--    <button mat-menu-item>-->
-<!--        <mat-icon>content_copy</mat-icon>-->
-<!--        <span>Dupliquer</span>-->
-<!--    </button>-->
+    <button mat-menu-item>
+        <mat-icon>content_copy</mat-icon>
+        <span>Dupliquer</span>
+    </button>
 <!--    <button mat-menu-item>-->
 <!--        <mat-icon>content_copy</mat-icon>-->
 <!--        <span>Annuler</span>-->
 <!--    </button>-->
-    <button mat-menu-item (click)="$event.stopPropagation(); lockOrUnlock()">
-        <ng-container *ngIf="note.lock; else unlock">
-            <mat-icon class="icon-lock">lock_outline</mat-icon>
-            <span>Déverouiller</span>
-        </ng-container>
-        <ng-template #unlock>
-            <mat-icon class="icon-lock">lock_open_outline</mat-icon>
-            <span>Verrouiller</span>
-        </ng-template>
-    </button>
-    <button mat-menu-item (click)="openRemoveDialog()">
-        <mat-icon color="warn">delete_outline</mat-icon>
-        <span class="txt-warn">Supprimer</span>
-    </button>
+    <ng-container *ngIf="authService.decodedToken.id === note.ownerId">
+        <button mat-menu-item (click)="$event.stopPropagation(); lockOrUnlock()">
+            <ng-container *ngIf="note.lock; else unlock">
+                <mat-icon class="icon-lock">lock_outline</mat-icon>
+                <span>Déverouiller</span>
+            </ng-container>
+            <ng-template #unlock>
+                <mat-icon class="icon-lock">lock_open_outline</mat-icon>
+                <span>Verrouiller</span>
+            </ng-template>
+        </button>
+        <button mat-menu-item (click)="openRemoveDialog()">
+            <mat-icon color="warn">delete_outline</mat-icon>
+            <span class="txt-warn">Supprimer</span>
+        </button>
+    </ng-container>
 </mat-menu>
