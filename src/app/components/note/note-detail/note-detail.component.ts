@@ -1,7 +1,8 @@
 import {
     Component,
     EventEmitter,
-    Input, OnChanges,
+    Input,
+    OnChanges,
     OnInit,
     Output,
     SimpleChanges
@@ -11,8 +12,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotesService } from '../../../services/notes.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackBarService } from '../../../services/snack-bar.service';
-import { UserService } from "../../../services/user.service";
-import { AuthService } from "../../../services/auth.service";
+import { UserService } from '../../../services/user.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
     selector: 'app-note-detail',
@@ -78,7 +79,8 @@ export class NoteDetailComponent implements OnInit, OnChanges {
             this.note.content === this.content &&
             this.note.color === this.selectedColor.value &&
             this.note.lock === this.isLocked
-        ) return;
+        )
+            return;
 
         this.note.title = this.title;
         this.note.content = this.content;
@@ -88,7 +90,10 @@ export class NoteDetailComponent implements OnInit, OnChanges {
         this.notesService.updateNote(this.note).subscribe({
             next: (note) => {
                 this.note = note;
-                const change = {id: +localStorage.getItem('groupId')!, clearNoteId: false};
+                const change = {
+                    id: +localStorage.getItem('groupId')!,
+                    clearNoteId: false
+                };
                 this.userService.emitGroupId(change);
             },
             error: (err) => {
@@ -97,7 +102,7 @@ export class NoteDetailComponent implements OnInit, OnChanges {
         });
     }
 
-    getCurrentColor(color: {key: string, value: string}) {
+    getCurrentColor(color: { key: string; value: string }) {
         this.selectedColor = color;
         this.updateNote();
     }

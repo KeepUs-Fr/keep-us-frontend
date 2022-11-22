@@ -43,7 +43,9 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('refreshKey', result.refreshKey);
 
-                this.authService.decodedToken = this.authService.decodeToken(result.token);
+                this.authService.decodedToken = this.authService.decodeToken(
+                    result.token
+                );
 
                 this.authService.emitChange(true);
                 this.isLoading = false;

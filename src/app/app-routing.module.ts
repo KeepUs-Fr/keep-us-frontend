@@ -8,7 +8,7 @@ import { NotFoundComponent } from './components/layout/not-found/not-found.compo
 import { AuthGuardService } from './services/auth-guard.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
-import { DeleteAccountComponent } from "./components/delete-account/delete-account.component";
+import { DeleteAccountComponent } from './components/delete-account/delete-account.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },

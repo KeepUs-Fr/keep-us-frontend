@@ -38,10 +38,7 @@ export class NotesService {
     }
 
     updateNote(note: NoteModel): Observable<NoteModel> {
-        return this.http.patch<NoteModel>(
-            environment.baseUrl + '/notes',
-            note
-        );
+        return this.http.patch<NoteModel>(environment.baseUrl + '/notes', note);
     }
 
     lockUnlockNote(id: number): Observable<NoteModel> {
@@ -52,7 +49,10 @@ export class NotesService {
     }
 
     updatePosition(notes: NoteModel[]): Observable<void> {
-        return this.http.patch<void>(environment.baseUrl + '/notes/positions', notes);
+        return this.http.patch<void>(
+            environment.baseUrl + '/notes/positions',
+            notes
+        );
     }
 
     deleteNote(id: number): Observable<void> {

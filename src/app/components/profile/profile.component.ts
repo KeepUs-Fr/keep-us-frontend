@@ -6,8 +6,7 @@ import { SideNavService } from '../../services/side-nav.service';
 import { UserService } from '../../services/user.service';
 import { NotesService } from '../../services/notes.service';
 import { SnackBarService } from '../../services/snack-bar.service';
-import { UserModel } from "../../models/user.model";
-
+import { UserModel } from '../../models/user.model';
 
 @Component({
     selector: 'app-profile',
@@ -40,8 +39,12 @@ export class ProfileComponent implements OnInit {
         dialogRef.afterClosed().subscribe({
             next: (avatarId) => {
                 if (this.user.avatarId !== avatarId)
-                    this.userService.updateAvatar(this.authService.decodedToken.id, avatarId)
-                        .subscribe(user => this.user = user);
+                    this.userService
+                        .updateAvatar(
+                            this.authService.decodedToken.id,
+                            avatarId
+                        )
+                        .subscribe((user) => (this.user = user));
             },
             error: (err) => {
                 console.error(err);
@@ -50,6 +53,8 @@ export class ProfileComponent implements OnInit {
     }
 
     private getAvatar() {
-        this.userService.getUserById(this.authService.decodedToken.id).subscribe(user => this.user = user);
+        this.userService
+            .getUserById(this.authService.decodedToken.id)
+            .subscribe((user) => (this.user = user));
     }
 }

@@ -7,9 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { ResponsiveService } from '../../../services/responsive.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { AnimationOptions } from "ngx-lottie";
-import { AuthService } from "../../../services/auth.service";
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { AnimationOptions } from 'ngx-lottie';
+import { AuthService } from '../../../services/auth.service';
 
 @UntilDestroy()
 @Component({
@@ -51,9 +51,8 @@ export class NoteListComponent implements OnInit {
             this.getNotes();
         }
 
-        this.userService.groupIdEmitted.subscribe(change => {
-            if (change.clearNoteId)
-                this.noteId = undefined;
+        this.userService.groupIdEmitted.subscribe((change) => {
+            if (change.clearNoteId) this.noteId = undefined;
 
             this.groupId = change.id;
             this.getNotes();
@@ -91,14 +90,14 @@ export class NoteListComponent implements OnInit {
 
     drop(event: CdkDragDrop<NoteModel[]>) {
         moveItemInArray(this.notes, event.previousIndex, event.currentIndex);
-        this.notesService.updatePosition(this.notes).subscribe(_ => {});
+        this.notesService.updatePosition(this.notes).subscribe((_) => {});
     }
 
     private getNotes() {
         this.isLoading = true;
         this.notesService.getNotes(this.groupId).subscribe({
             next: (notes) => {
-                this.notes = notes.sort((a,b) => a.position - b.position);
+                this.notes = notes.sort((a, b) => a.position - b.position);
                 this.isLoading = false;
             },
             error: (err) => {

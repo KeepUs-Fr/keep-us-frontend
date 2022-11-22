@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CreateGroupModel } from "../../../models/group.model";
-import { AuthService } from "../../../services/auth.service";
+import { CreateGroupModel } from '../../../models/group.model';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
     selector: 'app-add-modal',

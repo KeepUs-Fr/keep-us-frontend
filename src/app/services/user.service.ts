@@ -10,27 +10,36 @@ import { UserModel } from '../models/user.model';
 })
 export class UserService {
     // Observable string sources
-    private emitGroupIdSource = new Subject<{id: number, clearNoteId: boolean}>();
+    private emitGroupIdSource = new Subject<{
+        id: number;
+        clearNoteId: boolean;
+    }>();
     // Observable string streams
     groupIdEmitted = this.emitGroupIdSource.asObservable();
 
     constructor(private http: HttpClient) {}
 
-    emitGroupId(change: {id: number, clearNoteId: boolean}) {
+    emitGroupId(change: { id: number; clearNoteId: boolean }) {
         this.emitGroupIdSource.next(change);
     }
 
     getUserById(id: number): Observable<UserModel> {
-        return this.http.get<UserModel>(environment.baseUrl + '/auth/account/' + id);
+        return this.http.get<UserModel>(
+            environment.baseUrl + '/auth/account/' + id
+        );
     }
 
-   updateAvatar(id: number, avatarId: number): Observable<UserModel> {
-       let queryParam = new HttpParams();
-       queryParam = queryParam.append('avatar', avatarId);
+    updateAvatar(id: number, avatarId: number): Observable<UserModel> {
+        let queryParam = new HttpParams();
+        queryParam = queryParam.append('avatar', avatarId);
 
-       return this.http.patch<UserModel>(environment.baseUrl + '/auth/account/' + id, {}, {
-           params: queryParam
-        });
+        return this.http.patch<UserModel>(
+            environment.baseUrl + '/auth/account/' + id,
+            {},
+            {
+                params: queryParam
+            }
+        );
     }
 
     getUserByUsername(username: string): Observable<UserModel> {
@@ -64,8 +73,9 @@ export class UserService {
         queryParam = queryParam.append('username', username);
 
         return this.http.patch<GroupModel>(
-            environment.baseUrl + '/groups/' + groupId + '/member',{},
-            {params: queryParam}
+            environment.baseUrl + '/groups/' + groupId + '/member',
+            {},
+            { params: queryParam }
         );
     }
 

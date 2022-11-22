@@ -10,9 +10,8 @@ import { GroupModel } from '../../../models/group.model';
 import { ResponsiveService } from '../../../services/responsive.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { RemoveModalComponent } from "../../modals/remove-modal/remove-modal.component";
-import { NotesService } from "../../../services/notes.service";
-
+import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
+import { NotesService } from '../../../services/notes.service';
 
 @UntilDestroy()
 @Component({
@@ -40,9 +39,7 @@ export class SideNavComponent implements OnInit {
         private responsiveService: ResponsiveService,
         private userService: UserService,
         private notesService: NotesService
-    ){
-    }
-
+    ) {}
 
     ngOnInit() {
         if (this.authService.isLogged()) {
@@ -53,11 +50,11 @@ export class SideNavComponent implements OnInit {
                 this.avatarId = msg;
             });
 
-            this.authService.changeEmitted.subscribe(change => {
+            this.authService.changeEmitted.subscribe((change) => {
                 if (change) this.getUserById();
-            })
+            });
 
-            this.userService.groupIdEmitted.subscribe(change => {
+            this.userService.groupIdEmitted.subscribe((change) => {
                 if (change.id === 0) this.getGroupByUsername();
             });
         }
@@ -81,7 +78,7 @@ export class SideNavComponent implements OnInit {
 
         if (group && id > 0) {
             this.router.navigate(['notes']).then();
-            const change = {id: id, clearNoteId: true};
+            const change = { id: id, clearNoteId: true };
             this.userService.emitGroupId(change);
         }
 
@@ -91,15 +88,17 @@ export class SideNavComponent implements OnInit {
     }
 
     getUserById() {
-        this.userService.getUserById(this.authService.decodedToken?.id!).subscribe({
-            next: user => {
-               this.avatarId = user.avatarId.toString();
-               this.getGroupByUsername();
-            },
-            error: err => {
-                console.error(err);
-            }
-        })
+        this.userService
+            .getUserById(this.authService.decodedToken?.id!)
+            .subscribe({
+                next: (user) => {
+                    this.avatarId = user.avatarId.toString();
+                    this.getGroupByUsername();
+                },
+                error: (err) => {
+                    console.error(err);
+                }
+            });
     }
 
     openAddModal(isCreation: boolean): void {
@@ -119,13 +118,22 @@ export class SideNavComponent implements OnInit {
                     }
                 } else {
                     if (username !== false) {
-                        this.userService.addGroupMember(
-                            +localStorage.getItem('groupId')!, username).subscribe({
-                            next: _ => this.snackBarService.openSuccess('User ' + username + ' has been added'),
-                            error: (err) => {
-                                this.snackBarService.openError(err.error.message);
-                            }
-                        });
+                        this.userService
+                            .addGroupMember(
+                                +localStorage.getItem('groupId')!,
+                                username
+                            )
+                            .subscribe({
+                                next: (_) =>
+                                    this.snackBarService.openSuccess(
+                                        'User ' + username + ' has been added'
+                                    ),
+                                error: (err) => {
+                                    this.snackBarService.openError(
+                                        err.error.message
+                                    );
+                                }
+                            });
                     }
                 }
             },
@@ -138,33 +146,40 @@ export class SideNavComponent implements OnInit {
     openRemoveDialog() {
         const dialogRef = this.dialog.open(RemoveModalComponent, {
             maxWidth: '400px',
-            data: { isGroup: true, id: this.selectedGroup.id },
+            data: { isGroup: true, id: this.selectedGroup.id }
         });
 
         dialogRef.afterClosed().subscribe({
-            next: isRemovable => {
-                if (isRemovable) this.userService.deleteGroup(this.selectedGroup.id).subscribe({
-                    next: _ => {
-                        this.getGroupByUsername();
-                        this.snackBarService.openSuccess('Le groupe a été supprimé');
-                    },
-                    error: err => console.error(err)
-                });
+            next: (isRemovable) => {
+                if (isRemovable)
+                    this.userService
+                        .deleteGroup(this.selectedGroup.id)
+                        .subscribe({
+                            next: (_) => {
+                                this.getGroupByUsername();
+                                this.snackBarService.openSuccess(
+                                    'Le groupe a été supprimé'
+                                );
+                            },
+                            error: (err) => console.error(err)
+                        });
             },
-            error: err => console.error(err)
+            error: (err) => console.error(err)
         });
     }
 
     private getGroupByUsername() {
-        this.userService.getGroupsByOwnerId(this.authService.decodedToken.id).subscribe({
-            next: (groups) => {
-                this.groups = groups;
-                this.selectedGroup = this.groups.slice(0, 1).shift()!;
-                this.currentId = this.selectedGroup.id.toString();
-                localStorage.setItem('groupId', this.currentId);
-                const change = {id: +this.currentId, clearNoteId: true};
-                this.userService.emitGroupId(change);
-            }
-        });
+        this.userService
+            .getGroupsByOwnerId(this.authService.decodedToken.id)
+            .subscribe({
+                next: (groups) => {
+                    this.groups = groups;
+                    this.selectedGroup = this.groups.slice(0, 1).shift()!;
+                    this.currentId = this.selectedGroup.id.toString();
+                    localStorage.setItem('groupId', this.currentId);
+                    const change = { id: +this.currentId, clearNoteId: true };
+                    this.userService.emitGroupId(change);
+                }
+            });
     }
 }
