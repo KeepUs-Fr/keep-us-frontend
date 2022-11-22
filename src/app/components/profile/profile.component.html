@@ -1,46 +1,21 @@
-<div class="profile" *ngIf="authService.decodedToken.id && selectedAvatar !== ''">
+<div class="profile" *ngIf="user.id">
     <div class="justify-center">
         <div>
-            <img src="assets/images/avatars/avatar-{{selectedAvatar}}.png" alt="Avatar" class="avatar">
+            <img src="assets/images/avatars/avatar-{{user.avatarId.toString()}}.png" alt="Avatar" class="avatar">
             <div>
                 <button mat-icon-button class="btn-edit" (click)="openAvatarDialog()">
                     <mat-icon>photo_camera</mat-icon>
                 </button>
             </div>
-            <h1>{{authService.decodedToken.sub}}</h1>
         </div>
     </div>
+    <h1>{{user.username}}</h1>
+    <p>Membre Keep Us depuis le {{user.creationDate | date:'dd/MM/yyyy'}}</p>
 
-    <mat-table [dataSource]="groups" class="mat-elevation-z8">
-        <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef>Nom du groupe</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="date">
-            <mat-header-cell *matHeaderCellDef>Date de création</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.createDate | date:'dd/MM/yyyy'}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="members">
-            <mat-header-cell *matHeaderCellDef>Nombre de membres</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.members.length + 1}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <button mat-icon-button
-                        *ngIf="element.ownerId === authService.decodedToken.id && this.element.name !== 'Personal space'"
-                        color="warn"
-                        (click)="openRemoveDialog(element.id)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+    <div class="delete-account">
+        <p>Besoin de supprimer votre compte ?</p>
+        <a class="justify-center" routerLink="/account-delete">Je m'en occupe maintenant</a>
+    </div>
 </div>
 
 

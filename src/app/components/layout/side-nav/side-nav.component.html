@@ -7,7 +7,7 @@
         [opened]="(isMobile$ | async) === false">
 
         <mat-toolbar class="sticky-item" style="height: 64px;" color="primary">
-            <img src="assets/images/logo.svg" alt="Logo" width="48" height="48">
+            <img src="../../../../assets/images/logo.svg" alt="Logo" width="48" height="48">
             <span>Keep Us</span>
         </mat-toolbar>
 
@@ -90,7 +90,9 @@
                             <mat-icon>person_remove</mat-icon>
                             <span>Quitter le groupe</span>
                         </button>
-                        <button mat-menu-item *ngIf="selectedGroup.ownerId === authService.decodedToken.id">
+                        <button mat-menu-item
+                                *ngIf="selectedGroup.ownerId === authService.decodedToken.id"
+                                (click)="openRemoveDialog()">
                             <mat-icon color="warn">highlight_off</mat-icon>
                             <span class="txt-warn">Supprimer ce groupe</span>
                         </button>
@@ -106,7 +108,7 @@
             </ng-container>
 
             <ng-template #no_auth>
-                <img src="assets/images/logo.svg" alt="Logo" width="48" height="48"
+                <img src="../../../../assets/images/logo.svg" alt="Logo" width="48" height="48"
                      class="home" routerLink="/home">
                 <span *ngIf="!(isMobile$ | async)" class="home" routerLink="/home">Keep Us</span>
                 <span class="spacer"></span>

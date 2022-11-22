@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CreateNoteModel } from '../../../models/note.model';
 import { NotesService } from '../../../services/notes.service';
-import { AuthService } from "../../../services/auth.service";
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
     selector: 'app-note-creation',
@@ -15,8 +15,10 @@ export class NoteCreationComponent {
     isLocked = false;
     selectedColor = 'blue';
 
-    constructor(private noteService: NotesService,
-                private authService: AuthService) {}
+    constructor(
+        private noteService: NotesService,
+        private authService: AuthService
+    ) {}
 
     submit(): void {
         let newNote: CreateNoteModel = {

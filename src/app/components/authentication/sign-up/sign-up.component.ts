@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
-import { CreateGroupModel } from "../../../models/group.model";
+import { CreateGroupModel } from '../../../models/group.model';
 
 @Component({
     selector: 'app-sign-up',
@@ -40,7 +35,9 @@ export class SignUpComponent implements OnInit {
                 null,
                 [
                     Validators.required,
-                    Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+                    Validators.pattern(
+                        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                    )
                 ]
             ],
             password: [
@@ -49,21 +46,20 @@ export class SignUpComponent implements OnInit {
                     Validators.required,
                     Validators.minLength(8),
                     Validators.maxLength(40),
-                    Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)
+                    Validators.pattern(
+                        /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+                    )
                 ]
             ]
         });
     }
 
     ngOnInit() {
-        if (this.authService.isLogged()) {
-            this.router.navigate(['notes']).then();
-        }
+        if (this.authService.isLogged()) this.router.navigate(['notes']).then();
     }
 
     onSubmit() {
-        if(this.signupForm.invalid)
-            return
+        if (this.signupForm.invalid) return;
 
         this.isLoading = true;
         this.authService.signup(this.signupForm.value).subscribe({
@@ -73,14 +69,16 @@ export class SignUpComponent implements OnInit {
                         localStorage.setItem('token', result.token);
                         localStorage.setItem('refreshKey', result.refreshKey);
 
-                        this.authService.decodedToken = this.authService.decodeToken(result.token);
+                        this.authService.decodedToken =
+                            this.authService.decodeToken(result.token);
 
                         const group: CreateGroupModel = {
-                            name: "Personal space",
+                            name: 'Personal space',
                             ownerId: res.id,
                             members: []
-                        }
-                        this.userService.createGroup(group).subscribe(_ => {
+                        };
+
+                        this.userService.createGroup(group).subscribe((_) => {
                             this.authService.emitChange(true);
                             this.isLoading = false;
                             this.router.navigate(['notes']).then();

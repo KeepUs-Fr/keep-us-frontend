@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AnimationOptions } from "ngx-lottie";
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
     selector: 'app-not-found',

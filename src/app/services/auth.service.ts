@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 import { DecodedTokenModel } from '../models/decoded-token.model';
 import jwt_decode from 'jwt-decode';
 import { AuthModel, AuthRegisterModel } from '../models/auth.model';
-import { UserModel } from "../models/user.model";
+import { UserModel } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -40,22 +40,39 @@ export class AuthService {
         );
     }
 
-    login(credential: AuthModel): Observable<{ token: string, refreshKey: string }> {
-        return this.http.post<{ token: string, refreshKey: string }>(
+    login(
+        credential: AuthModel
+    ): Observable<{ token: string; refreshKey: string }> {
+        return this.http.post<{ token: string; refreshKey: string }>(
             environment.baseUrl + '/auth/login',
             credential
         );
     }
 
-    refresh(): Observable<{ token: string, refreshKey: string }> {
+    refresh(): Observable<{ token: string; refreshKey: string }> {
         let queryParam = new HttpParams();
-        queryParam = queryParam.append('refreshKey', localStorage.getItem('refreshKey')!);
+        queryParam = queryParam.append(
+            'refreshKey',
+            localStorage.getItem('refreshKey')!
+        );
 
-        return this.http.get<{ token: string, refreshKey: string }>(
+        return this.http.get<{ token: string; refreshKey: string }>(
             environment.baseUrl + '/auth/refresh/' + this.decodedToken.id,
-            {params: queryParam});
+            { params: queryParam }
+        );
     }
 
+    deleteAccount(password: string): Observable<void> {
+        let queryParam = new HttpParams();
+        queryParam = queryParam.append('password', password);
+
+        return this.http.delete<void>(
+            environment.baseUrl + '/auth/' + this.decodedToken.id,
+            {
+                params: queryParam
+            }
+        );
+    }
 
     logout() {
         localStorage.removeItem('token');

@@ -1,0 +1,45 @@
+.account-delete {
+    margin: 0 auto;
+
+    @media (min-width: 786px) {
+        width: 500px;
+    }
+
+    mat-icon {
+        vertical-align: middle;
+        margin-right: 12px;
+    }
+
+    p {
+        font-size: 16px;
+        margin-top: 24px;
+
+        &.txt-warn {
+            margin: 0;
+        }
+    }
+
+    .delete {
+        margin-top: 44px;
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 44px;
+
+        @media (max-width: 786px) {
+            font-size:  28px;
+            text-align: center;
+        }
+    }
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
+

@@ -7,14 +7,22 @@ import {
     HttpRequest
 } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
-import { BehaviorSubject, filter, Observable, switchMap, take, throwError } from 'rxjs';
+import {
+    BehaviorSubject,
+    filter,
+    Observable,
+    switchMap,
+    take,
+    throwError
+} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SnackBarService } from './services/snack-bar.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
     private isRefreshing = false;
-    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    private refreshTokenSubject: BehaviorSubject<any> =
+        new BehaviorSubject<any>(null);
 
     constructor(
         private authService: AuthService,
@@ -81,22 +89,22 @@ export class TokenInterceptor implements HttpInterceptor {
         if (request.url.includes('auth/refresh')) {
             this.isRefreshing = false;
             this.authService.logout();
-            this.snackBarService.openSuccess(
-                'Your session has expired'
-            );
+            this.snackBarService.openSuccess('Your session has expired');
             return throwError(request.body);
         }
 
         return this.refreshTokenSubject.pipe(
             filter((token) => token !== null),
             take(1),
-            switchMap((token) => next.handle(
-                request.clone({
-                    setHeaders: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-            ))
+            switchMap((token) =>
+                next.handle(
+                    request.clone({
+                        setHeaders: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+                )
+            )
         );
     }
 }

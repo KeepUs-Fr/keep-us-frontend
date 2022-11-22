@@ -1,6 +1,6 @@
 export interface DecodedTokenModel {
     sub: string;
-    id: number,
+    id: number;
     role: string;
     iat: string;
     exp: string;

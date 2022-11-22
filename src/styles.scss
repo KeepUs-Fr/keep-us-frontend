@@ -125,10 +125,21 @@ body {
             border: 1px solid #FFFFFF;
         }
 
+        &.delete {
+            background: #b00020 !important;
+        }
+
+        &.cancel {
+            background: transparent;
+            border: 1px solid rgba(55, 53, 47, 0.16);
+            color: rgb(55, 53, 47);
+        }
+
         &.secondary {
             background: linear-gradient(90deg, #E64602 0%, #FCA311 100%);
         }
     }
+
     .txt-warn {
         color: #b00020;
     }
@@ -217,6 +228,10 @@ body {
 
     .vertical-center {
         margin: auto 0;
+    }
+
+    .float-r {
+        float: right;
     }
 
     .mb-20 {

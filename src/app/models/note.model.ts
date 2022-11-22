@@ -8,6 +8,7 @@ export interface NoteModel {
     ownerId: number;
     groupId: number;
     createDate: Date;
+    updateDate: Date;
 }
 
 export interface CreateNoteModel {
