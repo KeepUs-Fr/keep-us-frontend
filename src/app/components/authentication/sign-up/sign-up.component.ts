@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
     FormBuilder,
-    FormControl,
     FormGroup,
     Validators
 } from '@angular/forms';
@@ -79,6 +78,7 @@ export class SignUpComponent implements OnInit {
                             ownerId: res.id,
                             members: []
                         }
+
                         this.userService.createGroup(group).subscribe(_ => {
                             this.authService.emitChange(true);
                             this.isLoading = false;

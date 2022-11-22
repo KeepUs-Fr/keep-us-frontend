@@ -25,7 +25,7 @@
                     <mat-icon>{{passwordHidden ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
-            <small *ngIf="isPasswordFocus">
+            <small *ngIf="isPasswordFocus && signupForm.get('password')?.invalid">
                 <mat-icon>cancel</mat-icon>Au moins 8 caractères<br/>
                 <mat-icon>cancel</mat-icon>Contient une majuscule <br/>
                 <mat-icon>cancel</mat-icon>Contient une minuscule <br/>
