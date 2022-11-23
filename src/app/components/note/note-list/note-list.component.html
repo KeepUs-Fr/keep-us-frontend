@@ -33,9 +33,7 @@
                                         <mat-card-subtitle (click)="goToNoteDetail(note.id)">
                                             {{note.title ? note.title : 'Sans titre'}}
                                         </mat-card-subtitle>
-                                        <ng-container *ngIf="authService.decodedToken.id === note.ownerId">
-                                            <app-note-menu [note]="note" (reload)="reload($event)"></app-note-menu>
-                                        </ng-container>
+                                        <app-note-menu [note]="note" (reload)="reload($event)"></app-note-menu>
                                     </mat-card-content>
                                 </mat-card>
                             </div>

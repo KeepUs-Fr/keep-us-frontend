@@ -53,7 +53,6 @@ export class NoteListComponent implements OnInit {
 
         this.userService.groupIdEmitted.subscribe((change) => {
             if (change.clearNoteId) this.noteId = undefined;
-
             this.groupId = change.id;
             this.getNotes();
         });
@@ -96,11 +95,11 @@ export class NoteListComponent implements OnInit {
     private getNotes() {
         this.isLoading = true;
         this.notesService.getNotes(this.groupId).subscribe({
-            next: (notes) => {
+            next: notes => {
                 this.notes = notes.sort((a, b) => a.position - b.position);
                 this.isLoading = false;
             },
-            error: (err) => {
+            error: err => {
                 this.isLoading = false;
                 console.error(err);
             }

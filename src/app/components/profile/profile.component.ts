@@ -46,15 +46,11 @@ export class ProfileComponent implements OnInit {
                         )
                         .subscribe((user) => (this.user = user));
             },
-            error: (err) => {
-                console.error(err);
-            }
+            error: err => console.error(err)
         });
     }
 
     private getAvatar() {
-        this.userService
-            .getUserById(this.authService.decodedToken.id)
-            .subscribe((user) => (this.user = user));
+        this.userService.getUserById(this.authService.decodedToken.id).subscribe(user => this.user = user);
     }
 }

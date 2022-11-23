@@ -18,6 +18,10 @@
     }
 
     .delete-account {
-        padding-top: 44px;
+        position: absolute;
+        left: 50%;
+        bottom: 12px;
+        transform: translate(-50%);
+        width: 100%;
     }
 }

@@ -1,24 +1,14 @@
 <div class="account-delete">
     <div>
         <h1>Voulez-vous vraiment supprimer le compte ?</h1>
-
-        <p>
-            <mat-icon color="warn">warning</mat-icon>
-            Le profil, les groupes, ainsi que les notes associés à ce compte ne seront plus disponibles.
-        </p>
-        <p>
-            <mat-icon color="warn">warning</mat-icon>
-            Vous ne pourrez plus accéder aux informations du compte, à l'espace personnel,
-            aux differents groupes, ni aux notes.
-        </p>
-        <p>
-            <mat-icon color="warn">warning</mat-icon>
-            La suppression du compte est une action irreversible. Toutes
-            les données seront supprimées.
-        </p>
+        <ng-container *ngFor="let msg of warningList">
+            <div class="justify-start">
+                <mat-icon color="warn">warning</mat-icon>
+                <p>{{msg}}</p>
+            </div>
+        </ng-container>
 
         <p class="delete">Je veux supprimer définitivement le compte.</p>
-
         <form>
             <mat-form-field appearance="outline">
                 <mat-label>Mot de passe</mat-label>
@@ -30,6 +20,7 @@
         </form>
 
         <p class="txt-warn txt-center" *ngIf="errorMsg.trim() !== ''">{{errorMsg}}</p>
+
         <button mat-flat-button
                 [mat-dialog-close]="true"
                 class="btn delete"

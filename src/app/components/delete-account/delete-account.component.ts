@@ -10,6 +10,11 @@ export class DeleteAccountComponent {
     hide = true;
     password = '';
     errorMsg = '';
+    warningList: string[] = [
+        'Le profil, les groupes, ainsi que les notes associés à ce compte ne seront plus disponibles.',
+        'Vous ne pourrez plus accéder aux informations du compte, à l\'espace personnel, aux differents groupes, ni aux notes.',
+        'La suppression du compte est une action irreversible. Toutes les données seront supprimées.'
+    ]
 
     constructor(private authService: AuthService) {}
 

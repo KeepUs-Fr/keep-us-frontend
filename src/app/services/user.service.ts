@@ -61,6 +61,10 @@ export class UserService {
         return this.http.get<GroupModel>(environment.baseUrl + '/groups/' + id);
     }
 
+    getGroupMembers(id: number): Observable<UserModel[]> {
+        return this.http.get<UserModel[]>(environment.baseUrl + '/groups/' + id + '/members');
+    }
+
     createGroup(group: CreateGroupModel): Observable<GroupModel> {
         return this.http.post<GroupModel>(
             environment.baseUrl + '/groups',
@@ -76,6 +80,13 @@ export class UserService {
             environment.baseUrl + '/groups/' + groupId + '/member',
             {},
             { params: queryParam }
+        );
+    }
+
+    deleteGroupMember(groupId: number, userId: number): Observable<void> {
+        return this.http.patch<void>(
+            environment.baseUrl + '/groups/' + groupId + '/member/' + userId,
+            {},
         );
     }
 
