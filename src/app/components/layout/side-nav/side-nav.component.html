@@ -85,11 +85,11 @@
                         <mat-icon>group_add</mat-icon>
                         <span>Ajouter un membre</span>
                     </button>
-<!--                    <button mat-menu-item *ngIf="selectedGroup.ownerId !== authService.decodedToken.id"-->
-<!--                            (click)="quitCurrentGroup()">-->
-<!--                        <mat-icon color="warn">person_remove</mat-icon>-->
-<!--                        <span class="txt-warn">Quitter le groupe</span>-->
-<!--                    </button>-->
+                    <button mat-menu-item *ngIf="selectedGroup.ownerId !== authService.decodedToken.id"
+                            (click)="quitCurrentGroup()">
+                        <mat-icon color="warn">person_remove</mat-icon>
+                        <span class="txt-warn">Quitter le groupe</span>
+                    </button>
                     <button mat-menu-item
                             *ngIf="selectedGroup.ownerId === authService.decodedToken.id"
                             (click)="openRemoveDialog()">
