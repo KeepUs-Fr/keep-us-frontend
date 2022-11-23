@@ -6,14 +6,10 @@
 </button>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="duplicateNote()">
         <mat-icon>content_copy</mat-icon>
         <span>Dupliquer</span>
     </button>
-<!--    <button mat-menu-item>-->
-<!--        <mat-icon>content_copy</mat-icon>-->
-<!--        <span>Annuler</span>-->
-<!--    </button>-->
     <ng-container *ngIf="authService.decodedToken.id === note.ownerId">
         <button mat-menu-item (click)="$event.stopPropagation(); lockOrUnlock()">
             <ng-container *ngIf="note.lock; else unlock">

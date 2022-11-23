@@ -34,6 +34,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LottieModule } from 'ngx-lottie';
 import { NoteMenuComponent } from './components/note/note-menu/note-menu.component';
 import { DeleteAccountComponent } from './components/delete-account/delete-account.component';
+import { UserModalComponent } from './components/modals/user-modal/user-modal.component';
 
 FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
 
@@ -62,6 +63,7 @@ export function playerFactory(): any {
         HomeComponent,
         NoteMenuComponent,
         DeleteAccountComponent,
+        UserModalComponent,
     ],
     imports: [
         BrowserModule,

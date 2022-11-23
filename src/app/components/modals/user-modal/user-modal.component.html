@@ -1,0 +1,10 @@
+<div mat-dialog-content>
+    <h2 class="txt-center">Liste des membres</h2>
+    <ng-container *ngIf="data.length > 0">
+        <p>Il y a {{data.length}} {{data.length === 1 ? 'membre' : 'membres'}} dans le groupe.</p>
+        <div *ngFor="let user of data">
+            <img src="assets/images/avatars/avatar-{{user.avatarId}}.png" alt="Avatar" class="avatar">
+            <span style="vertical-align: middle">{{user.username}}</span>
+        </div>
+    </ng-container>
+</div>

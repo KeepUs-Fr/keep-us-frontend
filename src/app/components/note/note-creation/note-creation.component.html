@@ -12,7 +12,7 @@
         </textarea>
     </mat-form-field>
     <br/>
-    <mat-form-field appearance="standard" style="margin-bottom: 7px">
+    <mat-form-field appearance="standard">
         <textarea matInput [(ngModel)]="description"
                   style="font-size: 16px"
                   placeholder="Créer une note..."
@@ -32,7 +32,7 @@
 <div mat-dialog-actions class="justify-center">
     <button mat-flat-button
             class="btn secondary"
-            (click)="submit()"
+            (click)="onSubmit()"
             [mat-dialog-close]="closeModal">
         Créer
     </button>

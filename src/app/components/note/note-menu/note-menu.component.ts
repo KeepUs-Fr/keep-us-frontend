@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NoteModel } from '../../../models/note.model';
+import { CreateNoteModel, NoteModel } from '../../../models/note.model';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotesService } from '../../../services/notes.service';
@@ -37,8 +37,25 @@ export class NoteMenuComponent {
     lockOrUnlock() {
         this.note.lock = !this.note.lock;
         this.notesService.lockUnlockNote(this.note.id).subscribe({
-            next: (note) => (this.note = note),
-            error: (err) => console.error(err)
+            next: note => this.note = note,
+            error: err => console.error(err)
+        });
+    }
+
+    duplicateNote() {
+        let newNote: CreateNoteModel = {
+            title: this.note.title,
+            content: this.note.content,
+            position: this.note.position,
+            lock: this.note.lock,
+            color: this.note.color,
+            ownerId: this.authService.decodedToken.id,
+            groupId: +localStorage.getItem('groupId')!
+        };
+
+        this.notesService.createNote(newNote).subscribe({
+            next: _ => this.reload.emit(true),
+            error: err => console.error(err)
         });
     }
 }

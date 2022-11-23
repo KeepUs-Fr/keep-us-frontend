@@ -12,6 +12,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { RemoveModalComponent } from '../../modals/remove-modal/remove-modal.component';
 import { NotesService } from '../../../services/notes.service';
+import { UserModalComponent } from "../../modals/user-modal/user-modal.component";
 
 @UntilDestroy()
 @Component({
@@ -101,7 +102,15 @@ export class SideNavComponent implements OnInit {
             });
     }
 
-    openAddModal(isCreation: boolean): void {
+    quitCurrentGroup() {
+        this.userService.deleteGroupMember(+localStorage.getItem('groupId')!, this.authService.decodedToken.id)
+            .subscribe({
+                next: _ => {},
+                error: err => console.error(err)
+        });
+    }
+
+    openAddDialog(isCreation: boolean): void {
         const dialogRef = this.dialog.open(AddModalComponent, {
             data: { isCreation: isCreation },
             width: '400px'
@@ -123,21 +132,36 @@ export class SideNavComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe({
-            next: (isRemovable) => {
-                if (isRemovable)
-                    this.userService
-                        .deleteGroup(this.selectedGroup.id)
-                        .subscribe({
-                            next: (_) => {
-                                this.getGroupByUsername();
-                                this.snackBarService.openSuccess(
-                                    'Le groupe a été supprimé'
-                                );
-                            },
-                            error: (err) => console.error(err)
-                        });
+            next: isRemovable => {
+                if (isRemovable) {
+                    this.userService.deleteGroup(this.selectedGroup.id).subscribe({
+                        next: _ => {
+                            this.getGroupByUsername();
+                            this.snackBarService.openSuccess(
+                                'Le groupe a été supprimé'
+                            );
+                        },
+                        error: err => console.error(err)
+                    });
+                }
             },
             error: (err) => console.error(err)
+        });
+    }
+
+    openUserDialog() {
+        this.userService.getUserById(this.authService.decodedToken.id).subscribe(user => {
+            this.userService.getGroupMembers(+localStorage.getItem('groupId')!).subscribe({
+                next: users => {
+                    users.push(user);
+
+                    this.dialog.open(UserModalComponent, {
+                        width: '400px',
+                        data: users
+                    });
+                },
+                error: err => console.error(err)
+            });
         });
     }
 

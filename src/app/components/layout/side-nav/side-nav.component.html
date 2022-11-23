@@ -21,7 +21,7 @@
                        [ngClass]="{'active': currentId === '-1'}">
                         <img src="assets/images/avatars/avatar-{{avatarId}}.png"
                              alt="Avatar"
-                             class="avatar icon-margin">
+                             class="avatar">
                         <span>{{authService.decodedToken.sub}}</span>
                     </a>
                 </mat-nav-list>
@@ -40,7 +40,7 @@
             </mat-nav-list>
 
             <!-- Add new group -->
-            <mat-nav-list class="bottom-btn" (click)="openAddModal(true);">
+            <mat-nav-list class="bottom-btn" (click)="openAddDialog(true);">
                 <a mat-list-item>
                     <mat-icon>add_circle</mat-icon>
                     <span class="ml-12">Créer un groupe</span>
@@ -77,18 +77,19 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="openUserDialog()">
                         <mat-icon>group</mat-icon>
                         <span>Liste des membres</span>
                     </button>
-                    <button mat-menu-item (click)="openAddModal(false)">
+                    <button mat-menu-item (click)="openAddDialog(false)">
                         <mat-icon>group_add</mat-icon>
                         <span>Ajouter un membre</span>
                     </button>
-                    <button mat-menu-item *ngIf="selectedGroup.ownerId !== authService.decodedToken.id">
-                        <mat-icon>person_remove</mat-icon>
-                        <span>Quitter le groupe</span>
-                    </button>
+<!--                    <button mat-menu-item *ngIf="selectedGroup.ownerId !== authService.decodedToken.id"-->
+<!--                            (click)="quitCurrentGroup()">-->
+<!--                        <mat-icon color="warn">person_remove</mat-icon>-->
+<!--                        <span class="txt-warn">Quitter le groupe</span>-->
+<!--                    </button>-->
                     <button mat-menu-item
                             *ngIf="selectedGroup.ownerId === authService.decodedToken.id"
                             (click)="openRemoveDialog()">

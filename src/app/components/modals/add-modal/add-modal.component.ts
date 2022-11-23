@@ -35,9 +35,14 @@ export class AddModalComponent {
         } else {
             this.userService.addGroupMember(+localStorage.getItem('groupId')!, this.name).subscribe({
                 next: _ => this.snackBarService.openSuccess(this.name + ' a été ajouté'),
-                error: (err) => {
+                error: err => {
+                    console.error(err);
+
                     if (err.status === 404)
                         this.snackBarService.openError('L\'utilisateur ' + this.name + ' est introuvable');
+
+                    if (err.status === 409)
+                        this.snackBarService.openError('L\'utilisateur ' + this.name + ' est déjà dans le groupe');
                 }
             });
         }

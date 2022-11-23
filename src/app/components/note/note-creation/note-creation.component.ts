@@ -20,7 +20,7 @@ export class NoteCreationComponent {
         private authService: AuthService
     ) {}
 
-    submit(): void {
+    onSubmit(): void {
         let newNote: CreateNoteModel = {
             title: this.title,
             content: this.description,
