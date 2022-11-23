@@ -41,6 +41,14 @@ export class NotesService {
         return this.http.patch<NoteModel>(environment.baseUrl + '/notes', note);
     }
 
+    updateNotesOwnerId(groupId: number, ownerId: number, groupOwnerId: number): Observable<void> {
+        let queryParam = new HttpParams();
+        queryParam = queryParam.append('ownerId', ownerId);
+        queryParam = queryParam.append('groupOwnerId', groupOwnerId);
+
+        return this.http.patch<void>(environment.baseUrl + '/notes/group/' + groupId,
+            {},{params: queryParam})
+    }
     lockUnlockNote(id: number): Observable<NoteModel> {
         return this.http.patch<NoteModel>(
             environment.baseUrl + '/notes/' + id + '/lock',

@@ -103,10 +103,18 @@ export class SideNavComponent implements OnInit {
     }
 
     quitCurrentGroup() {
-        this.userService.deleteGroupMember(+localStorage.getItem('groupId')!, this.authService.decodedToken.id)
-            .subscribe({
-                next: _ => {},
-                error: err => console.error(err)
+        this.notesService.updateNotesOwnerId(
+            this.selectedGroup.id,
+            this.authService.decodedToken.id,
+            this.selectedGroup.ownerId).subscribe({
+            next: _ => {
+                this.userService.deleteGroupMember(this.selectedGroup.id, this.authService.decodedToken.id)
+                    .subscribe({
+                        next: _ => this.getGroupByUsername(),
+                        error: err => console.error(err)
+                    });
+            },
+            error: err => console.error(err)
         });
     }
 
@@ -150,8 +158,8 @@ export class SideNavComponent implements OnInit {
     }
 
     openUserDialog() {
-        this.userService.getUserById(this.authService.decodedToken.id).subscribe(user => {
-            this.userService.getGroupMembers(+localStorage.getItem('groupId')!).subscribe({
+        this.userService.getUserById(this.selectedGroup.ownerId).subscribe(user => {
+            this.userService.getGroupMembers(this.selectedGroup.id).subscribe({
                 next: users => {
                     users.push(user);
 
